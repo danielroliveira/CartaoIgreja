@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CamadaUI.Modals
+namespace CamadaUI.Models
 {
 	public partial class frmModConfig : Form
 	{

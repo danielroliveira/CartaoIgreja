@@ -76,7 +76,6 @@
 			this.btnSair.Text = "&Sair";
 			this.btnSair.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnSair.ToolTipText = "Sair do Aplicativo";
-			this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
 			// 
 			// btnBiblia
 			// 
@@ -88,7 +87,6 @@
 			this.btnBiblia.Padding = new System.Windows.Forms.Padding(5);
 			this.btnBiblia.Size = new System.Drawing.Size(152, 32);
 			this.btnBiblia.Text = "Leitura Bíblica";
-			this.btnBiblia.Click += new System.EventHandler(this.btnBiblia_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -105,7 +103,6 @@
 			this.btnLouvores.Padding = new System.Windows.Forms.Padding(5);
 			this.btnLouvores.Size = new System.Drawing.Size(108, 32);
 			this.btnLouvores.Text = "Louvores";
-			this.btnLouvores.Click += new System.EventHandler(this.btnLouvores_Click);
 			// 
 			// btnHarpa
 			// 
@@ -117,7 +114,6 @@
 			this.btnHarpa.Padding = new System.Windows.Forms.Padding(5);
 			this.btnHarpa.Size = new System.Drawing.Size(137, 32);
 			this.btnHarpa.Text = "Harpa Cristã";
-			this.btnHarpa.Click += new System.EventHandler(this.btnHarpa_Click);
 			// 
 			// toolStripSplitButton1
 			// 
@@ -174,7 +170,6 @@
 			this.btnClose.TabIndex = 11;
 			this.btnClose.TabStop = false;
 			this.btnClose.UseVisualStyleBackColor = false;
-			this.btnClose.Click += new System.EventHandler(this.btnSair_Click);
 			// 
 			// btnMinimizer
 			// 
@@ -193,7 +188,6 @@
 			this.btnMinimizer.TabIndex = 11;
 			this.btnMinimizer.TabStop = false;
 			this.btnMinimizer.UseVisualStyleBackColor = false;
-			this.btnMinimizer.Click += new System.EventHandler(this.btnMinimizer_Click);
 			// 
 			// btnConfig
 			// 
@@ -212,7 +206,6 @@
 			this.btnConfig.TabIndex = 11;
 			this.btnConfig.TabStop = false;
 			this.btnConfig.UseVisualStyleBackColor = false;
-			this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
 			// 
 			// frmPrincipal
 			// 
@@ -247,13 +240,13 @@
         private System.Windows.Forms.ToolStripButton btnLouvores;
         private System.Windows.Forms.ToolStripButton btnHarpa;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.Panel pnlTop;
         internal System.Windows.Forms.Button btnConfig;
         internal System.Windows.Forms.Button btnClose;
         internal System.Windows.Forms.Button btnMinimizer;
 		private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
 		private System.Windows.Forms.Label lblTitulo;
-		public System.Windows.Forms.ToolStrip mnuPrincipal;
+		protected internal System.Windows.Forms.ToolStrip mnuPrincipal;
+		public System.Windows.Forms.Panel pnlTop;
 	}
 }
 

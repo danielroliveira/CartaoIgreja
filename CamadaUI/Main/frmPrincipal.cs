@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using CamadaUI.Escritura;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
 
@@ -17,7 +16,6 @@ namespace CamadaUI.Main
 		{
 			InitializeComponent();
 
-			pnlTop.BackColor = Properties.Settings.Default.PanelTopColor;
 			lblTitulo.Text = AplicacaoTitulo;
 
 			foreach (Control control in this.Controls)
@@ -34,7 +32,7 @@ namespace CamadaUI.Main
 					this.BackgroundImageLayout = ImageLayout.Zoom;
 					//client.BackColor = Color.FromArgb(195, 240, 123);
 
-					client.BackgroundImage = Properties.Resources.Logo_FAES_cinza_PNG_Borda;
+					client.BackgroundImage = Properties.Resources.Logo_ADRJ_Fundo;
 					//picFundo.BackColor = Color.Red;
 				}
 			}
@@ -64,6 +62,7 @@ namespace CamadaUI.Main
 		
 		#endregion
 
+		/*
 		#region BUTTONS
 
 		// APPLICATION EXIT
@@ -168,6 +167,7 @@ namespace CamadaUI.Main
 		}
 
 		#endregion
+		*/
 
 		#region OTHER FUNCTIONS
 

@@ -1,5 +1,4 @@
-﻿using CamadaBLL;
-using CamadaDTO;
+﻿using CamadaDTO;
 using System;
 using System.Drawing;
 using System.IO;
@@ -365,7 +364,7 @@ namespace CamadaUI
 		//--- OCULTAR E REVELAR O MENU PRINCIPAL
 		public static void OcultaMenuPrincipal()
 		{
-			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
+			Main.frmPrincipal frm = Application.OpenForms.OfType<Main.frmPrincipal>().First();
 			frm.mnuPrincipal.Visible = false;
 			frm.pnlTop.BackColor = Color.Gainsboro;
 			frm.btnConfig.Enabled = false;
@@ -374,7 +373,7 @@ namespace CamadaUI
 		//--- REVELA MENU PRINCIPAL
 		public static void MostraMenuPrincipal()
 		{
-			frmPrincipal frm = Application.OpenForms.OfType<frmPrincipal>().First();
+			Main.frmPrincipal frm = Application.OpenForms.OfType<Main.frmPrincipal>().First();
 			frm.mnuPrincipal.Visible = true;
 			frm.mnuPrincipal.Enabled = true;
 			frm.pnlTop.BackColor = Color.SlateGray;
@@ -394,161 +393,6 @@ namespace CamadaUI
 		}
 
 		#endregion
-
-		#region CONTROLA SALDO CONTA E SETOR AND DATE
-
-		// UPDATE SALDO DA CONTA LOCAL
-		//------------------------------------------------------------------------------------------------------------
-		public static void ContaSaldoLocalUpdate(int IDConta, decimal Valor)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				// execute
-				frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-				objConta conta = principal.propContaPadrao;
-
-				if (conta.IDConta == IDConta)
-				{
-					conta.ContaSaldo += Valor;
-				}
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao ALTERAR o saldo da CONTA local..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				throw ex;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-		}
-
-		// UPDATE SALDO DO SETOR LOCAL
-		//------------------------------------------------------------------------------------------------------------
-		public static void SetorSaldoLocalUpdate(int IDSetor, decimal Valor)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				// execute
-				frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-				objSetor setor = principal.propSetorPadrao;
-
-				if (setor.IDSetor == IDSetor)
-				{
-					setor.SetorSaldo += Valor;
-				}
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao ALTERAR o saldo do SETOR local..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				throw ex;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-		}
-
-		// GET CONTA PADRAO
-		//------------------------------------------------------------------------------------------------------------
-		public static objConta ContaPadrao()
-		{
-			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			return principal.propContaPadrao.ShallowCopy();
-		}
-
-		// GET SETOR PADRAO
-		//------------------------------------------------------------------------------------------------------------
-		public static objSetor SetorPadrao()
-		{
-			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			return principal.propSetorPadrao.ShallowCopy();
-		}
-
-		// GET DATE PADRAO
-		//------------------------------------------------------------------------------------------------------------
-		public static DateTime DataPadrao()
-		{
-			frmPrincipal principal = Application.OpenForms.OfType<frmPrincipal>().First();
-			return principal.propDataPadrao;
-		}
-
-		#endregion // CONTROLA SALDO CONTA E SETOR --- END
-
-		#region USER AUTORIZATION GUARD
-
-		public static bool CheckAuthorization(EnumAcessoTipo AuthLevel,
-			string AuthDescription,
-			Form formOrigem = null)
-		{
-			if (Program.usuarioAtual.UsuarioAcesso <= (byte)AuthLevel)
-			{
-				return true;
-			}
-			else
-			{
-				return GetAuthorization(AuthLevel, AuthDescription, formOrigem);
-			}
-		}
-
-		private static bool GetAuthorization(EnumAcessoTipo AuthLevel,
-			string AuthDescription,
-			Form formOrigem = null)
-		{
-			var frmA = new Main.frmUserAuthorization(AuthDescription, formOrigem);
-			frmA.ShowDialog();
-
-			if (frmA.DialogResult != DialogResult.OK) return false;
-
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				//--- GET User Data
-				var db = new AcessoControlBLL();
-				object obj = db.GetAuthorization(frmA.propUser, frmA.propSenha, AuthLevel, AuthDescription);
-
-				if (obj.GetType() == typeof(objUsuario))
-				{
-					return true;
-				}
-				else
-				{
-					AbrirDialog("Uma falha ocorreu na autorização:\n" + obj.ToString(),
-								"Autorização Negada",
-								DialogType.OK,
-								DialogIcon.Warning);
-					return false;
-				}
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao obter a autorização..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-				return false;
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
-
-		#endregion // USER AUTORIZATION GUARD --- END
-
+		
 	}
 }

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CamadaUI.Modals
+namespace CamadaUI.Models
 {
 	public partial class frmModFinBorder : Form
 	{
@@ -39,7 +39,7 @@ namespace CamadaUI.Modals
 			Px = Cursor.Position.X - Left;
 
 			if (IsMdiChild)
-				if (((frmPrincipal)(Application.OpenForms[0])).mnuPrincipal.Visible)
+				if (((Main.frmPrincipal)(Application.OpenForms[0])).mnuPrincipal.Visible)
 				{
 					Py = Cursor.Position.Y - Top + 98;
 				}

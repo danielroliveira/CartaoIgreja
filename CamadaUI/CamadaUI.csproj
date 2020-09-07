@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="betterlistviewexpress-net45, Version=3.15.0.0, Culture=neutral, PublicKeyToken=e6c91a3add447be2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Component Owl\Better ListView Express\Redistributable\.NET Framework Specific\.NET Framework 4.5\betterlistviewexpress-net45.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,18 +50,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main\frmComboLista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmComboLista.designer.cs">
+      <DependentUpon>frmComboLista.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmDateGet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmDateGet.designer.cs">
+      <DependentUpon>frmDateGet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmDateMesAnoGet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmDateMesAnoGet.designer.cs">
+      <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmMessage.designer.cs">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
     <Compile Include="Main\Utilidades.cs" />
-    <Compile Include="Modals\frmModConfig.cs">
+    <Compile Include="Models\frmModConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modals\frmModConfig.designer.cs">
+    <Compile Include="Models\frmModConfig.designer.cs">
       <DependentUpon>frmModConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modals\frmModFinBorder.cs">
+    <Compile Include="Models\frmModFinBorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modals\frmModFinBorder.designer.cs">
+    <Compile Include="Models\frmModFinBorder.designer.cs">
       <DependentUpon>frmModFinBorder.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmPrincipal.cs">
@@ -68,10 +96,22 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Modals\frmModConfig.resx">
+    <EmbeddedResource Include="Main\frmComboLista.resx">
+      <DependentUpon>frmComboLista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmDateGet.resx">
+      <DependentUpon>frmDateGet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmDateMesAnoGet.resx">
+      <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmMessage.resx">
+      <DependentUpon>frmMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\frmModConfig.resx">
       <DependentUpon>frmModConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modals\frmModFinBorder.resx">
+    <EmbeddedResource Include="Models\frmModFinBorder.resx">
       <DependentUpon>frmModFinBorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmPrincipal.resx">
@@ -104,6 +144,10 @@
     <None Include="Resources\CloseIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TesourariaIgreja\CamadaUC\CamadaUC.csproj">
+      <Project>{2358e4c4-84ab-41fb-b79c-46ea095bc279}</Project>
+      <Name>CamadaUC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CamadaBLL\CamadaBLL.csproj">
       <Project>{b6b682fd-3486-405b-ba95-0f2832205433}</Project>
       <Name>CamadaBLL</Name>
@@ -112,6 +156,27 @@
       <Project>{390b5a1a-256d-4288-a727-cf852ac0c233}</Project>
       <Name>CamadaDTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_question.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo_ADRJ_Fundo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fechar_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
