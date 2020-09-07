@@ -33,10 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AwesomeShapeControl">
+      <HintPath>..\ControlsDLL\AwesomeShapeControl.dll</HintPath>
+    </Reference>
     <Reference Include="betterlistviewexpress-net45, Version=3.15.0.0, Culture=neutral, PublicKeyToken=e6c91a3add447be2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Component Owl\Better ListView Express\Redistributable\.NET Framework Specific\.NET Framework 4.5\betterlistviewexpress-net45.dll</HintPath>
     </Reference>
+    <Reference Include="GlassButton">
+      <HintPath>..\ControlsDLL\GlassButton.dll</HintPath>
+    </Reference>
+    <Reference Include="MBGlassButton">
+      <HintPath>..\ControlsDLL\MBGlassButton.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,11 +60,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\frmConfigDados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigDados.designer.cs">
+      <DependentUpon>frmConfigDados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\frmConfigGeral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigGeral.designer.cs">
+      <DependentUpon>frmConfigGeral.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmComboLista.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main\frmComboLista.designer.cs">
       <DependentUpon>frmComboLista.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\frmConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfig.designer.cs">
+      <DependentUpon>frmConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmDateGet.cs">
       <SubType>Form</SubType>
@@ -96,8 +124,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Config\frmConfigDados.resx">
+      <DependentUpon>frmConfigDados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfigGeral.resx">
+      <DependentUpon>frmConfigGeral.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\frmComboLista.resx">
       <DependentUpon>frmComboLista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfig.resx">
+      <DependentUpon>frmConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmDateGet.resx">
       <DependentUpon>frmDateGet.cs</DependentUpon>
@@ -177,6 +214,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fechar_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\contribuinte_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sair_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Imprimir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backup_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

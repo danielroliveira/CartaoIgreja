@@ -23,20 +23,10 @@ namespace CamadaUI.Main
 				MdiClient client = control as MdiClient;
 				if (!(client == null))
 				{
-					//client.BackgroundImage = Properties.Resources.Logo_FAES_cinza_PNG_Borda;
-
-					//Image cachorro = Image.FromFile("E:\\Desktop\\faes.png");
-					//Image cachorro = Image.FromFile("E:\\Desktop\\j0424399.jpg");
-
-					//Image cachorro = Properties.Resources.notamusical_16;
-					this.BackgroundImageLayout = ImageLayout.Zoom;
-					//client.BackColor = Color.FromArgb(195, 240, 123);
-
+					BackgroundImageLayout = ImageLayout.Zoom;
 					client.BackgroundImage = Properties.Resources.Logo_ADRJ_Fundo;
-					//picFundo.BackColor = Color.Red;
 				}
 			}
-
 		}
 
 		// LOAD
@@ -44,7 +34,87 @@ namespace CamadaUI.Main
 		private void frmPrincipal_Load(object sender, EventArgs e)
 		{
 			mnuPrincipal.Focus();
-			//btnBiblia.Select();
+
+
+
+
+
+			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
+			//------------------------------------------------------------------------------------------------------------
+			try
+			{
+				//--- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				AcessoControlBLL acessoBLL = new AcessoControlBLL();
+				string TestAcesso = acessoBLL.GetConnString();
+
+				//--- open FRMCONNSTRING: to define the string de conexao
+				if (string.IsNullOrEmpty(TestAcesso))
+				{
+					Main.frmConnString fcString = new Main.frmConnString();
+					fcString.ShowDialog();
+
+					if (fcString.DialogResult == DialogResult.Cancel)
+					{
+						Application.Exit();
+						return;
+					}
+				}
+
+				//--- VERFICA SE O ARQUIVO DE CONFIG FOI ENCONTRADO
+				//------------------------------------------------------------------------------------------------------------
+				if (VerificaConfig() == false)
+				{
+					Application.Exit();
+					return;
+				}
+
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao obter o caminho do BD..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+			//--- HABILITA A VERSAO E O TITULO
+			//----------------------------------------------------------------
+			string Versao = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			lblVersao.Text = Versao;
+
+			//-- HABILITA O MENU
+			//----------------------------------------------------------------
+			mnuPrincipal.Enabled = true;
+
+			//--- ATUALIZA O MENU CONFORME O USUARIO ACESSO
+			//----------------------------------------------------------------
+			MenuUserAcesso();
+
+			//---- INICIALIZA O TIMER DA HORA
+			//----------------------------------------------------------------
+			//lblHora.Text = DateTime.Now.ToShortTimeString;
+
+			//--- HABILITA O HANDLER DE ABERTURA DO MENU
+			//----------------------------------------------------------------
+			MenuOpen_Handler();
+			mnuPrincipal.Focus();
+			btnCadastros.Select();
+
+			// CREATE HANDLERS TO OPEN FORM ONCLICK
+			//----------------------------------------------------------------
+			HandlersMenuClickToOpenForm();
+
+
+
+
+
+
 		}
 
 		public string AplicacaoTitulo
@@ -59,11 +129,78 @@ namespace CamadaUI.Main
 				SaveConfigValorNode("IgrejaTitulo", value);
 			}
 		}
-		
+
 		#endregion
 
-		/*
+		#region MENU FUNCOES
+
+		private void HandlersMenuClickToOpenForm()
+		{
+			/*
+
+			// MENU CADASTROS
+			mnuContribuintes.Click += (a, b) => MenuClickOpenForm(new Registres.frmContribuinteListagem(false, this));
+			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));
+			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoListagem());
+			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoSetorListagem());
+			mnuReunioes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoReuniaoListagem());
+
+			// MENU ENTRADAS
+			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());
+			mnuContribuicaoInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicao(new objContribuicao(null)));
+			mnuContribuicaoProcurar.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicaoListagem());
+			mnuAReceberProcurar.Click += (a, b) => MenuClickOpenForm(new frmAReceberListagem());
+
+			*/
+		}
+
+		private void MenuClickOpenForm(Form form)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				form.MdiParent = this;
+				DesativaMenuPrincipal();
+				form.Show();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao abrir formulário..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion
+
 		#region BUTTONS
+		private void MenuOpen_Handler()
+		{
+			foreach (object control in mnuPrincipal.Items)
+			{
+				//MessageBox.Show(control.GetType().ToString());
+
+				if (control.GetType() == typeof(ToolStripSplitButton))
+				{
+					ToolStripSplitButton splitButton = (ToolStripSplitButton)control;
+					splitButton.ButtonClick += ToolStripSplitButton_ButtonClick;
+					splitButton.MouseHover += ToolStripSplitButton_ButtonClick;
+				}
+			}
+		}
+
+		private void ToolStripSplitButton_ButtonClick(object sender, EventArgs e)
+		{
+			ToolStripSplitButton control = (ToolStripSplitButton)sender;
+			control.ShowDropDown();
+		}
 
 		// APPLICATION EXIT
 		// =============================================================================
@@ -77,67 +214,6 @@ namespace CamadaUI.Main
 		private void btnMinimizer_Click(object sender, EventArgs e)
 		{
 			WindowState = FormWindowState.Minimized;
-		}
-
-		// OPEN ESCRITURA
-		// =============================================================================
-		private void btnBiblia_Click(object sender, EventArgs e)
-		{
-			frmLeitura f = new frmLeitura();
-			f.Show();
-			Visible = false;
-		}
-
-		// OPEN HARPA
-		// =============================================================================
-		private void btnHarpa_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Form f = new Harpa.frmHarpa();
-				f.Show();
-				Visible = false;
-
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Hinos..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-
-		}
-
-		// OPEN LOUVORES
-		// =============================================================================
-		private void btnLouvores_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				Form f = new Louvor.frmLouvorLista();
-				f.Show();
-				Visible = false;
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Abrir o formulário de Louvores..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
 		}
 
 		// OPEN CONFIG
@@ -167,7 +243,6 @@ namespace CamadaUI.Main
 		}
 
 		#endregion
-		*/
 
 		#region OTHER FUNCTIONS
 
