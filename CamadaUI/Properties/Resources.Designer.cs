@@ -73,6 +73,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_user {
+            get {
+                object obj = ResourceManager.GetObject("add_user", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap backup_24 {
             get {
                 object obj = ResourceManager.GetObject("backup_24", resourceCulture);
@@ -123,6 +133,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap edit_profile {
+            get {
+                object obj = ResourceManager.GetObject("edit_profile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap editar_16 {
             get {
                 object obj = ResourceManager.GetObject("editar_16", resourceCulture);
@@ -136,6 +156,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap fechar_24 {
             get {
                 object obj = ResourceManager.GetObject("fechar_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap funcoes_32 {
+            get {
+                object obj = ResourceManager.GetObject("funcoes_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +206,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap icon_warning {
             get {
                 object obj = ResourceManager.GetObject("icon_warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap igreja_32 {
+            get {
+                object obj = ResourceManager.GetObject("igreja_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

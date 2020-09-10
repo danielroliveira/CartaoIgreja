@@ -19,6 +19,13 @@ namespace CamadaUI
 
 	public static class FuncoesGlobais
 	{
+		// GET PATH OF DATABASE
+		//==============================================================================================
+		public static string DBPath()
+		{
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"CartaoIgrejaDB.accdb");
+		}
+
 		#region CONFIG CREATE | LOAD | CHANGE
 
 		// CHECK IF EXIST CONFIG

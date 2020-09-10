@@ -42,7 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppException.cs" />
+    <Compile Include="objCongregacao.cs" />
     <Compile Include="objDadosIgreja.cs" />
+    <Compile Include="objEstadoCivil.cs" />
+    <Compile Include="objFuncao.cs" />
+    <Compile Include="objMembro.cs" />
+    <Compile Include="objSituacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

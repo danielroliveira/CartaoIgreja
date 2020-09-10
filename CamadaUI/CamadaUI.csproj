@@ -242,5 +242,26 @@
   <ItemGroup>
     <None Include="Resources\refresh_16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Novo_PEQ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_user1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_profile1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\igreja_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\funcoes_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

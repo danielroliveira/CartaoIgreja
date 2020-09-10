@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 using static CamadaUI.FuncoesGlobais;
+using System.IO;
 
 namespace CamadaUI.Main
 {
@@ -16,8 +17,10 @@ namespace CamadaUI.Main
 		{
 			InitializeComponent();
 
-			lblTitulo.Text = AplicacaoTitulo;
+			string titulo = AplicacaoTitulo;
+			lblTitulo.Text = titulo == string.Empty ? "Título da Igreja" : titulo;
 
+			//--- INSERT BACKGROUND MDI FORM
 			foreach (Control control in this.Controls)
 			{
 				MdiClient client = control as MdiClient;
@@ -35,10 +38,6 @@ namespace CamadaUI.Main
 		{
 			mnuPrincipal.Focus();
 
-
-
-
-
 			//--- VERIFICA SE EXISTE CONFIG DO CAMINHO DO BD
 			//------------------------------------------------------------------------------------------------------------
 			try
@@ -46,30 +45,28 @@ namespace CamadaUI.Main
 				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				AcessoControlBLL acessoBLL = new AcessoControlBLL();
-				string TestAcesso = acessoBLL.GetConnString();
+				//--- open check DATABASE
+				FileInfo DB = new FileInfo(DBPath());
 
-				//--- open FRMCONNSTRING: to define the string de conexao
-				if (string.IsNullOrEmpty(TestAcesso))
+				if (!DB.Exists)
 				{
-					Main.frmConnString fcString = new Main.frmConnString();
-					fcString.ShowDialog();
-
-					if (fcString.DialogResult == DialogResult.Cancel)
-					{
-						Application.Exit();
-						return;
-					}
-				}
-
-				//--- VERFICA SE O ARQUIVO DE CONFIG FOI ENCONTRADO
-				//------------------------------------------------------------------------------------------------------------
-				if (VerificaConfig() == false)
-				{
+					AbrirDialog("Não foi encontrado o Banco de Dados...\n" +
+						"Desculpe, o aplicativo não pode ser aberto!",
+						"Exceção", DialogType.OK, DialogIcon.Exclamation);
 					Application.Exit();
 					return;
 				}
 
+				//--- VERFICA SE O ARQUIVO DE CONFIG FOI ENCONTRADO
+				//------------------------------------------------------------------------------------------------------------
+				if (VerificaConfigXML() == false)
+				{
+					AbrirDialog("O arquivo de configuração não pôde ser criado...\n" +
+						"Desculpe, o aplicativo não pode ser aberto!",
+						"Exceção", DialogType.OK, DialogIcon.Exclamation);
+					Application.Exit();
+					return;
+				}
 
 			}
 			catch (Exception ex)
@@ -92,14 +89,6 @@ namespace CamadaUI.Main
 			//----------------------------------------------------------------
 			mnuPrincipal.Enabled = true;
 
-			//--- ATUALIZA O MENU CONFORME O USUARIO ACESSO
-			//----------------------------------------------------------------
-			MenuUserAcesso();
-
-			//---- INICIALIZA O TIMER DA HORA
-			//----------------------------------------------------------------
-			//lblHora.Text = DateTime.Now.ToShortTimeString;
-
 			//--- HABILITA O HANDLER DE ABERTURA DO MENU
 			//----------------------------------------------------------------
 			MenuOpen_Handler();
@@ -109,11 +98,6 @@ namespace CamadaUI.Main
 			// CREATE HANDLERS TO OPEN FORM ONCLICK
 			//----------------------------------------------------------------
 			HandlersMenuClickToOpenForm();
-
-
-
-
-
 
 		}
 
@@ -185,8 +169,6 @@ namespace CamadaUI.Main
 		{
 			foreach (object control in mnuPrincipal.Items)
 			{
-				//MessageBox.Show(control.GetType().ToString());
-
 				if (control.GetType() == typeof(ToolStripSplitButton))
 				{
 					ToolStripSplitButton splitButton = (ToolStripSplitButton)control;
@@ -251,7 +233,7 @@ namespace CamadaUI.Main
 			mnuPrincipal.Enabled = IsEnabled;
 			btnConfig.Enabled = IsEnabled;
 		}
-		
+
 		#endregion
 	}
 }

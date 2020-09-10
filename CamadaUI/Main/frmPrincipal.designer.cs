@@ -29,102 +29,54 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
-			this.mnuPrincipal = new System.Windows.Forms.ToolStrip();
-			this.btnSair = new System.Windows.Forms.ToolStripButton();
-			this.mnuMembro = new System.Windows.Forms.ToolStripSplitButton();
-			this.inserirNovoCadastroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuImpressao = new System.Windows.Forms.ToolStripSplitButton();
 			this.pnlTop = new System.Windows.Forms.Panel();
+			this.lblVersao = new System.Windows.Forms.Label();
 			this.lblTitulo = new System.Windows.Forms.Label();
+			this.Label1 = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
 			this.btnMinimizer = new System.Windows.Forms.Button();
 			this.btnConfig = new System.Windows.Forms.Button();
-			this.mnuPrincipal.SuspendLayout();
+			this.mnuPrincipal = new System.Windows.Forms.ToolStrip();
+			this.btnSair = new System.Windows.Forms.ToolStripButton();
+			this.btnCadastros = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuCadastroAdicionar = new System.Windows.Forms.ToolStripMenuItem();
+			this.editarMembroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cadastroDeFunçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cadstrosDeCongregaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnImprimir = new System.Windows.Forms.ToolStripSplitButton();
+			this.mnuImpressaoInserir = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuContribuicaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop.SuspendLayout();
+			this.mnuPrincipal.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// mnuPrincipal
-			// 
-			this.mnuPrincipal.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.mnuPrincipal.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.mnuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnSair,
-            this.mnuMembro,
-            this.toolStripSeparator1,
-            this.mnuImpressao});
-			this.mnuPrincipal.Location = new System.Drawing.Point(0, 40);
-			this.mnuPrincipal.Name = "mnuPrincipal";
-			this.mnuPrincipal.Size = new System.Drawing.Size(1110, 56);
-			this.mnuPrincipal.TabIndex = 0;
-			this.mnuPrincipal.Text = "toolStrip1";
-			// 
-			// btnSair
-			// 
-			this.btnSair.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.btnSair.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnSair.Image = global::CamadaUI.Properties.Resources.sair_32;
-			this.btnSair.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.btnSair.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnSair.Margin = new System.Windows.Forms.Padding(5);
-			this.btnSair.Name = "btnSair";
-			this.btnSair.Padding = new System.Windows.Forms.Padding(5);
-			this.btnSair.Size = new System.Drawing.Size(85, 46);
-			this.btnSair.Text = "&Sair";
-			this.btnSair.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnSair.ToolTipText = "Sair do Aplicativo";
-			this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
-			// 
-			// mnuMembro
-			// 
-			this.mnuMembro.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.inserirNovoCadastroToolStripMenuItem});
-			this.mnuMembro.Image = global::CamadaUI.Properties.Resources.contribuinte_32;
-			this.mnuMembro.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.mnuMembro.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuMembro.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.mnuMembro.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
-			this.mnuMembro.Name = "mnuMembro";
-			this.mnuMembro.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.mnuMembro.Size = new System.Drawing.Size(154, 53);
-			this.mnuMembro.Text = "Membresia";
-			// 
-			// inserirNovoCadastroToolStripMenuItem
-			// 
-			this.inserirNovoCadastroToolStripMenuItem.Name = "inserirNovoCadastroToolStripMenuItem";
-			this.inserirNovoCadastroToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-			this.inserirNovoCadastroToolStripMenuItem.Text = "Inserir Novo Cadastro";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 56);
-			// 
-			// mnuImpressao
-			// 
-			this.mnuImpressao.Image = global::CamadaUI.Properties.Resources.Imprimir;
-			this.mnuImpressao.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.mnuImpressao.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuImpressao.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.mnuImpressao.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
-			this.mnuImpressao.Name = "mnuImpressao";
-			this.mnuImpressao.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.mnuImpressao.Size = new System.Drawing.Size(143, 53);
-			this.mnuImpressao.Text = "Imprimir";
 			// 
 			// pnlTop
 			// 
 			this.pnlTop.BackColor = System.Drawing.Color.SlateGray;
+			this.pnlTop.Controls.Add(this.lblVersao);
 			this.pnlTop.Controls.Add(this.lblTitulo);
+			this.pnlTop.Controls.Add(this.Label1);
 			this.pnlTop.Controls.Add(this.btnClose);
 			this.pnlTop.Controls.Add(this.btnMinimizer);
 			this.pnlTop.Controls.Add(this.btnConfig);
-			this.pnlTop.Controls.Add(this.mnuPrincipal);
 			this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pnlTop.Location = new System.Drawing.Point(0, 0);
 			this.pnlTop.Name = "pnlTop";
-			this.pnlTop.Size = new System.Drawing.Size(1110, 96);
+			this.pnlTop.Size = new System.Drawing.Size(1110, 40);
 			this.pnlTop.TabIndex = 0;
+			// 
+			// lblVersao
+			// 
+			this.lblVersao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblVersao.AutoSize = true;
+			this.lblVersao.ForeColor = System.Drawing.Color.Transparent;
+			this.lblVersao.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lblVersao.Location = new System.Drawing.Point(919, 9);
+			this.lblVersao.Name = "lblVersao";
+			this.lblVersao.Size = new System.Drawing.Size(26, 18);
+			this.lblVersao.TabIndex = 14;
+			this.lblVersao.Text = "...";
 			// 
 			// lblTitulo
 			// 
@@ -140,6 +92,19 @@
 			this.lblTitulo.TabIndex = 12;
 			this.lblTitulo.Text = "Titulo da Igreja";
 			this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+			// 
+			// Label1
+			// 
+			this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.Label1.AutoSize = true;
+			this.Label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Label1.ForeColor = System.Drawing.Color.Transparent;
+			this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.Label1.Location = new System.Drawing.Point(866, 9);
+			this.Label1.Name = "Label1";
+			this.Label1.Size = new System.Drawing.Size(57, 19);
+			this.Label1.TabIndex = 13;
+			this.Label1.Text = "Versão:";
 			// 
 			// btnClose
 			// 
@@ -198,12 +163,136 @@
 			this.btnConfig.UseVisualStyleBackColor = false;
 			this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
 			// 
+			// mnuPrincipal
+			// 
+			this.mnuPrincipal.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.mnuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSair,
+            this.btnCadastros,
+            this.btnImprimir});
+			this.mnuPrincipal.Location = new System.Drawing.Point(0, 40);
+			this.mnuPrincipal.Name = "mnuPrincipal";
+			this.mnuPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.mnuPrincipal.Size = new System.Drawing.Size(1110, 56);
+			this.mnuPrincipal.TabIndex = 2;
+			this.mnuPrincipal.Text = "Menu Principal";
+			// 
+			// btnSair
+			// 
+			this.btnSair.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.btnSair.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnSair.Image = global::CamadaUI.Properties.Resources.sair_32;
+			this.btnSair.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnSair.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnSair.Margin = new System.Windows.Forms.Padding(5);
+			this.btnSair.Name = "btnSair";
+			this.btnSair.Padding = new System.Windows.Forms.Padding(5);
+			this.btnSair.Size = new System.Drawing.Size(85, 46);
+			this.btnSair.Text = "&Sair";
+			this.btnSair.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnSair.ToolTipText = "Sair do Aplicativo";
+			this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+			// 
+			// btnCadastros
+			// 
+			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuCadastroAdicionar,
+            this.editarMembroToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.cadastroDeFunçõesToolStripMenuItem,
+            this.cadstrosDeCongregaçõesToolStripMenuItem});
+			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.contribuinte_32;
+			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnCadastros.Margin = new System.Windows.Forms.Padding(5);
+			this.btnCadastros.Name = "btnCadastros";
+			this.btnCadastros.Size = new System.Drawing.Size(138, 46);
+			this.btnCadastros.Text = "Cadastros";
+			// 
+			// mnuCadastroAdicionar
+			// 
+			this.mnuCadastroAdicionar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCadastroAdicionar.Image = global::CamadaUI.Properties.Resources.add_user;
+			this.mnuCadastroAdicionar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCadastroAdicionar.Name = "mnuCadastroAdicionar";
+			this.mnuCadastroAdicionar.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuCadastroAdicionar.Size = new System.Drawing.Size(266, 36);
+			this.mnuCadastroAdicionar.Text = "Adicionar Membro";
+			// 
+			// editarMembroToolStripMenuItem
+			// 
+			this.editarMembroToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
+			this.editarMembroToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.edit_profile;
+			this.editarMembroToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.editarMembroToolStripMenuItem.Name = "editarMembroToolStripMenuItem";
+			this.editarMembroToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
+			this.editarMembroToolStripMenuItem.Text = "Editar Membro";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(263, 6);
+			// 
+			// cadastroDeFunçõesToolStripMenuItem
+			// 
+			this.cadastroDeFunçõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
+			this.cadastroDeFunçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.funcoes_32;
+			this.cadastroDeFunçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.cadastroDeFunçõesToolStripMenuItem.Name = "cadastroDeFunçõesToolStripMenuItem";
+			this.cadastroDeFunçõesToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
+			this.cadastroDeFunçõesToolStripMenuItem.Text = "Cadastro de Funções";
+			// 
+			// cadstrosDeCongregaçõesToolStripMenuItem
+			// 
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.igreja_32;
+			this.cadstrosDeCongregaçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Name = "cadstrosDeCongregaçõesToolStripMenuItem";
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Text = "Cadstros de Congregações";
+			// 
+			// btnImprimir
+			// 
+			this.btnImprimir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImpressaoInserir,
+            this.mnuContribuicaoProcurar});
+			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.Imprimir;
+			this.btnImprimir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.btnImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnImprimir.Margin = new System.Windows.Forms.Padding(5);
+			this.btnImprimir.Name = "btnImprimir";
+			this.btnImprimir.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+			this.btnImprimir.Padding = new System.Windows.Forms.Padding(5);
+			this.btnImprimir.Size = new System.Drawing.Size(143, 46);
+			this.btnImprimir.Text = "Imprimir";
+			this.btnImprimir.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+			// 
+			// mnuImpressaoInserir
+			// 
+			this.mnuImpressaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuImpressaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImpressaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuImpressaoInserir.Name = "mnuImpressaoInserir";
+			this.mnuImpressaoInserir.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuImpressaoInserir.Size = new System.Drawing.Size(217, 22);
+			this.mnuImpressaoInserir.Text = "Inserir Impressão";
+			// 
+			// mnuContribuicaoProcurar
+			// 
+			this.mnuContribuicaoProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuContribuicaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuContribuicaoProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuContribuicaoProcurar.Name = "mnuContribuicaoProcurar";
+			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(217, 24);
+			this.mnuContribuicaoProcurar.Text = "Procurar Contribuição";
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1110, 732);
+			this.Controls.Add(this.mnuPrincipal);
 			this.Controls.Add(this.pnlTop);
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -217,26 +306,34 @@
 			this.Text = "Principal";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Load += new System.EventHandler(this.frmPrincipal_Load);
-			this.mnuPrincipal.ResumeLayout(false);
-			this.mnuPrincipal.PerformLayout();
 			this.pnlTop.ResumeLayout(false);
 			this.pnlTop.PerformLayout();
+			this.mnuPrincipal.ResumeLayout(false);
+			this.mnuPrincipal.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ToolStripButton btnSair;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         internal System.Windows.Forms.Button btnConfig;
         internal System.Windows.Forms.Button btnClose;
         internal System.Windows.Forms.Button btnMinimizer;
 		private System.Windows.Forms.Label lblTitulo;
-		protected internal System.Windows.Forms.ToolStrip mnuPrincipal;
 		public System.Windows.Forms.Panel pnlTop;
-		private System.Windows.Forms.ToolStripSplitButton mnuMembro;
-		private System.Windows.Forms.ToolStripMenuItem inserirNovoCadastroToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSplitButton mnuImpressao;
+		internal System.Windows.Forms.Label lblVersao;
+		internal System.Windows.Forms.Label Label1;
+		public System.Windows.Forms.ToolStrip mnuPrincipal;
+		private System.Windows.Forms.ToolStripButton btnSair;
+		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
+		private System.Windows.Forms.ToolStripMenuItem mnuCadastroAdicionar;
+		private System.Windows.Forms.ToolStripSplitButton btnImprimir;
+		private System.Windows.Forms.ToolStripMenuItem mnuImpressaoInserir;
+		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoProcurar;
+		private System.Windows.Forms.ToolStripMenuItem editarMembroToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem cadastroDeFunçõesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem cadstrosDeCongregaçõesToolStripMenuItem;
 	}
 }
 
