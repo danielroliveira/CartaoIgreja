@@ -11,6 +11,7 @@ namespace CamadaDTO
 		struct StructMembro
 		{
 			internal int? _IDMembro;
+			internal int? _RGMembro;
 			internal string _MembroNome;
 			internal DateTime? _NascimentoData;
 			internal byte _Sexo; // 1 : Masculino | 2 : Feminino
@@ -25,6 +26,7 @@ namespace CamadaDTO
 			internal byte _IDFuncao;
 			internal string _Funcao;
 			internal bool _Imprimir;
+			internal bool _NaLista;
 			internal byte _IDSituacao;
 			internal string _Situacao;
 		}
@@ -35,16 +37,16 @@ namespace CamadaDTO
 		private StructMembro BackupData;
 		private bool inTxn = false;
 
-		public objMembro(int? IDMembro) : base()
+		public objMembro() : base()
 		{
 			EditData = new StructMembro()
 			{
-				_IDMembro = IDMembro,
 				_MembroNome = "",
 				_NascimentoData = null,
 				_IDSituacao = 1,
 				_Situacao = "Ativo",
 				_Imprimir = true,
+				_NaLista = false,
 				_IDFuncao = 2,
 				_Funcao = "Membro",
 				_IDEstadoCivil = 1,
@@ -106,6 +108,22 @@ namespace CamadaDTO
 		public int? IDMembro
 		{
 			get => EditData._IDMembro;
+			set => EditData._IDMembro = value;
+		}
+
+		// Property RGMembro
+		//---------------------------------------------------------------
+		public int? RGMembro
+		{
+			get => EditData._RGMembro;
+			set
+			{
+				if (value != EditData._RGMembro)
+				{
+					EditData._RGMembro = value;
+					NotifyPropertyChanged("RGMembro");
+				}
+			}
 		}
 
 		// Property MembroNome
@@ -323,6 +341,21 @@ namespace CamadaDTO
 				{
 					EditData._Imprimir = value;
 					NotifyPropertyChanged("Imprimir");
+				}
+			}
+		}
+
+		// Property NaLista
+		//---------------------------------------------------------------
+		public bool NaLista
+		{
+			get => EditData._NaLista;
+			set
+			{
+				if (value != EditData._NaLista)
+				{
+					EditData._NaLista = value;
+					NotifyPropertyChanged("NaLista");
 				}
 			}
 		}

@@ -23,7 +23,7 @@ namespace CamadaUI
 		//==============================================================================================
 		public static string DBPath()
 		{
-			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"CartaoIgrejaDB.accdb");
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"CartaoIgrejaDB.mdb");
 		}
 
 		#region CONFIG CREATE | LOAD | CHANGE
@@ -50,25 +50,10 @@ namespace CamadaUI
 					new XElement("Configuracao",
 						new XElement("DefaultValues",
 							new XElement("IgrejaTitulo", ""),
-							new XElement("DataPadrao", ""),
-							new XElement("CongregacaoPadrao", 1),
-							new XElement("CongregacaoDescricao", "Sede"),
-							new XElement("ContaPadrao", "1"),
-							new XElement("ContaDescricao", "Caixa Geral"),
-							new XElement("SetorPadrao", "1"),
-							new XElement("SetorDescricao", ""),
-							new XElement("DataBloqueada", ""),
 							new XElement("CidadePadrao", ""),
 							new XElement("UFPadrao", ""),
-							new XElement("DocumentsImageFolder", "")
-						),
-						new XElement("ArquivoLogo",
-							new XElement("ArquivoLogoMono", ""),
-							new XElement("ArquivoLogoColor", "")
-						),
-						new XElement("ServidorDados",
-							new XElement("StringConexao", ""),
-							new XElement("ServidorLocal", "")
+							new XElement("FotosImageFolder", ""),
+							new XElement("DesignImageFolder", "")
 						),
 						new XElement("DadosIgreja",
 							new XElement("RazaoSocial"),
@@ -222,7 +207,8 @@ namespace CamadaUI
 		{
 			try
 			{
-				objDadosIgreja DadosEmpresa = new objDadosIgreja() {
+				objDadosIgreja DadosEmpresa = new objDadosIgreja()
+				{
 					RazaoSocial = ObterConfigValorNode("RazaoSocial"),
 					TelefoneFinanceiro = ObterConfigValorNode("TelefoneFinanceiro"),
 					TelefonePrincipal = ObterConfigValorNode("TelefonePrincipal"),
@@ -400,6 +386,6 @@ namespace CamadaUI
 		}
 
 		#endregion
-		
+
 	}
 }

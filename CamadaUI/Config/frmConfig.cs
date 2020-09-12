@@ -42,17 +42,8 @@ namespace CamadaUI.Config
 					case "frmConfigDados":
 						btnDados.BackColor = btnColorSelected;
 						break;
-					case "frmConfigImagem":
-						btnImagem.BackColor = btnColorSelected;
-						break;
-					case "frmConfigServidor":
-						btnServidor.BackColor = btnColorSelected;
-						break;
-					case "frmConfigAvisos":
-						btnAvisos.BackColor = btnColorSelected;
-						break;
-					case "frmConfigUsuarios":
-						btnUsuarios.BackColor = btnColorSelected;
+					case "frmConfigSobre":
+						btnSobre.BackColor = btnColorSelected;
 						break;
 					default:
 						break;
@@ -120,24 +111,9 @@ namespace CamadaUI.Config
 			AbrirFormNoPanel<frmConfigGeral>();
 		}
 
-		private void btnImagem_Click(object sender, EventArgs e)
+		private void btnSobre_Click(object sender, EventArgs e)
 		{
-			//AbrirFormNoPanel<frmConfigImagem>();
-		}
-
-		private void btnServidor_Click(object sender, EventArgs e)
-		{
-			//AbrirFormNoPanel<frmConfigServidor>();
-		}
-
-		private void btnAvisos_Click(object sender, EventArgs e)
-		{
-			//AbrirFormNoPanel<frmConfigAvisos>();
-		}
-
-		private void btnUsuarios_Click(object sender, EventArgs e)
-		{
-			//AbrirFormNoPanel<frmConfigUsuarios>();
+			AbrirFormNoPanel<frmConfigSobre>();
 		}
 
 		private void btnDados_Click(object sender, EventArgs e)

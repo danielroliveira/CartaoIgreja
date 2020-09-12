@@ -30,9 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
 			this.pnlTop = new System.Windows.Forms.Panel();
-			this.lblVersao = new System.Windows.Forms.Label();
 			this.lblTitulo = new System.Windows.Forms.Label();
-			this.Label1 = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
 			this.btnMinimizer = new System.Windows.Forms.Button();
 			this.btnConfig = new System.Windows.Forms.Button();
@@ -54,9 +52,7 @@
 			// pnlTop
 			// 
 			this.pnlTop.BackColor = System.Drawing.Color.SlateGray;
-			this.pnlTop.Controls.Add(this.lblVersao);
 			this.pnlTop.Controls.Add(this.lblTitulo);
-			this.pnlTop.Controls.Add(this.Label1);
 			this.pnlTop.Controls.Add(this.btnClose);
 			this.pnlTop.Controls.Add(this.btnMinimizer);
 			this.pnlTop.Controls.Add(this.btnConfig);
@@ -65,18 +61,6 @@
 			this.pnlTop.Name = "pnlTop";
 			this.pnlTop.Size = new System.Drawing.Size(1110, 40);
 			this.pnlTop.TabIndex = 0;
-			// 
-			// lblVersao
-			// 
-			this.lblVersao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblVersao.AutoSize = true;
-			this.lblVersao.ForeColor = System.Drawing.Color.Transparent;
-			this.lblVersao.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.lblVersao.Location = new System.Drawing.Point(919, 9);
-			this.lblVersao.Name = "lblVersao";
-			this.lblVersao.Size = new System.Drawing.Size(26, 18);
-			this.lblVersao.TabIndex = 14;
-			this.lblVersao.Text = "...";
 			// 
 			// lblTitulo
 			// 
@@ -92,19 +76,6 @@
 			this.lblTitulo.TabIndex = 12;
 			this.lblTitulo.Text = "Titulo da Igreja";
 			this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-			// 
-			// Label1
-			// 
-			this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.Label1.AutoSize = true;
-			this.Label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Label1.ForeColor = System.Drawing.Color.Transparent;
-			this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.Label1.Location = new System.Drawing.Point(866, 9);
-			this.Label1.Name = "Label1";
-			this.Label1.Size = new System.Drawing.Size(57, 19);
-			this.Label1.TabIndex = 13;
-			this.Label1.Text = "Versão:";
 			// 
 			// btnClose
 			// 
@@ -321,8 +292,6 @@
         internal System.Windows.Forms.Button btnMinimizer;
 		private System.Windows.Forms.Label lblTitulo;
 		public System.Windows.Forms.Panel pnlTop;
-		internal System.Windows.Forms.Label lblVersao;
-		internal System.Windows.Forms.Label Label1;
 		public System.Windows.Forms.ToolStrip mnuPrincipal;
 		private System.Windows.Forms.ToolStripButton btnSair;
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;

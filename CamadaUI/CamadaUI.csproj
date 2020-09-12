@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>program_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AwesomeShapeControl">
       <HintPath>..\ControlsDLL\AwesomeShapeControl.dll</HintPath>
@@ -71,6 +74,12 @@
     </Compile>
     <Compile Include="Config\frmConfigGeral.designer.cs">
       <DependentUpon>frmConfigGeral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\frmConfigSobre.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\frmConfigSobre.designer.cs">
+      <DependentUpon>frmConfigSobre.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmComboLista.cs">
       <SubType>Form</SubType>
@@ -129,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigGeral.resx">
       <DependentUpon>frmConfigGeral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\frmConfigSobre.resx">
+      <DependentUpon>frmConfigSobre.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmComboLista.resx">
       <DependentUpon>frmComboLista.cs</DependentUpon>
@@ -262,6 +274,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\funcoes_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="program_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

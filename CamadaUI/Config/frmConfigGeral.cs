@@ -1,19 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
-using System.Drawing;
-using CamadaDTO;
-using System.IO;
 using System.Xml;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Config
 {
 	public partial class frmConfigGeral : Models.frmModConfig
 	{
-		private int? _IDCongregacao;
-
 		#region SUB NEW | LOAD
 
 		// SUB NEW | CONSTRUCTOR
@@ -63,7 +59,7 @@ namespace CamadaUI.Config
 			{
 				//--- cria uma lista de controles que serao impedidos de receber '+'
 				Control[] controlesBloqueados = {
-					txtContaPadrao, txtSetorPadrao
+					txtFotosFolder, txtDesignFolder
 				};
 
 				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
@@ -83,12 +79,10 @@ namespace CamadaUI.Config
 
 				switch (ctr.Name)
 				{
-					case "txtContaPadrao":
+					case "txtDesignFolder":
 						break;
-					case "txtSetorPadrao":
-						break;
-					case "txtImageFolder":
-						btnProcImageFolder_Click(sender, new EventArgs());
+					case "txtFotosFolder":
+						btnProcFotosFolder_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -97,7 +91,7 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtContaPadrao, txtSetorPadrao, txtImageFolder };
+				Control[] controlesBloqueados = { txtFotosFolder, txtDesignFolder };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -144,23 +138,6 @@ namespace CamadaUI.Config
 
 				// CONGREGACAO
 				string strIDCong = LoadNode(doc, "CongregacaoPadrao");
-				_IDCongregacao = string.IsNullOrEmpty(strIDCong) ? null : int.Parse(strIDCong) as int?;
-				lblCongregacao.Text = LoadNode(doc, "CongregacaoDescricao");
-
-				// CONTA
-				//string strIDConta = LoadNode(doc, "ContaPadrao");
-				//_Conta.IDConta = string.IsNullOrEmpty(strIDConta) ? null : int.Parse(strIDConta) as int?;
-				txtContaPadrao.Text = LoadNode(doc, "ContaDescricao");
-
-				// SETOR
-				//string strIDSetor = LoadNode(doc, "SetorPadrao");
-				//_Setor.IDSetor = string.IsNullOrEmpty(strIDSetor) ? null : int.Parse(strIDSetor) as int?;
-				txtSetorPadrao.Text = LoadNode(doc, "SetorDescricao");
-
-				// DATA BLOQUEIO | DATA PADRAO
-				lblDataBloqueio.Text = LoadNode(doc, "DataBloqueada");
-				string DataPadrao = LoadNode(doc, "DataPadrao");
-				dtpDataPadrao.Value = string.IsNullOrEmpty(DataPadrao) ? DateTime.Today : Convert.ToDateTime(DataPadrao);
 
 				// CIDADE PADRAO
 				txtCidadePadrao.Text = LoadNode(doc, "CidadePadrao");
@@ -169,7 +146,8 @@ namespace CamadaUI.Config
 				txtUFPadrao.Text = LoadNode(doc, "UFPadrao");
 
 				// IMAGES FOLDER
-				txtImageFolder.Text = LoadNode(doc, "DocumentsImageFolder");
+				txtFotosFolder.Text = LoadNode(doc, "FotosImageFolder");
+				txtDesignFolder.Text = LoadNode(doc, "DesignImageFolder");
 
 			}
 			catch (Exception ex)
@@ -211,18 +189,10 @@ namespace CamadaUI.Config
 
 				// save items
 				SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
-				SaveConfigValorNode("CongregacaoDescricao", lblCongregacao.Text);
-				SaveConfigValorNode("CongregacaoPadrao", _IDCongregacao.ToString());
-				SaveConfigValorNode("ContaDescricao", txtContaPadrao.Text);
-				SaveConfigValorNode("ContaPadrao", "");
-				SaveConfigValorNode("SetorDescricao", txtSetorPadrao.Text);
-				SaveConfigValorNode("SetorPadrao", "");
-				SaveConfigValorNode("DataPadrao", dtpDataPadrao.Value.ToShortDateString());
 				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
 				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
-				SaveConfigValorNode("DocumentsImageFolder", txtImageFolder.Text);
-
-				//< DocumentsImageFolder ></ DocumentsImageFolder >
+				SaveConfigValorNode("FotosImageFolder", txtFotosFolder.Text);
+				SaveConfigValorNode("DesignImageFolder", txtDesignFolder.Text);
 
 				AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
 					DialogType.OK, DialogIcon.Information);
@@ -244,30 +214,28 @@ namespace CamadaUI.Config
 		private bool VerificaControles()
 		{
 			if (!VerificaControle(txtIgrejaTitulo, "TÍTULO DA IGREJA")) return false;
-			if (!VerificaControle(dtpDataPadrao, "DATA PADRÃO")) return false;
-			if (!VerificaControle(lblCongregacao, "CONGREGAÇÃO PADRÃO")) return false;
-			if (!VerificaControle(txtContaPadrao, "CONTA PADRÃO")) return false;
-			if (!VerificaControle(txtSetorPadrao, "SETOR PADRÃO")) return false;
 			if (!VerificaControle(txtCidadePadrao, "CIDADE PADRÃO")) return false;
 			if (!VerificaControle(txtUFPadrao, "UF PADRÃO")) return false;
+			if (!VerificaControle(txtFotosFolder, "PASTA DAS FOTOS")) return false;
+			if (!VerificaControle(txtDesignFolder, "PASTA DO DESIGN DO CARTÃO")) return false;
 
 			return true;
 		}
 
 		#endregion // SAVE CONFIG --- END
 
-		private void btnProcImageFolder_Click(object sender, EventArgs e)
+		private void btnProcFotosFolder_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				string oldPath = txtImageFolder.Text;
+				string oldPath = txtFotosFolder.Text;
 				string path = "";
 
 				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
 				if (oldPath == string.Empty)
 				{
 					string defFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-					defFolder += "\\Tesouraria\\DocumentosImagens\\";
+					defFolder += "\\Igreja Cartão\\Fotos\\";
 
 					if (Directory.Exists(defFolder))
 					{
@@ -275,7 +243,87 @@ namespace CamadaUI.Config
 					}
 					else
 					{
-						DialogResult resp = AbrirDialog("Ainda não foi criada a pasta padrão para os Documentos e Comprovantes. \n" +
+						DialogResult resp = AbrirDialog("Ainda não foi criada a pasta padrão das Fotos dos Membros. \n" +
+							"Deseja criar a pasta padrão?",
+							"Pasta de Fotos",
+							DialogType.SIM_NAO,
+							DialogIcon.Question);
+
+						if (resp == DialogResult.Yes)
+						{
+							Directory.CreateDirectory(defFolder);
+							path = defFolder;
+						}
+						else
+						{
+							path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+						}
+					}
+				}
+				else
+				{
+					if (!Directory.Exists(oldPath))
+					{
+						oldPath = "";
+						btnProcFotosFolder_Click(sender, e);
+						return;
+					}
+					else
+					{
+						path = oldPath;
+					}
+				}
+
+				// get folder
+				using (FolderBrowserDialog FBDiag = new FolderBrowserDialog()
+				{
+					Description = "Pasta de Fotos dos Membros",
+					SelectedPath = path,
+					ShowNewFolderButton = true
+				})
+				{
+
+					DialogResult result = FBDiag.ShowDialog();
+					if (result == DialogResult.OK)
+					{
+						path = FBDiag.SelectedPath;
+					}
+					else
+					{
+						return;
+					}
+				}
+
+				SaveConfigValorNode("FotosImageFolder", path);
+				txtFotosFolder.Text = path;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta de Fotos dos Membros..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		private void btnProcDesignFolder_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string oldPath = txtFotosFolder.Text;
+				string path = "";
+
+				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
+				if (oldPath == string.Empty)
+				{
+					string defFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+					defFolder += "\\Igreja Cartão\\Design\\";
+
+					if (Directory.Exists(defFolder))
+					{
+						path = defFolder;
+					}
+					else
+					{
+						DialogResult resp = AbrirDialog("Ainda não foi criada a pasta padrão para o Design dos Cartões. \n" +
 							"Deseja criar a pasta padrão?",
 							"Pasta de Documentos",
 							DialogType.SIM_NAO,
@@ -297,7 +345,7 @@ namespace CamadaUI.Config
 					if (!Directory.Exists(oldPath))
 					{
 						oldPath = "";
-						btnProcImageFolder_Click(sender, e);
+						btnProcDesignFolder_Click(sender, e);
 						return;
 					}
 					else
@@ -309,7 +357,7 @@ namespace CamadaUI.Config
 				// get folder
 				using (FolderBrowserDialog FBDiag = new FolderBrowserDialog()
 				{
-					Description = "Pasta de Imagens dos Documentos",
+					Description = "Pasta de Imagens do Design dos Cartões",
 					SelectedPath = path,
 					ShowNewFolderButton = true
 				})
@@ -326,12 +374,12 @@ namespace CamadaUI.Config
 					}
 				}
 
-				SaveConfigValorNode("DocumentsImageFolder", path);
-				txtImageFolder.Text = path;
+				SaveConfigValorNode("DesignImageFolder", path);
+				txtDesignFolder.Text = path;
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta de Imagens dos Documentos..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta do Design dos Cartões..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}

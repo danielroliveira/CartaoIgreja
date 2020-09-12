@@ -29,13 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.pnlMenu = new System.Windows.Forms.Panel();
-			this.btnUsuarios = new System.Windows.Forms.Button();
 			this.line1 = new AwesomeShapeControl.Line();
 			this.label1 = new System.Windows.Forms.Label();
-			this.btnAvisos = new System.Windows.Forms.Button();
-			this.btnServidor = new System.Windows.Forms.Button();
 			this.btnGeral = new System.Windows.Forms.Button();
-			this.btnImagem = new System.Windows.Forms.Button();
+			this.btnSobre = new System.Windows.Forms.Button();
 			this.btnDados = new System.Windows.Forms.Button();
 			this.pnlCorpo = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
@@ -62,37 +59,16 @@
 			// pnlMenu
 			// 
 			this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.pnlMenu.Controls.Add(this.btnUsuarios);
 			this.pnlMenu.Controls.Add(this.line1);
 			this.pnlMenu.Controls.Add(this.label1);
-			this.pnlMenu.Controls.Add(this.btnAvisos);
-			this.pnlMenu.Controls.Add(this.btnServidor);
 			this.pnlMenu.Controls.Add(this.btnGeral);
-			this.pnlMenu.Controls.Add(this.btnImagem);
+			this.pnlMenu.Controls.Add(this.btnSobre);
 			this.pnlMenu.Controls.Add(this.btnDados);
 			this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pnlMenu.Location = new System.Drawing.Point(0, 50);
 			this.pnlMenu.Name = "pnlMenu";
 			this.pnlMenu.Size = new System.Drawing.Size(200, 579);
 			this.pnlMenu.TabIndex = 1;
-			// 
-			// btnUsuarios
-			// 
-			this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnUsuarios.FlatAppearance.BorderSize = 0;
-			this.btnUsuarios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnUsuarios.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnUsuarios.ForeColor = System.Drawing.Color.White;
-			this.btnUsuarios.Location = new System.Drawing.Point(1, 367);
-			this.btnUsuarios.Name = "btnUsuarios";
-			this.btnUsuarios.Size = new System.Drawing.Size(198, 55);
-			this.btnUsuarios.TabIndex = 7;
-			this.btnUsuarios.TabStop = false;
-			this.btnUsuarios.Text = "Usuários";
-			this.btnUsuarios.UseVisualStyleBackColor = false;
-			this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
 			// 
 			// line1
 			// 
@@ -117,42 +93,6 @@
 			this.label1.TabIndex = 0;
 			this.label1.Text = "MENU";
 			// 
-			// btnAvisos
-			// 
-			this.btnAvisos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnAvisos.FlatAppearance.BorderSize = 0;
-			this.btnAvisos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnAvisos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnAvisos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnAvisos.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnAvisos.ForeColor = System.Drawing.Color.White;
-			this.btnAvisos.Location = new System.Drawing.Point(1, 306);
-			this.btnAvisos.Name = "btnAvisos";
-			this.btnAvisos.Size = new System.Drawing.Size(198, 55);
-			this.btnAvisos.TabIndex = 6;
-			this.btnAvisos.TabStop = false;
-			this.btnAvisos.Text = "Avisos";
-			this.btnAvisos.UseVisualStyleBackColor = false;
-			this.btnAvisos.Click += new System.EventHandler(this.btnAvisos_Click);
-			// 
-			// btnServidor
-			// 
-			this.btnServidor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnServidor.FlatAppearance.BorderSize = 0;
-			this.btnServidor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnServidor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnServidor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnServidor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnServidor.ForeColor = System.Drawing.Color.White;
-			this.btnServidor.Location = new System.Drawing.Point(1, 245);
-			this.btnServidor.Name = "btnServidor";
-			this.btnServidor.Size = new System.Drawing.Size(198, 55);
-			this.btnServidor.TabIndex = 5;
-			this.btnServidor.TabStop = false;
-			this.btnServidor.Text = "Servidor Dados";
-			this.btnServidor.UseVisualStyleBackColor = false;
-			this.btnServidor.Click += new System.EventHandler(this.btnServidor_Click);
-			// 
 			// btnGeral
 			// 
 			this.btnGeral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
@@ -171,23 +111,23 @@
 			this.btnGeral.UseVisualStyleBackColor = false;
 			this.btnGeral.Click += new System.EventHandler(this.btnGeral_Click);
 			// 
-			// btnImagem
+			// btnSobre
 			// 
-			this.btnImagem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-			this.btnImagem.FlatAppearance.BorderSize = 0;
-			this.btnImagem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.btnImagem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
-			this.btnImagem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnImagem.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnImagem.ForeColor = System.Drawing.Color.White;
-			this.btnImagem.Location = new System.Drawing.Point(1, 184);
-			this.btnImagem.Name = "btnImagem";
-			this.btnImagem.Size = new System.Drawing.Size(198, 55);
-			this.btnImagem.TabIndex = 4;
-			this.btnImagem.TabStop = false;
-			this.btnImagem.Text = "Imagem Padrão";
-			this.btnImagem.UseVisualStyleBackColor = false;
-			this.btnImagem.Click += new System.EventHandler(this.btnImagem_Click);
+			this.btnSobre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
+			this.btnSobre.FlatAppearance.BorderSize = 0;
+			this.btnSobre.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.btnSobre.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+			this.btnSobre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSobre.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnSobre.ForeColor = System.Drawing.Color.White;
+			this.btnSobre.Location = new System.Drawing.Point(1, 184);
+			this.btnSobre.Name = "btnSobre";
+			this.btnSobre.Size = new System.Drawing.Size(198, 55);
+			this.btnSobre.TabIndex = 4;
+			this.btnSobre.TabStop = false;
+			this.btnSobre.Text = "Sobre";
+			this.btnSobre.UseVisualStyleBackColor = false;
+			this.btnSobre.Click += new System.EventHandler(this.btnSobre_Click);
 			// 
 			// btnDados
 			// 
@@ -238,11 +178,8 @@
 		private System.Windows.Forms.Panel pnlCorpo;
 		private System.Windows.Forms.Label label1;
 		private AwesomeShapeControl.Line line1;
-		private System.Windows.Forms.Button btnServidor;
 		private System.Windows.Forms.Button btnGeral;
-		private System.Windows.Forms.Button btnImagem;
-		private System.Windows.Forms.Button btnAvisos;
-		private System.Windows.Forms.Button btnUsuarios;
+		private System.Windows.Forms.Button btnSobre;
 		private System.Windows.Forms.Button btnDados;
 	}
 }

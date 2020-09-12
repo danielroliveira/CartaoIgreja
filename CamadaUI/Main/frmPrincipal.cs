@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
+﻿using CamadaBLL;
+using System;
 using System.IO;
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Main
 {
@@ -46,7 +46,8 @@ namespace CamadaUI.Main
 				Cursor.Current = Cursors.WaitCursor;
 
 				//--- open check DATABASE
-				FileInfo DB = new FileInfo(DBPath());
+				string pathDB = DBPath();
+				FileInfo DB = new FileInfo(pathDB);
 
 				if (!DB.Exists)
 				{
@@ -68,10 +69,16 @@ namespace CamadaUI.Main
 					return;
 				}
 
+				//--- PREENCHE AS LISTAGENS
+				//------------------------------------------------------------------------------------------------------------
+				DiversosBLL div = new DiversosBLL(pathDB);
+				Program.lstCongregacao = div.GetListCongregacao();
+				Program.lstFuncao = div.GetListFuncao();
+
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao obter o caminho do BD..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu... " + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -79,11 +86,6 @@ namespace CamadaUI.Main
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
-			//--- HABILITA A VERSAO E O TITULO
-			//----------------------------------------------------------------
-			string Versao = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			lblVersao.Text = Versao;
 
 			//-- HABILITA O MENU
 			//----------------------------------------------------------------

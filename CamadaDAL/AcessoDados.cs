@@ -30,6 +30,7 @@ namespace CamadaDAL
         // OPEN CONNECTION
         private bool Connect(string dataBasePath)
         {
+            //string connstr = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + dataBasePath;
             string connstr = "Provider=Microsoft.Jet.OleDb.4.0; Data Source=" + dataBasePath;
             bool bln = false;
             
@@ -88,6 +89,23 @@ namespace CamadaDAL
         public void AdicionarParametros(string nomeParametro, object valorParametro)
         {
             ParamList.Add(new OleDbParameter(nomeParametro, valorParametro));
+        }
+
+        // TRANSFORM NULL PARAMETERS
+        public void ConvertNullParams()
+        {
+            foreach (OleDbParameter parameter in ParamList)
+            {
+                if (parameter.Value == null)
+                {
+                    parameter.Value = DBNull.Value;
+                }
+                else if (parameter.Value is string && (string)parameter.Value == "")
+                {
+                    parameter.Value = DBNull.Value;
+                }
+            }
+
         }
 
         // ==============================================================================
@@ -170,13 +188,109 @@ namespace CamadaDAL
             }
         }
 
-		#endregion
 
-		// ==============================================================================
-		#region TRANSACTION
+        // EXECUTAR INSERT AND RETURN NEW ID
+        //------------------------------------------------------------------------------------------------------------
+        public long ExecutarInsertAndGetID(string query)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    // try connect
+                    Connect(_dataBasePath);
+                    // Check Again
+                    if (conn.State == ConnectionState.Closed)
+                        throw new Exception("Sem conexão ao Database...");
+                }
 
-		// BEGIN TRANSACTION
-		public void BeginTransaction()
+                cmd = new OleDbConnection().CreateCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+                cmd.CommandTimeout = 7200;
+
+                ParamList.ForEach(p => cmd.Parameters.Add(p));
+
+                if (!isTran)
+                {
+                    //--- EXECUTE
+                    cmd.ExecuteScalar();
+
+                    //--- GET NEW ID
+                    long? obj = GetNewID();
+
+                    //--- CLOSE DB CONNECTION
+                    CloseConn();
+
+                    if (obj == null)
+                    {
+                        throw new Exception("Não foi retornado novo ID...");
+                    }
+
+                    //--- RETURN
+                    return (long)obj;
+                }
+                else
+                {
+                    //--- ADD TRANSACTION TO COMMAND
+                    cmd.Transaction = trans;
+
+                    //--- EXECUTE
+                    cmd.ExecuteScalar();
+
+                    //--- GET NEW ID
+                    long? obj = GetNewID();
+
+                    if (obj == null)
+                    {
+                        throw new Exception("Não foi retornado novo ID...");
+                    }
+
+                    //--- RETURN
+                    return (long)obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // GET NEW ID OF INSERT
+        //------------------------------------------------------------------------------------------------------------
+        private long? GetNewID()
+        {
+            //--- obter NewID
+            LimparParametros();
+            string myQuery = "SELECT @@IDENTITY As LastID";
+            DataTable dt = ExecutarConsulta(CommandType.Text, myQuery);
+
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            object newID = dt.Rows[0][0];
+
+            if (long.TryParse(newID.ToString(), out long j))
+            {
+                return j;
+            }
+            else
+            {
+                throw new Exception(newID.ToString());
+            }
+
+        }
+
+        #endregion
+
+        // ==============================================================================
+        #region TRANSACTION
+
+        // BEGIN TRANSACTION
+        public void BeginTransaction()
         {
             if (isTran) return;
 
@@ -214,6 +328,57 @@ namespace CamadaDAL
         public bool isTran { get; set; }
 
         #endregion
+
+        // ==============================================================================
+        #region RETURN STRINGS INSERT | UPDATE
+
+        // CREATE INSERT STRING SQL
+        //------------------------------------------------------------------------------------------------------------
+        public string CreateInsertSQL(string tableName)
+        {
+            string sql = $"INSERT INTO {tableName} (";
+            string filds = "";
+            string pars = "";
+
+            // add fields and params
+            foreach (var param in ParamList)
+            {
+                filds += param.ParameterName.Replace("@", "") + ", ";
+                pars += param.ParameterName + ", ";
+            }
+
+            // create SQL string
+            sql += filds.Remove(filds.Length - 2, 2) + ") VALUES (" + pars.Remove(pars.Length - 2, 2) + ")";
+
+            // return
+            return sql;
+        }
+
+        // CREATE UPDATE STRING SQL
+        //------------------------------------------------------------------------------------------------------------
+        public string CreateUpdateSQL(string tableName, string IDParamName)
+        {
+            string sql = $"UPDATE {tableName} SET ";
+            string filds = "";
+
+            // add fields and params
+            foreach (var param in ParamList)
+            {
+                if (param.ParameterName.Replace("@", "") != IDParamName.Replace("@", ""))
+                {
+                    filds += $"{param.ParameterName.Replace("@", "")} = {param.ParameterName}, ";
+                }
+            }
+
+            // create SQL string
+            IDParamName = IDParamName.Replace("@", "");
+            sql += $"{filds.Remove(filds.Length - 2, 2)} WHERE {IDParamName} = @{IDParamName}";
+
+            // return
+            return sql;
+        }
+
+        #endregion // RETURN STRINGS INSERT | UPDATE --- END
 
     }
 }
