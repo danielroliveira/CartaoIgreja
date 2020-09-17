@@ -18,10 +18,11 @@ namespace CamadaDTO
 			internal DateTime? _MembresiaData;
 			internal DateTime? _EmissaoData;
 			internal DateTime? _ValidadeData;
-			internal byte _IDEstadoCivil;
-			internal string _EstadoCivilM;
-			internal string _EstadoCivilF;
-			internal byte _IDCongregacao;
+			internal objEstadoCivil _EstadoCivil;
+			//internal byte _IDEstadoCivil;
+			//internal string _EstadoCivilM;
+			//internal string _EstadoCivilF;
+			internal byte? _IDCongregacao;
 			internal string _Congregacao;
 			internal byte _IDFuncao;
 			internal string _Funcao;
@@ -37,10 +38,12 @@ namespace CamadaDTO
 		private StructMembro BackupData;
 		private bool inTxn = false;
 
-		public objMembro() : base()
+		public objMembro(int? IDMembro) : base()
 		{
 			EditData = new StructMembro()
 			{
+				_EstadoCivil = new objEstadoCivil() { IDEstadoCivil = 1, EstadoCivil = "Solteiro(a)" },
+				_IDMembro = IDMembro,
 				_MembroNome = "",
 				_NascimentoData = null,
 				_IDSituacao = 1,
@@ -49,8 +52,8 @@ namespace CamadaDTO
 				_NaLista = false,
 				_IDFuncao = 2,
 				_Funcao = "Membro",
-				_IDEstadoCivil = 1,
 				_EmissaoData = DateTime.Today,
+				_IDCongregacao = null
 			};
 		}
 
@@ -220,12 +223,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte IDEstadoCivil
 		{
-			get => EditData._IDEstadoCivil;
+			get => EditData._EstadoCivil.IDEstadoCivil;
 			set
 			{
-				if (value != EditData._IDEstadoCivil)
+				if (value != EditData._EstadoCivil.IDEstadoCivil)
 				{
-					EditData._IDEstadoCivil = value;
+					EditData._EstadoCivil.IDEstadoCivil = value;
 					NotifyPropertyChanged("IDEstadoCivil");
 				}
 			}
@@ -235,44 +238,50 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string EstadoCivil
 		{
-			get 
-			{
-				if (Sexo == 1)
-				{
-					return EditData._EstadoCivilM;
-				}
-				else if(Sexo == 2)
-				{
-					return EditData._EstadoCivilF;
-				}
-				else
-				{
-					return "";
-				}
-			}
-
+			get => EditData._EstadoCivil.EstadoCivil;
 			set
 			{
-				if (value != EditData._EstadoCivilM && value != EditData._EstadoCivilF)
+				if (value != EditData._EstadoCivil.EstadoCivil)
 				{
-
-					if (Sexo == 1)
-					{
-						EditData._EstadoCivilM = value;
-					}
-					else if (Sexo == 2)
-					{
-						EditData._EstadoCivilF = value;
-					}
-
+					EditData._EstadoCivil.EstadoCivil = value;
 					NotifyPropertyChanged("EstadoCivil");
+				}
+			}
+		}
+
+		// Property EstadoCivilM
+		//---------------------------------------------------------------
+		public string EstadoCivilM
+		{
+			get => EditData._EstadoCivil.EstadoCivilM;
+			set
+			{
+				if (value != EditData._EstadoCivil.EstadoCivilM)
+				{
+					EditData._EstadoCivil.EstadoCivilM = value;
+					NotifyPropertyChanged("EstadoCivilM");
+				}
+			}
+		}
+
+		// Property EstadoCivilF
+		//---------------------------------------------------------------
+		public string EstadoCivilF
+		{
+			get => EditData._EstadoCivil.EstadoCivilF;
+			set
+			{
+				if (value != EditData._EstadoCivil.EstadoCivilF)
+				{
+					EditData._EstadoCivil.EstadoCivilF = value;
+					NotifyPropertyChanged("EstadoCivilF");
 				}
 			}
 		}
 
 		// Property IDCongregacao
 		//---------------------------------------------------------------
-		public byte IDCongregacao
+		public byte? IDCongregacao
 		{
 			get => EditData._IDCongregacao;
 			set

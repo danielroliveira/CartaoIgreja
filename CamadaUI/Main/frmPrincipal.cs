@@ -1,4 +1,5 @@
 ﻿using CamadaBLL;
+using CamadaDTO;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -74,7 +75,8 @@ namespace CamadaUI.Main
 				DiversosBLL div = new DiversosBLL(pathDB);
 				Program.lstCongregacao = div.GetListCongregacao();
 				Program.lstFuncao = div.GetListFuncao();
-
+				Program.lstEstadoCivil = div.GetListEstadoCivil();
+				Program.lstSituacao = div.GetListSituacao();
 			}
 			catch (Exception ex)
 			{
@@ -122,10 +124,11 @@ namespace CamadaUI.Main
 
 		private void HandlersMenuClickToOpenForm()
 		{
+			// MENU CADASTROS
+			mnuMembroAdicionar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembro(new objMembro(null), this));
+			mnuMembroProcurar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembroListagem());
 			/*
 
-			// MENU CADASTROS
-			mnuContribuintes.Click += (a, b) => MenuClickOpenForm(new Registres.frmContribuinteListagem(false, this));
 			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));
 			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoListagem());
 			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoSetorListagem());

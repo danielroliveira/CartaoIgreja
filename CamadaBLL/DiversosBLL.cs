@@ -128,6 +128,8 @@ namespace CamadaBLL
 
 					obj.IDEstadoCivil = (byte)row["IDEstadoCivil"];
 					obj.EstadoCivil = (string)row["EstadoCivil"];
+					obj.EstadoCivilM = (string)row["EstadoCivilM"];
+					obj.EstadoCivilF = (string)row["EstadoCivilF"];
 
 					listagem.Add(obj);
 				}

@@ -37,8 +37,8 @@
 			this.mnuPrincipal = new System.Windows.Forms.ToolStrip();
 			this.btnSair = new System.Windows.Forms.ToolStripButton();
 			this.btnCadastros = new System.Windows.Forms.ToolStripSplitButton();
-			this.mnuCadastroAdicionar = new System.Windows.Forms.ToolStripMenuItem();
-			this.editarMembroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuMembroAdicionar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuMembroProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.cadastroDeFunçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cadstrosDeCongregaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,8 +167,8 @@
 			// btnCadastros
 			// 
 			this.btnCadastros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuCadastroAdicionar,
-            this.editarMembroToolStripMenuItem,
+            this.mnuMembroAdicionar,
+            this.mnuMembroProcurar,
             this.toolStripSeparator1,
             this.cadastroDeFunçõesToolStripMenuItem,
             this.cadstrosDeCongregaçõesToolStripMenuItem});
@@ -180,24 +180,24 @@
 			this.btnCadastros.Size = new System.Drawing.Size(138, 46);
 			this.btnCadastros.Text = "Cadastros";
 			// 
-			// mnuCadastroAdicionar
+			// mnuMembroAdicionar
 			// 
-			this.mnuCadastroAdicionar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuCadastroAdicionar.Image = global::CamadaUI.Properties.Resources.add_user;
-			this.mnuCadastroAdicionar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuCadastroAdicionar.Name = "mnuCadastroAdicionar";
-			this.mnuCadastroAdicionar.Padding = new System.Windows.Forms.Padding(0);
-			this.mnuCadastroAdicionar.Size = new System.Drawing.Size(266, 36);
-			this.mnuCadastroAdicionar.Text = "Adicionar Membro";
+			this.mnuMembroAdicionar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuMembroAdicionar.Image = global::CamadaUI.Properties.Resources.add_user;
+			this.mnuMembroAdicionar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuMembroAdicionar.Name = "mnuMembroAdicionar";
+			this.mnuMembroAdicionar.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuMembroAdicionar.Size = new System.Drawing.Size(266, 36);
+			this.mnuMembroAdicionar.Text = "Adicionar Membro";
 			// 
-			// editarMembroToolStripMenuItem
+			// mnuMembroProcurar
 			// 
-			this.editarMembroToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
-			this.editarMembroToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.edit_profile;
-			this.editarMembroToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.editarMembroToolStripMenuItem.Name = "editarMembroToolStripMenuItem";
-			this.editarMembroToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
-			this.editarMembroToolStripMenuItem.Text = "Editar Membro";
+			this.mnuMembroProcurar.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuMembroProcurar.Image = global::CamadaUI.Properties.Resources.search_user;
+			this.mnuMembroProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuMembroProcurar.Name = "mnuMembroProcurar";
+			this.mnuMembroProcurar.Size = new System.Drawing.Size(266, 38);
+			this.mnuMembroProcurar.Text = "Procurar Membro";
 			// 
 			// toolStripSeparator1
 			// 
@@ -295,11 +295,11 @@
 		public System.Windows.Forms.ToolStrip mnuPrincipal;
 		private System.Windows.Forms.ToolStripButton btnSair;
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
-		private System.Windows.Forms.ToolStripMenuItem mnuCadastroAdicionar;
+		private System.Windows.Forms.ToolStripMenuItem mnuMembroAdicionar;
 		private System.Windows.Forms.ToolStripSplitButton btnImprimir;
 		private System.Windows.Forms.ToolStripMenuItem mnuImpressaoInserir;
 		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoProcurar;
-		private System.Windows.Forms.ToolStripMenuItem editarMembroToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuMembroProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem cadastroDeFunçõesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cadstrosDeCongregaçõesToolStripMenuItem;

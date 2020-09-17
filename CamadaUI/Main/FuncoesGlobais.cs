@@ -366,6 +366,7 @@ namespace CamadaUI
 		//--- REVELA MENU PRINCIPAL
 		public static void MostraMenuPrincipal()
 		{
+			if (Application.OpenForms.Count == 0) return;
 			Main.frmPrincipal frm = Application.OpenForms.OfType<Main.frmPrincipal>().First();
 			frm.mnuPrincipal.Visible = true;
 			frm.mnuPrincipal.Enabled = true;

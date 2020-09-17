@@ -113,6 +113,24 @@
     </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
     <Compile Include="Main\Utilidades.cs" />
+    <Compile Include="Membros\frmCongregacaoProcura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Membros\frmCongregacaoProcura.designer.cs">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Membros\frmMembro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Membros\frmMembro.designer.cs">
+      <DependentUpon>frmMembro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Membros\frmMembroListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Membros\frmMembroListagem.designer.cs">
+      <DependentUpon>frmMembroListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\frmModConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +174,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmMessage.resx">
       <DependentUpon>frmMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Membros\frmCongregacaoProcura.resx">
+      <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Membros\frmMembro.resx">
+      <DependentUpon>frmMembro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Membros\frmMembroListagem.resx">
+      <DependentUpon>frmMembroListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\frmModConfig.resx">
       <DependentUpon>frmModConfig.cs</DependentUpon>
@@ -277,6 +304,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="program_icon.ico" />
+    <None Include="Resources\search_user.png" />
+    <None Include="Resources\block_24.png" />
+    <None Include="Resources\block_16.png" />
+    <None Include="Resources\accept_16.png" />
+    <None Include="Resources\add_16.png" />
+    <None Include="Resources\delete_16.png" />
+    <None Include="Resources\fechar_30.png" />
+    <None Include="Resources\SwitchON_30.png" />
+    <None Include="Resources\SwitchOFF_30.png" />
+    <None Include="Resources\delete_page_30.png" />
+    <None Include="Resources\salvar_30.png" />
+    <None Include="Resources\adicionar_30.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

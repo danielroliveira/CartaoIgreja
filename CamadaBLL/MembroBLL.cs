@@ -18,7 +18,7 @@ namespace CamadaBLL
 
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objMembro> GetListMembro(string membro, byte? IDSituacao = null)
+		public List<objMembro> GetListMembro(string membro = "", byte? IDSituacao = null)
 		{
 			try
 			{
@@ -97,7 +97,7 @@ namespace CamadaBLL
 		//------------------------------------------------------------------------------------------------------------
 		public objMembro ConvertRowInClass(DataRow row)
 		{
-			objMembro membro = new objMembro()
+			objMembro membro = new objMembro((byte?)row["IDMembro"])
 			{
 				IDMembro = (byte?)row["IDMembro"],
 				RGMembro = (byte?)row["RGMembro"],
@@ -108,7 +108,7 @@ namespace CamadaBLL
 				Sexo = (byte)row["Sexo"],
 				EmissaoData = row["EmissaoData"] == DBNull.Value ? null : (DateTime?)row["EmissaoData"],
 				IDEstadoCivil = (byte)row["IDEstadoCivil"],
-				EstadoCivil = (string)row["EstadoCivil"],
+				//EstadoCivil = (string)row["EstadoCivil"],
 				IDFuncao = (byte)row["IDFuncao"],
 				Funcao = (string)row["Funcao"],
 				IDSituacao = (byte)row["IDSituacao"],
@@ -118,6 +118,8 @@ namespace CamadaBLL
 				Imprimir = (bool)row["Imprimir"],
 				NaLista = (bool)row["NaLista"]
 			};
+
+			membro.EstadoCivil = membro.Sexo == 1 ? (string)row["EstadoCivilM"] : (string)row["EstadoCivilF"];
 
 			return membro;
 		}
