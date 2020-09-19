@@ -142,6 +142,9 @@ namespace CamadaUI.Config
 				// CIDADE PADRAO
 				txtCidadePadrao.Text = LoadNode(doc, "CidadePadrao");
 
+				// VALIDADE ANOS
+				numValidade.Text = LoadNode(doc, "ValidadeAnos");
+
 				// UF PADRAO
 				txtUFPadrao.Text = LoadNode(doc, "UFPadrao");
 
@@ -191,6 +194,7 @@ namespace CamadaUI.Config
 				SaveConfigValorNode("IgrejaTitulo", txtIgrejaTitulo.Text);
 				SaveConfigValorNode("CidadePadrao", txtCidadePadrao.Text);
 				SaveConfigValorNode("UFPadrao", txtUFPadrao.Text);
+				SaveConfigValorNode("ValidadeAnos", numValidade.Value.ToString());
 				SaveConfigValorNode("FotosImageFolder", txtFotosFolder.Text);
 				SaveConfigValorNode("DesignImageFolder", txtDesignFolder.Text);
 

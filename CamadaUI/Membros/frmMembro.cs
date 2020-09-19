@@ -23,7 +23,7 @@ namespace CamadaUI.Membros
 
 		// SUB NEW
 		//------------------------------------------------------------------------------------------------------------
-		public frmMembro(objMembro obj, Form formOrigem)
+		public frmMembro(objMembro obj, Form formOrigem = null)
 		{
 			InitializeComponent();
 
@@ -101,6 +101,7 @@ namespace CamadaUI.Membros
 			txtMembroNome.DataBindings.Add("Text", bind, "MembroNome", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtRGMembro.DataBindings.Add("Text", bind, "RGMembro", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpNascimentoData.DataBindings.Add("Value", bind, "NascimentoData", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpMembresiaData.DataBindings.Add("Value", bind, "MembresiaData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEstadoCivil.DataBindings.Add("Text", bind, "EstadoCivil", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtFuncao.DataBindings.Add("Text", bind, "Funcao", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -260,8 +261,10 @@ namespace CamadaUI.Membros
 				{
 					//--- save | Insert
 					int ID = (int)cBLL.InsertMembro(_membro);
+
 					//--- define newID
 					_membro.IDMembro = ID;
+					lblID.DataBindings["Text"].ReadValue();
 				}
 				else
 				{
@@ -274,14 +277,6 @@ namespace CamadaUI.Membros
 				//--- emit massage
 				AbrirDialog("Registro Salvo com sucesso!",
 					"Registro Salvo", DialogType.OK, DialogIcon.Information);
-
-				//--- Return value
-				if (_formOrigem != null || _formOrigem.GetType() != typeof(Main.frmPrincipal))
-				{
-					propEscolha = _membro;
-					DialogResult = DialogResult.OK;
-				}
-
 			}
 			catch (AppException ex)
 			{
@@ -305,7 +300,12 @@ namespace CamadaUI.Membros
 		//------------------------------------------------------------------------------------------------------------
 		private bool CheckSaveData()
 		{
-			if (!VerificaDadosClasse(txtMembroNome, "Membro", _membro)) return false;
+			if (!VerificaDadosClasse(txtMembroNome, "Nome do Membro", _membro)) return false;
+			if (!VerificaDadosClasse(cmbSexo, "Sexo do Membro", _membro)) return false;
+			if (!VerificaDadosClasse(txtRGMembro, "Reg do Membro", _membro)) return false;
+			if (!VerificaDadosClasse(txtCongregacao, "Congregação", _membro)) return false;
+			if (!VerificaDadosClasse(txtEstadoCivil, "Estado do Civil", _membro)) return false;
+			if (!VerificaDadosClasse(txtFuncao, "Função do Membro", _membro)) return false;
 
 			return true;
 		}

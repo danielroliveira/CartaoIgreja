@@ -31,6 +31,7 @@
 			this.btnSalvarConfig = new System.Windows.Forms.Button();
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.pnlPastas = new System.Windows.Forms.Panel();
+			this.btnBackupDesign = new MBGlassStyleButton.MBGlassButton();
 			this.btnBackupFotos = new MBGlassStyleButton.MBGlassButton();
 			this.btnProcDesignFolder = new MBGlassStyleButton.MBGlassButton();
 			this.btnProcFotosFolder = new MBGlassStyleButton.MBGlassButton();
@@ -47,9 +48,11 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtUFPadrao = new System.Windows.Forms.TextBox();
 			this.txtCidadePadrao = new System.Windows.Forms.TextBox();
-			this.btnBackupDesign = new MBGlassStyleButton.MBGlassButton();
+			this.label8 = new System.Windows.Forms.Label();
+			this.numValidade = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numValidade)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -114,6 +117,8 @@
 			// pnlPastas
 			// 
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.pnlPastas.Controls.Add(this.numValidade);
+			this.pnlPastas.Controls.Add(this.label8);
 			this.pnlPastas.Controls.Add(this.btnBackupDesign);
 			this.pnlPastas.Controls.Add(this.btnBackupFotos);
 			this.pnlPastas.Controls.Add(this.btnProcDesignFolder);
@@ -137,6 +142,35 @@
 			this.pnlPastas.Size = new System.Drawing.Size(720, 477);
 			this.pnlPastas.TabIndex = 1;
 			// 
+			// btnBackupDesign
+			// 
+			this.btnBackupDesign.BackColor = System.Drawing.Color.Transparent;
+			this.btnBackupDesign.BaseColor = System.Drawing.Color.LightSteelBlue;
+			this.btnBackupDesign.BaseStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(176)))), ((int)(((byte)(196)))), ((int)(((byte)(222)))));
+			this.btnBackupDesign.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+			this.btnBackupDesign.FlatAppearance.BorderSize = 0;
+			this.btnBackupDesign.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnBackupDesign.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnBackupDesign.Image = global::CamadaUI.Properties.Resources.backup_24;
+			this.btnBackupDesign.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnBackupDesign.ImageSize = new System.Drawing.Size(24, 24);
+			this.btnBackupDesign.Location = new System.Drawing.Point(484, 365);
+			this.btnBackupDesign.MenuListPosition = new System.Drawing.Point(0, 0);
+			this.btnBackupDesign.Name = "btnBackupDesign";
+			this.btnBackupDesign.OnColor = System.Drawing.Color.LightSlateGray;
+			this.btnBackupDesign.OnStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(119)))), ((int)(((byte)(136)))), ((int)(((byte)(153)))));
+			this.btnBackupDesign.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.btnBackupDesign.PressStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+			this.btnBackupDesign.Size = new System.Drawing.Size(153, 45);
+			this.btnBackupDesign.SplitLocation = MBGlassStyleButton.MBGlassButton.MB_SplitLocation.Right;
+			this.btnBackupDesign.TabIndex = 18;
+			this.btnBackupDesign.Text = "Backup Design";
+			this.btnBackupDesign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnBackupDesign.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnBackupDesign.UseCompatibleTextRendering = true;
+			this.btnBackupDesign.UseMnemonic = false;
+			this.btnBackupDesign.UseVisualStyleBackColor = true;
+			// 
 			// btnBackupFotos
 			// 
 			this.btnBackupFotos.BackColor = System.Drawing.Color.Transparent;
@@ -149,7 +183,7 @@
 			this.btnBackupFotos.Image = global::CamadaUI.Properties.Resources.backup_24;
 			this.btnBackupFotos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnBackupFotos.ImageSize = new System.Drawing.Size(24, 24);
-			this.btnBackupFotos.Location = new System.Drawing.Point(484, 223);
+			this.btnBackupFotos.Location = new System.Drawing.Point(484, 260);
 			this.btnBackupFotos.MenuListPosition = new System.Drawing.Point(0, 0);
 			this.btnBackupFotos.Name = "btnBackupFotos";
 			this.btnBackupFotos.OnColor = System.Drawing.Color.LightSlateGray;
@@ -158,7 +192,7 @@
 			this.btnBackupFotos.PressStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
 			this.btnBackupFotos.Size = new System.Drawing.Size(153, 45);
 			this.btnBackupFotos.SplitLocation = MBGlassStyleButton.MBGlassButton.MB_SplitLocation.Right;
-			this.btnBackupFotos.TabIndex = 25;
+			this.btnBackupFotos.TabIndex = 13;
 			this.btnBackupFotos.Text = "Backup Fotos";
 			this.btnBackupFotos.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnBackupFotos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -175,7 +209,7 @@
 			this.btnProcDesignFolder.FlatAppearance.BorderSize = 0;
 			this.btnProcDesignFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnProcDesignFolder.ImageSize = new System.Drawing.Size(24, 24);
-			this.btnProcDesignFolder.Location = new System.Drawing.Point(643, 292);
+			this.btnProcDesignFolder.Location = new System.Drawing.Point(643, 329);
 			this.btnProcDesignFolder.MenuListPosition = new System.Drawing.Point(0, 0);
 			this.btnProcDesignFolder.Name = "btnProcDesignFolder";
 			this.btnProcDesignFolder.OnColor = System.Drawing.Color.LightSlateGray;
@@ -184,7 +218,7 @@
 			this.btnProcDesignFolder.PressStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
 			this.btnProcDesignFolder.Size = new System.Drawing.Size(38, 28);
 			this.btnProcDesignFolder.SplitLocation = MBGlassStyleButton.MBGlassButton.MB_SplitLocation.Right;
-			this.btnProcDesignFolder.TabIndex = 25;
+			this.btnProcDesignFolder.TabIndex = 17;
 			this.btnProcDesignFolder.Text = "...";
 			this.btnProcDesignFolder.UseVisualStyleBackColor = false;
 			this.btnProcDesignFolder.Click += new System.EventHandler(this.btnProcDesignFolder_Click);
@@ -198,7 +232,7 @@
 			this.btnProcFotosFolder.FlatAppearance.BorderSize = 0;
 			this.btnProcFotosFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnProcFotosFolder.ImageSize = new System.Drawing.Size(24, 24);
-			this.btnProcFotosFolder.Location = new System.Drawing.Point(643, 187);
+			this.btnProcFotosFolder.Location = new System.Drawing.Point(643, 224);
 			this.btnProcFotosFolder.MenuListPosition = new System.Drawing.Point(0, 0);
 			this.btnProcFotosFolder.Name = "btnProcFotosFolder";
 			this.btnProcFotosFolder.OnColor = System.Drawing.Color.LightSlateGray;
@@ -207,7 +241,7 @@
 			this.btnProcFotosFolder.PressStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
 			this.btnProcFotosFolder.Size = new System.Drawing.Size(38, 28);
 			this.btnProcFotosFolder.SplitLocation = MBGlassStyleButton.MBGlassButton.MB_SplitLocation.Right;
-			this.btnProcFotosFolder.TabIndex = 25;
+			this.btnProcFotosFolder.TabIndex = 12;
 			this.btnProcFotosFolder.Text = "...";
 			this.btnProcFotosFolder.UseVisualStyleBackColor = false;
 			this.btnProcFotosFolder.Click += new System.EventHandler(this.btnProcFotosFolder_Click);
@@ -215,12 +249,12 @@
 			// txtDesignFolder
 			// 
 			this.txtDesignFolder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDesignFolder.Location = new System.Drawing.Point(72, 292);
+			this.txtDesignFolder.Location = new System.Drawing.Point(72, 329);
 			this.txtDesignFolder.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtDesignFolder.MaxLength = 200;
 			this.txtDesignFolder.Name = "txtDesignFolder";
 			this.txtDesignFolder.Size = new System.Drawing.Size(565, 27);
-			this.txtDesignFolder.TabIndex = 29;
+			this.txtDesignFolder.TabIndex = 16;
 			this.txtDesignFolder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// label6
@@ -228,31 +262,31 @@
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Calibri", 12F);
-			this.label6.Location = new System.Drawing.Point(19, 295);
+			this.label6.Location = new System.Drawing.Point(19, 332);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(49, 19);
-			this.label6.TabIndex = 28;
+			this.label6.TabIndex = 15;
 			this.label6.Text = "Pasta:";
 			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label7.Location = new System.Drawing.Point(9, 254);
+			this.label7.Location = new System.Drawing.Point(9, 291);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(237, 23);
-			this.label7.TabIndex = 27;
+			this.label7.TabIndex = 14;
 			this.label7.Text = "Pasta do Design dos Cartões:";
 			// 
 			// txtFotosFolder
 			// 
 			this.txtFotosFolder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFotosFolder.Location = new System.Drawing.Point(72, 187);
+			this.txtFotosFolder.Location = new System.Drawing.Point(72, 224);
 			this.txtFotosFolder.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtFotosFolder.MaxLength = 200;
 			this.txtFotosFolder.Name = "txtFotosFolder";
 			this.txtFotosFolder.Size = new System.Drawing.Size(565, 27);
-			this.txtFotosFolder.TabIndex = 23;
+			this.txtFotosFolder.TabIndex = 11;
 			this.txtFotosFolder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			// 
 			// Label18
@@ -260,10 +294,10 @@
 			this.Label18.AutoSize = true;
 			this.Label18.BackColor = System.Drawing.Color.Transparent;
 			this.Label18.Font = new System.Drawing.Font("Calibri", 12F);
-			this.Label18.Location = new System.Drawing.Point(19, 190);
+			this.Label18.Location = new System.Drawing.Point(19, 227);
 			this.Label18.Name = "Label18";
 			this.Label18.Size = new System.Drawing.Size(49, 19);
-			this.Label18.TabIndex = 22;
+			this.Label18.TabIndex = 10;
 			this.Label18.Text = "Pasta:";
 			// 
 			// label4
@@ -292,10 +326,10 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(9, 149);
+			this.label3.Location = new System.Drawing.Point(9, 186);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(242, 23);
-			this.label3.TabIndex = 21;
+			this.label3.TabIndex = 9;
 			this.label3.Text = "Pasta das Fotos de Membros:";
 			// 
 			// label1
@@ -316,7 +350,7 @@
 			this.label5.Location = new System.Drawing.Point(418, 92);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(79, 19);
-			this.label5.TabIndex = 19;
+			this.label5.TabIndex = 5;
 			this.label5.Text = "UF Padrão:";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -328,7 +362,7 @@
 			this.label2.Location = new System.Drawing.Point(74, 92);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(107, 19);
-			this.label2.TabIndex = 17;
+			this.label2.TabIndex = 3;
 			this.label2.Text = "Cidade Padrão:";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -341,7 +375,7 @@
 			this.txtUFPadrao.MaxLength = 2;
 			this.txtUFPadrao.Name = "txtUFPadrao";
 			this.txtUFPadrao.Size = new System.Drawing.Size(46, 27);
-			this.txtUFPadrao.TabIndex = 20;
+			this.txtUFPadrao.TabIndex = 6;
 			// 
 			// txtCidadePadrao
 			// 
@@ -351,36 +385,38 @@
 			this.txtCidadePadrao.MaxLength = 50;
 			this.txtCidadePadrao.Name = "txtCidadePadrao";
 			this.txtCidadePadrao.Size = new System.Drawing.Size(212, 27);
-			this.txtCidadePadrao.TabIndex = 18;
+			this.txtCidadePadrao.TabIndex = 4;
 			// 
-			// btnBackupDesign
+			// label8
 			// 
-			this.btnBackupDesign.BackColor = System.Drawing.Color.Transparent;
-			this.btnBackupDesign.BaseColor = System.Drawing.Color.LightSteelBlue;
-			this.btnBackupDesign.BaseStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(176)))), ((int)(((byte)(196)))), ((int)(((byte)(222)))));
-			this.btnBackupDesign.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-			this.btnBackupDesign.FlatAppearance.BorderSize = 0;
-			this.btnBackupDesign.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnBackupDesign.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnBackupDesign.Image = global::CamadaUI.Properties.Resources.backup_24;
-			this.btnBackupDesign.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnBackupDesign.ImageSize = new System.Drawing.Size(24, 24);
-			this.btnBackupDesign.Location = new System.Drawing.Point(484, 328);
-			this.btnBackupDesign.MenuListPosition = new System.Drawing.Point(0, 0);
-			this.btnBackupDesign.Name = "btnBackupDesign";
-			this.btnBackupDesign.OnColor = System.Drawing.Color.LightSlateGray;
-			this.btnBackupDesign.OnStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(119)))), ((int)(((byte)(136)))), ((int)(((byte)(153)))));
-			this.btnBackupDesign.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-			this.btnBackupDesign.PressStrokeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-			this.btnBackupDesign.Size = new System.Drawing.Size(153, 45);
-			this.btnBackupDesign.SplitLocation = MBGlassStyleButton.MBGlassButton.MB_SplitLocation.Right;
-			this.btnBackupDesign.TabIndex = 25;
-			this.btnBackupDesign.Text = "Backup Design";
-			this.btnBackupDesign.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.btnBackupDesign.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnBackupDesign.UseCompatibleTextRendering = true;
-			this.btnBackupDesign.UseMnemonic = false;
-			this.btnBackupDesign.UseVisualStyleBackColor = true;
+			this.label8.AutoSize = true;
+			this.label8.BackColor = System.Drawing.Color.Transparent;
+			this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(19, 130);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(162, 19);
+			this.label8.TabIndex = 7;
+			this.label8.Text = "Validade da Credencial:";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// numValidade
+			// 
+			this.numValidade.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.numValidade.Location = new System.Drawing.Point(187, 128);
+			this.numValidade.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numValidade.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numValidade.Name = "numValidade";
+			this.numValidade.Size = new System.Drawing.Size(79, 27);
+			this.numValidade.TabIndex = 8;
+			this.numValidade.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// frmConfigGeral
 			// 
@@ -400,6 +436,7 @@
 			this.panel1.ResumeLayout(false);
 			this.pnlPastas.ResumeLayout(false);
 			this.pnlPastas.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numValidade)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -425,5 +462,7 @@
 		private MBGlassStyleButton.MBGlassButton btnBackupFotos;
 		private MBGlassStyleButton.MBGlassButton btnProcDesignFolder;
 		private MBGlassStyleButton.MBGlassButton btnBackupDesign;
+		private System.Windows.Forms.NumericUpDown numValidade;
+		internal System.Windows.Forms.Label label8;
 	}
 }

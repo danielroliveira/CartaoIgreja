@@ -313,9 +313,29 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Imprimir_30 {
+            get {
+                object obj = ResourceManager.GetObject("Imprimir_30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logo_ADRJ_Fundo {
             get {
                 object obj = ResourceManager.GetObject("Logo_ADRJ_Fundo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_16 {
+            get {
+                object obj = ResourceManager.GetObject("print_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

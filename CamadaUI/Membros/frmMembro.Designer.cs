@@ -50,7 +50,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.dtpNascimentoData = new System.Windows.Forms.DateTimePicker();
 			this.label4 = new System.Windows.Forms.Label();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.dtpMembresiaData = new System.Windows.Forms.DateTimePicker();
 			this.txtEstadoCivil = new System.Windows.Forms.TextBox();
 			this.lblEstCivil = new System.Windows.Forms.Label();
 			this.btnSetEstadoCivil = new System.Windows.Forms.Button();
@@ -59,13 +59,16 @@
 			this.txtFuncao = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
+			this.picFoto = new System.Windows.Forms.PictureBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(221, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(417, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(299, 50);
 			this.lblTitulo.TabIndex = 2;
 			this.lblTitulo.Text = "Cadastro de Membro";
@@ -75,7 +78,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(520, 0);
+			this.btnClose.Location = new System.Drawing.Point(716, 0);
 			this.btnClose.TabIndex = 3;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -83,7 +86,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblID);
 			this.panel1.Controls.Add(this.lbl_IdTexto);
-			this.panel1.Size = new System.Drawing.Size(560, 50);
+			this.panel1.Size = new System.Drawing.Size(756, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lbl_IdTexto, 0);
@@ -210,7 +213,7 @@
             this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 416);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(555, 44);
+			this.tspMenu.Size = new System.Drawing.Size(751, 44);
 			this.tspMenu.TabIndex = 21;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -345,14 +348,14 @@
 			this.label4.TabIndex = 19;
 			this.label4.Text = "Dt Membresia";
 			// 
-			// dateTimePicker1
+			// dtpMembresiaData
 			// 
-			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker1.Location = new System.Drawing.Point(127, 365);
-			this.dateTimePicker1.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(124, 27);
-			this.dateTimePicker1.TabIndex = 20;
+			this.dtpMembresiaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpMembresiaData.Location = new System.Drawing.Point(127, 365);
+			this.dtpMembresiaData.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+			this.dtpMembresiaData.Name = "dtpMembresiaData";
+			this.dtpMembresiaData.Size = new System.Drawing.Size(124, 27);
+			this.dtpMembresiaData.TabIndex = 20;
 			// 
 			// txtEstadoCivil
 			// 
@@ -454,22 +457,48 @@
 			this.label5.TabIndex = 13;
 			this.label5.Text = "(nº 1 a 8)";
 			// 
+			// picFoto
+			// 
+			this.picFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.picFoto.Location = new System.Drawing.Point(545, 69);
+			this.picFoto.Name = "picFoto";
+			this.picFoto.Size = new System.Drawing.Size(180, 240);
+			this.picFoto.TabIndex = 22;
+			this.picFoto.TabStop = false;
+			// 
+			// button1
+			// 
+			this.button1.BackColor = System.Drawing.Color.Transparent;
+			this.button1.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Location = new System.Drawing.Point(568, 315);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(136, 27);
+			this.button1.TabIndex = 12;
+			this.button1.TabStop = false;
+			this.button1.Text = "Obter Foto";
+			this.button1.UseCompatibleTextRendering = true;
+			this.button1.UseVisualStyleBackColor = false;
+			this.button1.Click += new System.EventHandler(this.btnCongregacaoEscolher_Click);
+			// 
 			// frmMembro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(560, 462);
+			this.ClientSize = new System.Drawing.Size(756, 462);
+			this.Controls.Add(this.picFoto);
 			this.Controls.Add(this.txtFuncao);
 			this.Controls.Add(this.lblFunção);
 			this.Controls.Add(this.txtEstadoCivil);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblEstCivil);
-			this.Controls.Add(this.dateTimePicker1);
+			this.Controls.Add(this.dtpMembresiaData);
 			this.Controls.Add(this.dtpNascimentoData);
 			this.Controls.Add(this.cmbSexo);
 			this.Controls.Add(this.btnSetFuncao);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnSetEstadoCivil);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnCongregacaoEscolher);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtMembroNome);
@@ -498,22 +527,25 @@
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.btnCongregacaoEscolher, 0);
+			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.btnSetEstadoCivil, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.btnSetFuncao, 0);
 			this.Controls.SetChildIndex(this.cmbSexo, 0);
 			this.Controls.SetChildIndex(this.dtpNascimentoData, 0);
-			this.Controls.SetChildIndex(this.dateTimePicker1, 0);
+			this.Controls.SetChildIndex(this.dtpMembresiaData, 0);
 			this.Controls.SetChildIndex(this.lblEstCivil, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.txtEstadoCivil, 0);
 			this.Controls.SetChildIndex(this.lblFunção, 0);
 			this.Controls.SetChildIndex(this.txtFuncao, 0);
+			this.Controls.SetChildIndex(this.picFoto, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picFoto)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -542,7 +574,7 @@
 		internal System.Windows.Forms.Label label2;
 		private System.Windows.Forms.DateTimePicker dtpNascimentoData;
 		internal System.Windows.Forms.Label label4;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.DateTimePicker dtpMembresiaData;
 		internal System.Windows.Forms.TextBox txtEstadoCivil;
 		internal System.Windows.Forms.Label lblEstCivil;
 		internal System.Windows.Forms.Button btnSetEstadoCivil;
@@ -551,5 +583,7 @@
 		internal System.Windows.Forms.TextBox txtFuncao;
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label label5;
+		private System.Windows.Forms.PictureBox picFoto;
+		internal System.Windows.Forms.Button button1;
 	}
 }

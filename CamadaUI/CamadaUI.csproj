@@ -63,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cartao\frmCartaoLista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cartao\frmCartaoLista.designer.cs">
+      <DependentUpon>frmCartaoLista.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfigDados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Cartao\frmCartaoLista.resx">
+      <DependentUpon>frmCartaoLista.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Config\frmConfigDados.resx">
       <DependentUpon>frmConfigDados.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,7 +312,10 @@
     <None Include="Resources\funcoes_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\Config.xml" />
     <Content Include="program_icon.ico" />
+    <None Include="Resources\Imprimir_30.png" />
+    <None Include="Resources\print_16.png" />
     <None Include="Resources\search_user.png" />
     <None Include="Resources\block_24.png" />
     <None Include="Resources\block_16.png" />

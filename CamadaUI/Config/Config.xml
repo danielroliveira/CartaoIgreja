@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuracao>
+  <DefaultValues>
+    <IgrejaTitulo>Assembleia de Deus do Rio de Janeiro</IgrejaTitulo>
+    <CidadePadrao>Rio de Janeiro</CidadePadrao>
+    <UFPadrao>RJ</UFPadrao>
+    <FotosImageFolder>C:\Users\drojf\Igreja Cartão\Fotos</FotosImageFolder>
+    <DesignImageFolder>C:\Users\drojf\Igreja Cartão\Fotos</DesignImageFolder>
+	<ValidadeAnos></ValidadeAnos>
+  </DefaultValues>
+  <DadosIgreja>
+    <RazaoSocial>Teste</RazaoSocial>
+    <CNPJ>  .   .   /    -</CNPJ>
+    <TelefonePrincipal>(  )      -</TelefonePrincipal>
+    <TelefoneFinanceiro>(  )      -</TelefoneFinanceiro>
+    <ContatoFinanceiro />
+    <Endereco>Rua São Luiz Gonzaga</Endereco>
+    <Bairro>São Cristóvão</Bairro>
+    <Cidade>Rio de Janeiro</Cidade>
+    <UF>RJ</UF>
+    <CEP>     -</CEP>
+  </DadosIgreja>
+</Configuracao>

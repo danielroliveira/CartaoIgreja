@@ -93,14 +93,51 @@ namespace CamadaBLL
 			}
 		}
 
+		// GET LIST OF MEMBRO TO PRINT
+		//------------------------------------------------------------------------------------------------------------
+		public List<objMembro> GetListMembroToPrint()
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados(_DBPath);
+
+				string query = "SELECT * FROM qryMembro WHERE WHERE (((NaLista)=True))";
+
+				// add params
+				db.LimparParametros();
+
+				query += " ORDER BY MembroNome";
+
+				List<objMembro> listagem = new List<objMembro>();
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					return listagem;
+				}
+
+				foreach (DataRow row in dt.Rows)
+				{
+					listagem.Add(ConvertRowInClass(row));
+				}
+
+				return listagem;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		// CONVERT ROW IN CLASS
 		//------------------------------------------------------------------------------------------------------------
 		public objMembro ConvertRowInClass(DataRow row)
 		{
-			objMembro membro = new objMembro((byte?)row["IDMembro"])
+			objMembro membro = new objMembro((int?)row["IDMembro"])
 			{
-				IDMembro = (byte?)row["IDMembro"],
-				RGMembro = (byte?)row["RGMembro"],
+				IDMembro = (int?)row["IDMembro"],
+				RGMembro = (int?)row["RGMembro"],
 				MembroNome = (string)row["MembroNome"],
 				NascimentoData = row["NascimentoData"] == DBNull.Value ? null : (DateTime?)row["NascimentoData"],
 				IDCongregacao = (byte)row["IDCongregacao"],
@@ -108,7 +145,6 @@ namespace CamadaBLL
 				Sexo = (byte)row["Sexo"],
 				EmissaoData = row["EmissaoData"] == DBNull.Value ? null : (DateTime?)row["EmissaoData"],
 				IDEstadoCivil = (byte)row["IDEstadoCivil"],
-				//EstadoCivil = (string)row["EstadoCivil"],
 				IDFuncao = (byte)row["IDFuncao"],
 				Funcao = (string)row["Funcao"],
 				IDSituacao = (byte)row["IDSituacao"],
@@ -116,7 +152,7 @@ namespace CamadaBLL
 				MembresiaData = row["MembresiaData"] == DBNull.Value ? null : (DateTime?)row["MembresiaData"],
 				ValidadeData = row["ValidadeData"] == DBNull.Value ? null : (DateTime?)row["ValidadeData"],
 				Imprimir = (bool)row["Imprimir"],
-				NaLista = (bool)row["NaLista"]
+				NaLista = (bool)row["NaLista"],
 			};
 
 			membro.EstadoCivil = membro.Sexo == 1 ? (string)row["EstadoCivilM"] : (string)row["EstadoCivilF"];
@@ -171,7 +207,7 @@ namespace CamadaBLL
 
 				//--- define Params
 				db.AdicionarParametros("@RGMembro", membro.RGMembro);
-				db.AdicionarParametros("@Membro", membro.MembroNome);
+				db.AdicionarParametros("@MembroNome", membro.MembroNome);
 				db.AdicionarParametros("@NascimentoData", membro.NascimentoData);
 				db.AdicionarParametros("@IDFuncao", membro.IDFuncao);
 				db.AdicionarParametros("@Sexo", membro.Sexo);
@@ -182,7 +218,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDCongregacao", membro.IDCongregacao);
 				db.AdicionarParametros("@IDSituacao", membro.IDSituacao);
 				db.AdicionarParametros("@Imprimir", membro.Imprimir);
-				db.AdicionarParametros("@Situacao", membro.Situacao);
+				db.AdicionarParametros("@NaLista", membro.NaLista);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -231,7 +267,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create and execute query
-				string query = "SELECT * FROM tblMembro WHERE Membro = @Membro AND IDMembro <> @IDMembro";
+				string query = "SELECT * FROM tblMembro WHERE MembroNome = @MembroNome AND IDMembro <> @IDMembro";
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				if (dt.Rows.Count > 0)
@@ -260,9 +296,8 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDMembro", membro.IDMembro);
 				db.AdicionarParametros("@RGMembro", membro.RGMembro);
-				db.AdicionarParametros("@Membro", membro.MembroNome);
+				db.AdicionarParametros("@MembroNome", membro.MembroNome);
 				db.AdicionarParametros("@NascimentoData", membro.NascimentoData);
 				db.AdicionarParametros("@IDFuncao", membro.IDFuncao);
 				db.AdicionarParametros("@Sexo", membro.Sexo);
@@ -273,10 +308,12 @@ namespace CamadaBLL
 				db.AdicionarParametros("@IDCongregacao", membro.IDCongregacao);
 				db.AdicionarParametros("@IDSituacao", membro.IDSituacao);
 				db.AdicionarParametros("@Imprimir", membro.Imprimir);
-				db.AdicionarParametros("@Situacao", membro.Situacao);
+				db.AdicionarParametros("@NaLista", membro.NaLista);
+				db.AdicionarParametros("@IDMembro", membro.IDMembro);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
+
 
 				//--- create query
 				query = db.CreateUpdateSQL("tblMembro", "@IDMembro");

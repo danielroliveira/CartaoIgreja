@@ -53,7 +53,8 @@ namespace CamadaUI
 							new XElement("CidadePadrao", ""),
 							new XElement("UFPadrao", ""),
 							new XElement("FotosImageFolder", ""),
-							new XElement("DesignImageFolder", "")
+							new XElement("DesignImageFolder", ""),
+							new XElement("ValidadeAnos", "1")
 						),
 						new XElement("DadosIgreja",
 							new XElement("RazaoSocial"),

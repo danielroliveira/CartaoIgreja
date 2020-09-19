@@ -3,38 +3,30 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
 
-namespace CamadaUI.Membros
+namespace CamadaUI.Cartao
 {
-	public partial class frmMembroListagem : CamadaUI.Models.frmModFinBorder
+	public partial class frmCartaoLista : CamadaUI.Models.frmModFinBorder
 	{
 		private List<objMembro> lstMembros = new List<objMembro>();
-		private Image ImgPrint = Properties.Resources.print_16;
-		private Image ImgNPrint = Properties.Resources.CloseIcon;
-		private int _validade;
 		private Form _formOrigem;
 
 		#region NEW | OPEN FUNCTIONS
 
-		public frmMembroListagem(Form formOrigem = null)
+		public frmCartaoLista(Form formOrigem = null)
 		{
 			InitializeComponent();
 
 			//--- Add any initialization after the InitializeComponent() call.
-			_ = int.TryParse(ObterConfigValorNode("ValidadeAnos"), out _validade);
 			_formOrigem = formOrigem;
-			CarregaCmbSituacao();
 			ObterDados();
 			FormataListagem();
 
 			//--- get dados
-			cmbAtivo.SelectedValueChanged += (a, b) => ObterDados();
 			dgvListagem.CellDoubleClick += btnEditar_Click;
-			txtProcura.TextChanged += FiltrarListagem;
 			HandlerKeyDownControl(this);
 		}
 
@@ -50,7 +42,7 @@ namespace CamadaUI.Membros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				MembroBLL cBLL = new MembroBLL(DBPath());
-				lstMembros = cBLL.GetListMembro("", (byte)cmbAtivo.SelectedValue);
+				lstMembros = cBLL.GetListMembroToPrint();
 				dgvListagem.DataSource = lstMembros;
 			}
 			catch (Exception ex)
@@ -63,18 +55,6 @@ namespace CamadaUI.Membros
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-		}
-
-		// CARREGA COMBO
-		//------------------------------------------------------------------------------------------------------------
-		private void CarregaCmbSituacao()
-		{
-			//--- Set DataTable
-			cmbAtivo.DataSource = Program.lstSituacao;
-			cmbAtivo.ValueMember = "IDSituacao";
-			cmbAtivo.DisplayMember = "Situacao";
-			cmbAtivo.SelectedValue = 1;
-			cmbAtivo.SelectedIndex = 0;
 		}
 
 		#endregion
@@ -134,56 +114,8 @@ namespace CamadaUI.Membros
 			clnCongregacao.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCongregacao.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (5) COLUNA DA IMPRIMIR
-			//clnImprimir.Name = "Ativo";
-			clnImprimir.Resizable = DataGridViewTriState.False;
-			clnImprimir.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			clnImprimir.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			//--- (6) COLUNA EMISSAO DATA
-			clnEmissaoData.DataPropertyName = "EmissaoData";
-			clnEmissaoData.Visible = true;
-			clnEmissaoData.ReadOnly = true;
-			clnEmissaoData.Resizable = DataGridViewTriState.False;
-			clnEmissaoData.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnEmissaoData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnEmissaoData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-			//--- (6) COLUNA VALIDADE DATA
-			//clnValidadeData.DataPropertyName = "ValidadeData";
-			clnValidadeData.Visible = true;
-			clnValidadeData.ReadOnly = true;
-			clnValidadeData.Resizable = DataGridViewTriState.False;
-			clnValidadeData.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnValidadeData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnValidadeData.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnRG, clnMembro, clnFuncao, clnCongregacao, clnImprimir, clnEmissaoData, clnValidadeData);
-		}
-
-		// CONTROL IMAGES OF LIST DATAGRID
-		//------------------------------------------------------------------------------------------------------------
-		private void dgvListagem_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e.ColumnIndex == clnImprimir.Index)
-			{
-				objMembro item = (objMembro)dgvListagem.Rows[e.RowIndex].DataBoundItem;
-				if (item.Imprimir) e.Value = ImgPrint;
-				else e.Value = ImgNPrint;
-			}
-			else if (e.ColumnIndex == clnEmissaoData.Index)
-			{
-				if (e.Value == null)
-				{
-					e.Value = "---";
-					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value = "---";
-				}
-				else
-				{
-					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value = ((DateTime)e.Value).AddYears(_validade);
-				}
-			}
+			dgvListagem.Columns.AddRange(clnRG, clnMembro, clnFuncao, clnCongregacao);
 		}
 
 		// ON ENTER SELECT ITEM
@@ -212,11 +144,13 @@ namespace CamadaUI.Membros
 		{
 			if (_formOrigem == null)
 			{
+				/*
 				frmMembro frm = new frmMembro(new objMembro(null));
 				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
 				frm.Show();
+				*/
 			}
 			else
 			{
@@ -241,11 +175,13 @@ namespace CamadaUI.Membros
 			//--- open edit form
 			if (_formOrigem == null)
 			{
+				/*
 				frmMembro frm = new frmMembro(item);
 				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
 				Close();
 				frm.Show();
+				*/
 			}
 			else
 			{
@@ -255,38 +191,6 @@ namespace CamadaUI.Membros
 		}
 
 		#endregion
-
-		#region FILTRAGEM PROCURA
-
-		private void FiltrarListagem(object sender, EventArgs e)
-		{
-			if (txtProcura.TextLength > 0)
-			{
-				// filter
-				if (!int.TryParse(txtProcura.Text, out int i))
-				{
-					// declare function
-					Func<objMembro, bool> FiltroItem = c => c.MembroNome.ToLower().Contains(txtProcura.Text.ToLower());
-
-					// aply filter using function
-					dgvListagem.DataSource = lstMembros.FindAll(c => FiltroItem(c));
-				}
-				else
-				{
-					// declare function
-					Func<objMembro, bool> FiltroID = c => c.RGMembro == i;
-
-					// aply filter using function
-					dgvListagem.DataSource = lstMembros.FindAll(c => FiltroID(c));
-				}
-			}
-			else
-			{
-				dgvListagem.DataSource = lstMembros;
-			}
-		}
-
-		#endregion // FILTRAGEM PROCURA --- END
 
 		#region ATIVAR DESATIVAR MENU
 
@@ -358,9 +262,6 @@ namespace CamadaUI.Membros
 
 				MembroBLL cBLL = new MembroBLL(DBPath());
 				cBLL.UpdateMembro(membro);
-
-				//--- altera a imagem
-				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
 			{
@@ -380,7 +281,7 @@ namespace CamadaUI.Membros
 
 		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
 		//------------------------------------------------------------------------------------------------------------
-		private void frmMembroListagem_KeyDown(object sender, KeyEventArgs e)
+		private void frmCartaoLista_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -486,7 +387,6 @@ namespace CamadaUI.Membros
 
 				//--- altera a imagem
 				ObterDados();
-				FiltrarListagem(sender, e);
 			}
 			catch (Exception ex)
 			{

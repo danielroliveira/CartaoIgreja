@@ -52,8 +52,9 @@ namespace CamadaDTO
 				_NaLista = false,
 				_IDFuncao = 2,
 				_Funcao = "Membro",
-				_EmissaoData = DateTime.Today,
-				_IDCongregacao = null
+				//_EmissaoData = DateTime.Today,
+				_IDCongregacao = null,
+				_MembresiaData = DateTime.Today,
 			};
 		}
 
