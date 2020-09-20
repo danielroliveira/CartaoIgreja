@@ -127,6 +127,7 @@ namespace CamadaUI.Main
 			// MENU CADASTROS
 			mnuMembroAdicionar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembro(new objMembro(null), this));
 			mnuMembroProcurar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembroListagem());
+			mnuImpressaoLista.Click += (a, b) => MenuClickOpenForm(new Cartao.frmCartaoLista());
 			/*
 
 			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));

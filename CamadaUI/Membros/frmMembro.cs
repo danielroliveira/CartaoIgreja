@@ -169,7 +169,10 @@ namespace CamadaUI.Membros
 			}
 
 			Close();
-			MostraMenuPrincipal();
+
+			if (_formOrigem.GetType() == typeof(Main.frmPrincipal))
+				MostraMenuPrincipal();
+
 		}
 
 		// CANCELAR ALTERACAO
@@ -192,8 +195,8 @@ namespace CamadaUI.Membros
 				}
 				else // return to formOrigem
 				{
-					propEscolha = null;
-					DialogResult = DialogResult.Cancel;
+					AutoValidate = AutoValidate.Disable;
+					Close();
 				}
 			}
 			else if (Sit == EnumFlagEstado.Alterado)
@@ -502,6 +505,7 @@ namespace CamadaUI.Membros
 			{
 				if (_formOrigem.GetType() != typeof(Main.frmPrincipal))
 				{
+					_formOrigem.Visible = true;
 					Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
 					pnl.BackColor = Color.SlateGray;
 				}

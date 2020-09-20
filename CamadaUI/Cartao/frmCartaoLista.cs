@@ -142,20 +142,67 @@ namespace CamadaUI.Cartao
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem == null)
+			try
 			{
-				/*
-				frmMembro frm = new frmMembro(new objMembro(null));
-				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-				*/
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				Membros.frmMembroListagem frm = new Membros.frmMembroListagem(this);
+				frm.ShowDialog();
+
+				if (frm.DialogResult != DialogResult.OK) return;
+
+				objMembro membro = frm.propEscolha;
+
+				if (membro.NaLista)
+				{
+					AbrirDialog("O membro escolhido:\n" +
+						membro.MembroNome.ToUpper() + "\n" +
+						"já está na listagem de impressão...", "Na Lista");
+					return;
+				}
+
+				if (!membro.Imprimir)
+				{
+					var resp = AbrirDialog("O membro escolhido:\n" +
+						membro.MembroNome.ToUpper() + "\n" +
+						"não está marcado para imprimir\n" +
+						"Deseja marcar para impressão e inserir na listagem?", "Marcar para Impressão",
+						DialogType.SIM_NAO, DialogIcon.Question);
+
+					if (resp == DialogResult.No) return;
+
+					membro.Imprimir = true;
+				}
+
+				//--- save membro
+				membro.NaLista = true;
+				new MembroBLL(DBPath()).UpdateMembro(membro);
+
+				//--- Get Data
+				ObterDados();
+
+				foreach (DataGridViewRow row in dgvListagem.Rows)
+				{
+					if ((int)row.Cells[0].Value == membro.RGMembro)
+					{
+						row.Selected = true;
+					}
+					else
+					{
+						row.Selected = false;
+					}
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				propEscolha = new objMembro(null);
-				DialogResult = DialogResult.Yes;
+				AbrirDialog("Uma exceção ocorreu ao Adicionar Membro na lista de impressão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 

@@ -35,9 +35,7 @@
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnEditar = new System.Windows.Forms.Button();
 			this.txtProcura = new System.Windows.Forms.TextBox();
-			this.Label2 = new System.Windows.Forms.Label();
 			this.Label1 = new System.Windows.Forms.Label();
-			this.cmbAtivo = new CamadaUC.ucComboLimitedValues();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
 			this.clnRG = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnMembro = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +53,16 @@
 			this.transferênciaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.desligamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.falecimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnCongregacaoEscolher = new System.Windows.Forms.Button();
+			this.txtCongregacao = new System.Windows.Forms.TextBox();
+			this.Label6 = new System.Windows.Forms.Label();
+			this.txtFuncao = new System.Windows.Forms.TextBox();
+			this.lblFunção = new System.Windows.Forms.Label();
+			this.btnSetFuncao = new System.Windows.Forms.Button();
+			this.btnEscolher = new System.Windows.Forms.Button();
+			this.btnSetSituacao = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.txtSituacao = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -62,8 +70,8 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(910, 0);
-			this.lblTitulo.Size = new System.Drawing.Size(162, 50);
+			this.lblTitulo.Location = new System.Drawing.Point(698, 0);
+			this.lblTitulo.Size = new System.Drawing.Size(374, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Membros";
 			// 
@@ -87,7 +95,7 @@
 			this.btnFechar.Location = new System.Drawing.Point(964, 541);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
-			this.btnFechar.TabIndex = 8;
+			this.btnFechar.TabIndex = 16;
 			this.btnFechar.Text = "&Fechar";
 			this.btnFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -101,7 +109,7 @@
 			this.btnAdicionar.Location = new System.Drawing.Point(165, 541);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(126, 42);
-			this.btnAdicionar.TabIndex = 7;
+			this.btnAdicionar.TabIndex = 14;
 			this.btnAdicionar.Text = "&Adicionar";
 			this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnAdicionar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -115,7 +123,7 @@
 			this.btnEditar.Location = new System.Drawing.Point(22, 541);
 			this.btnEditar.Name = "btnEditar";
 			this.btnEditar.Size = new System.Drawing.Size(126, 42);
-			this.btnEditar.TabIndex = 6;
+			this.btnEditar.TabIndex = 13;
 			this.btnEditar.Text = "&Editar";
 			this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -124,39 +132,20 @@
 			// 
 			// txtProcura
 			// 
-			this.txtProcura.Location = new System.Drawing.Point(90, 67);
+			this.txtProcura.Location = new System.Drawing.Point(22, 80);
 			this.txtProcura.Margin = new System.Windows.Forms.Padding(6);
 			this.txtProcura.Name = "txtProcura";
 			this.txtProcura.Size = new System.Drawing.Size(282, 27);
 			this.txtProcura.TabIndex = 2;
 			// 
-			// Label2
-			// 
-			this.Label2.AutoSize = true;
-			this.Label2.Location = new System.Drawing.Point(396, 70);
-			this.Label2.Name = "Label2";
-			this.Label2.Size = new System.Drawing.Size(64, 19);
-			this.Label2.TabIndex = 3;
-			this.Label2.Text = "Situação";
-			// 
 			// Label1
 			// 
 			this.Label1.AutoSize = true;
-			this.Label1.Location = new System.Drawing.Point(26, 70);
+			this.Label1.Location = new System.Drawing.Point(18, 58);
 			this.Label1.Name = "Label1";
-			this.Label1.Size = new System.Drawing.Size(58, 19);
+			this.Label1.Size = new System.Drawing.Size(100, 19);
 			this.Label1.TabIndex = 1;
-			this.Label1.Text = "Procura";
-			// 
-			// cmbAtivo
-			// 
-			this.cmbAtivo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cmbAtivo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.cmbAtivo.FormattingEnabled = true;
-			this.cmbAtivo.Location = new System.Drawing.Point(466, 67);
-			this.cmbAtivo.Name = "cmbAtivo";
-			this.cmbAtivo.Size = new System.Drawing.Size(118, 27);
-			this.cmbAtivo.TabIndex = 4;
+			this.Label1.Text = "Procura Nome";
 			// 
 			// dgvListagem
 			// 
@@ -194,7 +183,7 @@
             this.clnValidadeData});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dgvListagem.Location = new System.Drawing.Point(22, 111);
+			this.dgvListagem.Location = new System.Drawing.Point(22, 124);
 			this.dgvListagem.MultiSelect = false;
 			this.dgvListagem.Name = "dgvListagem";
 			this.dgvListagem.ReadOnly = true;
@@ -204,8 +193,8 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(1068, 417);
-			this.dgvListagem.TabIndex = 5;
+			this.dgvListagem.Size = new System.Drawing.Size(1068, 404);
+			this.dgvListagem.TabIndex = 12;
 			this.dgvListagem.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListagem_CellFormatting);
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
@@ -339,30 +328,173 @@
 			this.falecimentoToolStripMenuItem.Text = "Falecimento";
 			this.falecimentoToolStripMenuItem.Click += new System.EventHandler(this.mnuAlterarSituacao_Click);
 			// 
+			// btnCongregacaoEscolher
+			// 
+			this.btnCongregacaoEscolher.BackColor = System.Drawing.Color.Transparent;
+			this.btnCongregacaoEscolher.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnCongregacaoEscolher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnCongregacaoEscolher.Location = new System.Drawing.Point(627, 80);
+			this.btnCongregacaoEscolher.Name = "btnCongregacaoEscolher";
+			this.btnCongregacaoEscolher.Size = new System.Drawing.Size(34, 27);
+			this.btnCongregacaoEscolher.TabIndex = 5;
+			this.btnCongregacaoEscolher.TabStop = false;
+			this.btnCongregacaoEscolher.Text = "...";
+			this.btnCongregacaoEscolher.UseCompatibleTextRendering = true;
+			this.btnCongregacaoEscolher.UseVisualStyleBackColor = false;
+			this.btnCongregacaoEscolher.Click += new System.EventHandler(this.btnCongregacaoEscolher_Click);
+			// 
+			// txtCongregacao
+			// 
+			this.txtCongregacao.Location = new System.Drawing.Point(318, 80);
+			this.txtCongregacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtCongregacao.MaxLength = 30;
+			this.txtCongregacao.Name = "txtCongregacao";
+			this.txtCongregacao.Size = new System.Drawing.Size(303, 27);
+			this.txtCongregacao.TabIndex = 4;
+			this.txtCongregacao.Tag = "Pressione a tecla (+) para procurar";
+			this.txtCongregacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
+			// Label6
+			// 
+			this.Label6.AutoSize = true;
+			this.Label6.BackColor = System.Drawing.Color.Transparent;
+			this.Label6.ForeColor = System.Drawing.Color.Black;
+			this.Label6.Location = new System.Drawing.Point(314, 58);
+			this.Label6.Name = "Label6";
+			this.Label6.Size = new System.Drawing.Size(94, 19);
+			this.Label6.TabIndex = 3;
+			this.Label6.Text = "Congregação";
+			// 
+			// txtFuncao
+			// 
+			this.txtFuncao.Location = new System.Drawing.Point(678, 80);
+			this.txtFuncao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtFuncao.MaxLength = 30;
+			this.txtFuncao.Name = "txtFuncao";
+			this.txtFuncao.Size = new System.Drawing.Size(153, 27);
+			this.txtFuncao.TabIndex = 7;
+			this.txtFuncao.Tag = "Pressione a tecla (+) para procurar";
+			this.txtFuncao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
+			// lblFunção
+			// 
+			this.lblFunção.AutoSize = true;
+			this.lblFunção.BackColor = System.Drawing.Color.Transparent;
+			this.lblFunção.ForeColor = System.Drawing.Color.Black;
+			this.lblFunção.Location = new System.Drawing.Point(674, 58);
+			this.lblFunção.Name = "lblFunção";
+			this.lblFunção.Size = new System.Drawing.Size(55, 19);
+			this.lblFunção.TabIndex = 6;
+			this.lblFunção.Text = "Função";
+			// 
+			// btnSetFuncao
+			// 
+			this.btnSetFuncao.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetFuncao.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnSetFuncao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetFuncao.Location = new System.Drawing.Point(837, 80);
+			this.btnSetFuncao.Name = "btnSetFuncao";
+			this.btnSetFuncao.Size = new System.Drawing.Size(34, 27);
+			this.btnSetFuncao.TabIndex = 8;
+			this.btnSetFuncao.TabStop = false;
+			this.btnSetFuncao.Text = "...";
+			this.btnSetFuncao.UseCompatibleTextRendering = true;
+			this.btnSetFuncao.UseVisualStyleBackColor = false;
+			this.btnSetFuncao.Click += new System.EventHandler(this.btnSetFuncao_Click);
+			// 
+			// btnEscolher
+			// 
+			this.btnEscolher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnEscolher.Image = global::CamadaUI.Properties.Resources.accept_24;
+			this.btnEscolher.Location = new System.Drawing.Point(422, 541);
+			this.btnEscolher.Name = "btnEscolher";
+			this.btnEscolher.Size = new System.Drawing.Size(276, 42);
+			this.btnEscolher.TabIndex = 15;
+			this.btnEscolher.Text = "&Escolher";
+			this.btnEscolher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnEscolher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnEscolher.UseVisualStyleBackColor = true;
+			this.btnEscolher.Visible = false;
+			this.btnEscolher.Click += new System.EventHandler(this.btnEditar_Click);
+			// 
+			// btnSetSituacao
+			// 
+			this.btnSetSituacao.BackColor = System.Drawing.Color.Transparent;
+			this.btnSetSituacao.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnSetSituacao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnSetSituacao.Location = new System.Drawing.Point(1055, 80);
+			this.btnSetSituacao.Name = "btnSetSituacao";
+			this.btnSetSituacao.Size = new System.Drawing.Size(34, 27);
+			this.btnSetSituacao.TabIndex = 11;
+			this.btnSetSituacao.TabStop = false;
+			this.btnSetSituacao.Text = "...";
+			this.btnSetSituacao.UseCompatibleTextRendering = true;
+			this.btnSetSituacao.UseVisualStyleBackColor = false;
+			this.btnSetSituacao.Click += new System.EventHandler(this.btnSetSituacao_Click);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.ForeColor = System.Drawing.Color.Black;
+			this.label3.Location = new System.Drawing.Point(892, 58);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(64, 19);
+			this.label3.TabIndex = 9;
+			this.label3.Text = "Situação";
+			// 
+			// txtSituacao
+			// 
+			this.txtSituacao.Location = new System.Drawing.Point(896, 80);
+			this.txtSituacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.txtSituacao.MaxLength = 30;
+			this.txtSituacao.Name = "txtSituacao";
+			this.txtSituacao.Size = new System.Drawing.Size(153, 27);
+			this.txtSituacao.TabIndex = 10;
+			this.txtSituacao.Tag = "Pressione a tecla (+) para procurar";
+			this.txtSituacao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
 			// frmMembroListagem
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(1112, 595);
+			this.Controls.Add(this.txtSituacao);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.txtFuncao);
+			this.Controls.Add(this.btnSetSituacao);
+			this.Controls.Add(this.lblFunção);
+			this.Controls.Add(this.btnSetFuncao);
+			this.Controls.Add(this.btnCongregacaoEscolher);
+			this.Controls.Add(this.txtCongregacao);
+			this.Controls.Add(this.Label6);
 			this.Controls.Add(this.dgvListagem);
-			this.Controls.Add(this.cmbAtivo);
 			this.Controls.Add(this.btnFechar);
+			this.Controls.Add(this.btnEscolher);
 			this.Controls.Add(this.btnAdicionar);
 			this.Controls.Add(this.btnEditar);
 			this.Controls.Add(this.txtProcura);
-			this.Controls.Add(this.Label2);
 			this.Controls.Add(this.Label1);
 			this.KeyPreview = true;
 			this.Name = "frmMembroListagem";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMembroListagem_KeyDown);
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frm_KeyPress);
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.Label1, 0);
-			this.Controls.SetChildIndex(this.Label2, 0);
 			this.Controls.SetChildIndex(this.txtProcura, 0);
 			this.Controls.SetChildIndex(this.btnEditar, 0);
 			this.Controls.SetChildIndex(this.btnAdicionar, 0);
+			this.Controls.SetChildIndex(this.btnEscolher, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
-			this.Controls.SetChildIndex(this.cmbAtivo, 0);
 			this.Controls.SetChildIndex(this.dgvListagem, 0);
+			this.Controls.SetChildIndex(this.Label6, 0);
+			this.Controls.SetChildIndex(this.txtCongregacao, 0);
+			this.Controls.SetChildIndex(this.btnCongregacaoEscolher, 0);
+			this.Controls.SetChildIndex(this.btnSetFuncao, 0);
+			this.Controls.SetChildIndex(this.lblFunção, 0);
+			this.Controls.SetChildIndex(this.btnSetSituacao, 0);
+			this.Controls.SetChildIndex(this.txtFuncao, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
+			this.Controls.SetChildIndex(this.txtSituacao, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.MenuListagem.ResumeLayout(false);
@@ -377,9 +509,7 @@
 		internal System.Windows.Forms.Button btnAdicionar;
 		internal System.Windows.Forms.Button btnEditar;
 		internal System.Windows.Forms.TextBox txtProcura;
-		internal System.Windows.Forms.Label Label2;
 		internal System.Windows.Forms.Label Label1;
-		private CamadaUC.ucComboLimitedValues cmbAtivo;
 		internal System.Windows.Forms.DataGridView dgvListagem;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
 		internal System.Windows.Forms.ToolStripMenuItem mnuImprimir;
@@ -397,5 +527,15 @@
 		private System.Windows.Forms.DataGridViewImageColumn clnImprimir;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnEmissaoData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnValidadeData;
+		internal System.Windows.Forms.Button btnCongregacaoEscolher;
+		internal System.Windows.Forms.TextBox txtCongregacao;
+		internal System.Windows.Forms.Label Label6;
+		internal System.Windows.Forms.TextBox txtFuncao;
+		internal System.Windows.Forms.Label lblFunção;
+		internal System.Windows.Forms.Button btnSetFuncao;
+		internal System.Windows.Forms.Button btnEscolher;
+		internal System.Windows.Forms.Button btnSetSituacao;
+		internal System.Windows.Forms.Label label3;
+		internal System.Windows.Forms.TextBox txtSituacao;
 	}
 }

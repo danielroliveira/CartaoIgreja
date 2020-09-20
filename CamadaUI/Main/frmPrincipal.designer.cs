@@ -43,8 +43,7 @@
 			this.cadastroDeFunçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cadstrosDeCongregaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnImprimir = new System.Windows.Forms.ToolStripSplitButton();
-			this.mnuImpressaoInserir = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuContribuicaoProcurar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuImpressaoLista = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop.SuspendLayout();
 			this.mnuPrincipal.SuspendLayout();
 			this.SuspendLayout();
@@ -225,8 +224,7 @@
 			// btnImprimir
 			// 
 			this.btnImprimir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuImpressaoInserir,
-            this.mnuContribuicaoProcurar});
+            this.mnuImpressaoLista});
 			this.btnImprimir.Image = global::CamadaUI.Properties.Resources.Imprimir;
 			this.btnImprimir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -238,24 +236,16 @@
 			this.btnImprimir.Text = "Imprimir";
 			this.btnImprimir.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
 			// 
-			// mnuImpressaoInserir
+			// mnuImpressaoLista
 			// 
-			this.mnuImpressaoInserir.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuImpressaoInserir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuImpressaoInserir.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuImpressaoInserir.Name = "mnuImpressaoInserir";
-			this.mnuImpressaoInserir.Padding = new System.Windows.Forms.Padding(0);
-			this.mnuImpressaoInserir.Size = new System.Drawing.Size(217, 22);
-			this.mnuImpressaoInserir.Text = "Inserir Impressão";
-			// 
-			// mnuContribuicaoProcurar
-			// 
-			this.mnuContribuicaoProcurar.Font = new System.Drawing.Font("Calibri", 12F);
-			this.mnuContribuicaoProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.mnuContribuicaoProcurar.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.mnuContribuicaoProcurar.Name = "mnuContribuicaoProcurar";
-			this.mnuContribuicaoProcurar.Size = new System.Drawing.Size(217, 24);
-			this.mnuContribuicaoProcurar.Text = "Procurar Contribuição";
+			this.mnuImpressaoLista.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuImpressaoLista.Image = global::CamadaUI.Properties.Resources.Imprimir_30;
+			this.mnuImpressaoLista.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuImpressaoLista.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.mnuImpressaoLista.Name = "mnuImpressaoLista";
+			this.mnuImpressaoLista.Padding = new System.Windows.Forms.Padding(0);
+			this.mnuImpressaoLista.Size = new System.Drawing.Size(213, 34);
+			this.mnuImpressaoLista.Text = "Lista de Impressão";
 			// 
 			// frmPrincipal
 			// 
@@ -297,8 +287,7 @@
 		private System.Windows.Forms.ToolStripSplitButton btnCadastros;
 		private System.Windows.Forms.ToolStripMenuItem mnuMembroAdicionar;
 		private System.Windows.Forms.ToolStripSplitButton btnImprimir;
-		private System.Windows.Forms.ToolStripMenuItem mnuImpressaoInserir;
-		private System.Windows.Forms.ToolStripMenuItem mnuContribuicaoProcurar;
+		private System.Windows.Forms.ToolStripMenuItem mnuImpressaoLista;
 		private System.Windows.Forms.ToolStripMenuItem mnuMembroProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem cadastroDeFunçõesToolStripMenuItem;

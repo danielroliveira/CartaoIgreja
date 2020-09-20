@@ -17,6 +17,12 @@ namespace CamadaUI.Membros
 		private Image ImgNPrint = Properties.Resources.CloseIcon;
 		private int _validade;
 		private Form _formOrigem;
+		private byte? IDFuncao;
+		private byte? IDCongregacao;
+		private byte? IDSituacao;
+
+		//--- PROPRIEDADE DE ESCOLHA
+		public objMembro propEscolha { get; set; }
 
 		#region NEW | OPEN FUNCTIONS
 
@@ -27,19 +33,37 @@ namespace CamadaUI.Membros
 			//--- Add any initialization after the InitializeComponent() call.
 			_ = int.TryParse(ObterConfigValorNode("ValidadeAnos"), out _validade);
 			_formOrigem = formOrigem;
-			CarregaCmbSituacao();
+
+			if (_formOrigem != null && _formOrigem.Name == "frmCartaoLista")
+			{
+				btnAdicionar.Visible = false;
+				btnEditar.Visible = false;
+				btnEscolher.Visible = true;
+				lblTitulo.Text = "Selecionar Membro";
+			}
+			else
+			{
+				btnAdicionar.Visible = true;
+				btnEditar.Visible = true;
+				btnEscolher.Visible = false;
+				lblTitulo.Text = "Procurar Membro";
+			}
+
+			//--- DEFINE DEFAULT SITUACAO
+			IDSituacao = 1; // ativo
+			txtSituacao.Text = "Ativo";
+			txtCongregacao.Text = "TODAS";
+			txtFuncao.Text = "TODAS";
+
+			//--- GET DATA
 			ObterDados();
 			FormataListagem();
 
 			//--- get dados
-			cmbAtivo.SelectedValueChanged += (a, b) => ObterDados();
 			dgvListagem.CellDoubleClick += btnEditar_Click;
 			txtProcura.TextChanged += FiltrarListagem;
 			HandlerKeyDownControl(this);
 		}
-
-		//--- PROPRIEDADE DE ESCOLHA
-		public objMembro propEscolha { get; set; }
 
 		// GET DATA
 		//------------------------------------------------------------------------------------------------------------
@@ -50,7 +74,7 @@ namespace CamadaUI.Membros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 				MembroBLL cBLL = new MembroBLL(DBPath());
-				lstMembros = cBLL.GetListMembro("", (byte)cmbAtivo.SelectedValue);
+				lstMembros = cBLL.GetListMembro("", IDCongregacao, IDFuncao, IDSituacao);
 				dgvListagem.DataSource = lstMembros;
 			}
 			catch (Exception ex)
@@ -63,18 +87,6 @@ namespace CamadaUI.Membros
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-		}
-
-		// CARREGA COMBO
-		//------------------------------------------------------------------------------------------------------------
-		private void CarregaCmbSituacao()
-		{
-			//--- Set DataTable
-			cmbAtivo.DataSource = Program.lstSituacao;
-			cmbAtivo.ValueMember = "IDSituacao";
-			cmbAtivo.DisplayMember = "Situacao";
-			cmbAtivo.SelectedValue = 1;
-			cmbAtivo.SelectedIndex = 0;
 		}
 
 		#endregion
@@ -212,10 +224,10 @@ namespace CamadaUI.Membros
 		{
 			if (_formOrigem == null)
 			{
-				frmMembro frm = new frmMembro(new objMembro(null));
+				frmMembro frm = new frmMembro(new objMembro(null), this);
 				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
 				DesativaMenuPrincipal();
-				Close();
+				Visible = false;
 				frm.Show();
 			}
 			else
@@ -226,6 +238,20 @@ namespace CamadaUI.Membros
 		}
 
 		private void btnEditar_Click(object sender, EventArgs e)
+		{
+			if (_formOrigem != null && _formOrigem.Name == "frmCartaoLista")
+			{
+				// ESCOLHER
+				EscolherRegistro();
+			}
+			else
+			{
+				// EDITAR
+				EditarRegistro();
+			}
+		}
+
+		private void EditarRegistro()
 		{
 			//--- check selected item
 			if (dgvListagem.SelectedRows.Count == 0)
@@ -239,19 +265,28 @@ namespace CamadaUI.Membros
 			objMembro item = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			if (_formOrigem == null)
+			frmMembro frm = new frmMembro(item, this);
+			frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			Visible = false;
+			frm.Show();
+		}
+
+		private void EscolherRegistro()
+		{
+			//--- check selected item
+			if (dgvListagem.SelectedRows.Count == 0)
 			{
-				frmMembro frm = new frmMembro(item);
-				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
+				AbrirDialog("Favor selecionar um registro para Editar...",
+					"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+				return;
 			}
-			else
-			{
-				propEscolha = item;
-				DialogResult = DialogResult.Yes;
-			}
+
+			//--- get Selected item
+			propEscolha = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
+
+			DialogResult = DialogResult.OK;
+
 		}
 
 		#endregion
@@ -288,7 +323,7 @@ namespace CamadaUI.Membros
 
 		#endregion // FILTRAGEM PROCURA --- END
 
-		#region ATIVAR DESATIVAR MENU
+		#region CONTEXT MENU
 
 		private void dgvListagem_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -374,67 +409,6 @@ namespace CamadaUI.Membros
 			}
 		}
 
-		#endregion // ATIVAR DESATIVAR MENU --- END
-
-		#region CONTROLS FUNCTION
-
-		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
-		//------------------------------------------------------------------------------------------------------------
-		private void frmMembroListagem_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-			{
-				e.Handled = true;
-				btnFechar_Click(sender, new EventArgs());
-			}
-			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == 0) i = dgvListagem.Rows.Count;
-						dgvListagem.Rows[i - 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
-			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
-			{
-				e.Handled = true;
-
-				if (dgvListagem.Rows.Count > 0)
-				{
-					if (dgvListagem.SelectedRows.Count > 0)
-					{
-						int i = dgvListagem.SelectedRows[0].Index;
-						dgvListagem.Rows[i].Selected = false;
-						if (i == dgvListagem.Rows.Count - 1) i = -1;
-						dgvListagem.Rows[i + 1].Selected = true;
-					}
-					else
-					{
-						dgvListagem.Rows[0].Selected = true;
-					}
-
-					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
-					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
-				}
-			}
-		}
-
-		#endregion // CONTROLS FUNCTION --- END
-
 		private void mnuAlterarSituacao_Click(object sender, EventArgs e)
 		{
 			ToolStripMenuItem menu = (ToolStripMenuItem)sender;
@@ -499,5 +473,300 @@ namespace CamadaUI.Membros
 				Cursor.Current = Cursors.Default;
 			}
 		}
+
+		#endregion // CONTEXT MENU --- END
+
+		#region CONTROLS FUNCTION
+
+		// FORM KEYPRESS: BLOQUEIA (+)
+		//------------------------------------------------------------------------------------------------------------
+		private void frm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 43)
+			{
+				//--- cria uma lista de controles que serao impedidos de receber '+'
+				Control[] controlesBloqueados = {
+					txtCongregacao, txtFuncao, txtSituacao
+				};
+
+				if (controlesBloqueados.Contains(ActiveControl)) e.Handled = true;
+			}
+		}
+
+		// ESC TO CLOSE || KEYDOWN TO DOWNLIST || KEYUP TO UPLIST
+		//------------------------------------------------------------------------------------------------------------
+		private void frmMembroListagem_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.Handled = true;
+				btnFechar_Click(sender, new EventArgs());
+			}
+			else if (e.KeyCode == Keys.Up && ActiveControl.GetType().BaseType.Name != "ComboBox")
+			{
+				e.Handled = true;
+
+				if (dgvListagem.Rows.Count > 0)
+				{
+					if (dgvListagem.SelectedRows.Count > 0)
+					{
+						int i = dgvListagem.SelectedRows[0].Index;
+						dgvListagem.Rows[i].Selected = false;
+						if (i == 0) i = dgvListagem.Rows.Count;
+						dgvListagem.Rows[i - 1].Selected = true;
+					}
+					else
+					{
+						dgvListagem.Rows[0].Selected = true;
+					}
+
+					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
+					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
+				}
+			}
+			else if (e.KeyCode == Keys.Down && ActiveControl.GetType().BaseType.Name != "ComboBox")
+			{
+				e.Handled = true;
+
+				if (dgvListagem.Rows.Count > 0)
+				{
+					if (dgvListagem.SelectedRows.Count > 0)
+					{
+						int i = dgvListagem.SelectedRows[0].Index;
+						dgvListagem.Rows[i].Selected = false;
+						if (i == dgvListagem.Rows.Count - 1) i = -1;
+						dgvListagem.Rows[i + 1].Selected = true;
+					}
+					else
+					{
+						dgvListagem.Rows[0].Selected = true;
+					}
+
+					dgvListagem.FirstDisplayedScrollingRowIndex = dgvListagem.SelectedRows[0].Index;
+					dgvListagem.SelectedRows[0].Cells[0].Selected = true;
+				}
+			}
+		}
+
+		// CONTROL KEYDOWN: BLOCK (+), CREATE (DELETE), BLOCK EDIT
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyDown(object sender, KeyEventArgs e)
+		{
+
+			Control ctr = (Control)sender;
+
+			if (e.KeyCode == Keys.Add || e.KeyCode == Keys.F4)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCongregacao":
+						btnCongregacaoEscolher_Click(sender, new EventArgs());
+						break;
+					case "txtFuncao":
+						btnSetFuncao_Click(sender, new EventArgs());
+						break;
+					case "txtSituacao":
+						btnSetSituacao_Click(sender, new EventArgs());
+						break;
+					default:
+						break;
+				}
+			}
+			else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) | (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
+			{
+				//--- cria um array de controles que serao liberados ao KEYPRESS
+				Control[] controlesID = {
+					txtFuncao, txtSituacao
+				};
+
+				if (controlesID.Contains(ctr))
+				{
+					e.Handled = false;
+				}
+				else
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtCongregacao":
+						txtCongregacao.Text = "TODAS";
+						IDCongregacao = null;
+						ObterDados();
+						break;
+					case "txtFuncao":
+						txtFuncao.Text = "TODAS";
+						IDFuncao = null;
+						ObterDados();
+						break;
+					case "txtSituacao":
+						txtSituacao.Text = "TODAS";
+						IDSituacao = null;
+						ObterDados();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (e.Alt)
+			{
+				e.Handled = false;
+			}
+			else
+			{
+				//--- cria um array de controles que serão bloqueados de alteracao
+				Control[] controlesBloqueados = { txtCongregacao, txtFuncao, txtSituacao };
+
+				if (controlesBloqueados.Contains(ctr))
+				{
+					e.Handled = true;
+					e.SuppressKeyPress = true;
+				}
+			}
+		}
+
+		// CREATE SHORTCUT TO TEXTBOX LIST VALUES
+		//------------------------------------------------------------------------------------------------------------
+		private void Control_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (char.IsDigit(e.KeyChar))
+			{
+				Control ctr = (Control)sender;
+				e.Handled = true;
+
+				switch (ctr.Name)
+				{
+					case "txtFuncao":
+
+						if (Program.lstFuncao.Count > 0)
+						{
+							var forma = Program.lstFuncao.FirstOrDefault(x => x.IDFuncao == int.Parse(e.KeyChar.ToString()));
+
+							if (forma == null) return;
+
+							if (forma.IDFuncao != IDFuncao)
+							{
+								IDFuncao = (byte)forma.IDFuncao;
+								txtFuncao.Text = forma.Funcao;
+							}
+
+						}
+						break;
+
+					case "txtSituacao":
+
+						if (Program.lstSituacao.Count > 0)
+						{
+							var forma = Program.lstSituacao.FirstOrDefault(x => x.IDSituacao == int.Parse(e.KeyChar.ToString()));
+
+							if (forma == null) return;
+
+							if (forma.IDSituacao != IDFuncao)
+							{
+								IDFuncao = (byte)forma.IDSituacao;
+								txtSituacao.Text = forma.Situacao;
+							}
+
+						}
+						break;
+
+					default:
+						break;
+				}
+			}
+		}
+
+		// OPEN CONGREGACAO PROCURA FORM
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCongregacaoEscolher_Click(object sender, EventArgs e)
+		{
+			frmCongregacaoProcura frm = new frmCongregacaoProcura(this, IDCongregacao);
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				IDCongregacao = frm.propEscolha.IDCongregacao;
+				txtCongregacao.Text = frm.propEscolha.Congregacao;
+				ObterDados();
+			}
+
+			//--- select
+			txtCongregacao.Focus();
+			txtCongregacao.SelectAll();
+		}
+
+		// SELECT FUNCAO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetFuncao_Click(object sender, EventArgs e)
+		{
+			if (Program.lstFuncao == null || Program.lstFuncao.Count == 0)
+			{
+				AbrirDialog("Não há Funcões cadastradas...", "Funções",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			var dic = Program.lstFuncao.ToDictionary(x => (int)x.IDFuncao, x => x.Funcao);
+
+			Main.frmComboLista frm = new Main.frmComboLista(dic, txtFuncao, IDFuncao);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				IDFuncao = (byte)frm.propEscolha.Key;
+				txtFuncao.Text = frm.propEscolha.Value;
+				ObterDados();
+			}
+
+			//--- select
+			txtFuncao.Focus();
+			txtFuncao.SelectAll();
+		}
+
+		// SELECT SITUACAO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnSetSituacao_Click(object sender, EventArgs e)
+		{
+			if (Program.lstSituacao == null || Program.lstSituacao.Count == 0)
+			{
+				AbrirDialog("Não há Situações cadastradas...", "Situações",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			var dic = Program.lstSituacao.ToDictionary(x => (int)x.IDSituacao, x => x.Situacao);
+
+			Main.frmComboLista frm = new Main.frmComboLista(dic, txtSituacao, IDSituacao);
+
+			// show form
+			frm.ShowDialog();
+
+			//--- check return
+			if (frm.DialogResult == DialogResult.OK)
+			{
+				IDSituacao = (byte)frm.propEscolha.Key;
+				txtSituacao.Text = frm.propEscolha.Value;
+				ObterDados();
+			}
+
+			//--- select
+			txtSituacao.Focus();
+			txtSituacao.SelectAll();
+		}
+
+		#endregion // CONTROLS FUNCTION --- END
+
 	}
 }

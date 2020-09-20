@@ -18,7 +18,7 @@ namespace CamadaBLL
 
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objMembro> GetListMembro(string membro = "", byte? IDSituacao = null)
+		public List<objMembro> GetListMembro(string membro = "", byte? IDCongregacao = null, byte? IDFuncao = null, byte? IDSituacao = null)
 		{
 			try
 			{
@@ -34,6 +34,28 @@ namespace CamadaBLL
 				{
 					db.AdicionarParametros("@MembroNome", membro);
 					query += " WHERE MembroNome LIKE '*'+@membro+'*' ";
+					haveWhere = true;
+				}
+
+				if (IDCongregacao != null)
+				{
+					db.AdicionarParametros("@IDCongregacao", IDCongregacao);
+					if (haveWhere)
+						query += " AND IDCongregacao = @IDCongregacao";
+					else
+						query += " WHERE IDCongregacao = @IDCongregacao";
+
+					haveWhere = true;
+				}
+
+				if (IDFuncao != null)
+				{
+					db.AdicionarParametros("@IDFuncao", IDFuncao);
+					if (haveWhere)
+						query += " AND IDFuncao = @IDFuncao";
+					else
+						query += " WHERE IDFuncao = @IDFuncao";
+
 					haveWhere = true;
 				}
 
@@ -101,7 +123,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados(_DBPath);
 
-				string query = "SELECT * FROM qryMembro WHERE WHERE (((NaLista)=True))";
+				string query = "SELECT * FROM qryMembro WHERE NaLista = True ";
 
 				// add params
 				db.LimparParametros();
