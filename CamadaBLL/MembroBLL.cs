@@ -169,6 +169,8 @@ namespace CamadaBLL
 				IDEstadoCivil = (byte)row["IDEstadoCivil"],
 				IDFuncao = (byte)row["IDFuncao"],
 				Funcao = (string)row["Funcao"],
+				ImagemCartaoFrente = row["ImagemCartaoFrente"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoFrente"],
+				ImagemCartaoVerso = row["ImagemCartaoVerso"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoVerso"],
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],
 				MembresiaData = row["MembresiaData"] == DBNull.Value ? null : (DateTime?)row["MembresiaData"],
@@ -358,6 +360,37 @@ namespace CamadaBLL
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();
+				throw ex;
+			}
+		}
+
+		// COUNT MARCADOS PARA IMPRESSAO
+		//------------------------------------------------------------------------------------------------------------
+		public int CountMarcados()
+		{
+			try
+			{
+				AcessoDados db = new AcessoDados(_DBPath);
+
+				//string query = "SELECT COUNT ";
+
+				string query = "SELECT COUNT(*) AS QUANT " +
+					"FROM tblMembro " +
+					"WHERE Imprimir = True";
+
+				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
+
+				if (dt.Rows.Count == 0)
+				{
+					throw new Exception("Não foi encontrado registros");
+				}
+
+				int quant = (int)dt.Rows[0][0];
+				return quant;
+
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}

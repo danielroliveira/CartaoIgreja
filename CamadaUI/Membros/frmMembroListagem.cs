@@ -217,7 +217,11 @@ namespace CamadaUI.Membros
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
-			MostraMenuPrincipal();
+
+			if (_formOrigem == null || _formOrigem.Name != "frmCartaoLista")
+			{
+				MostraMenuPrincipal();
+			}
 		}
 
 		private void btnAdicionar_Click(object sender, EventArgs e)

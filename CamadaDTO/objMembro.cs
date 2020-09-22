@@ -24,8 +24,11 @@ namespace CamadaDTO
 			//internal string _EstadoCivilF;
 			internal byte? _IDCongregacao;
 			internal string _Congregacao;
-			internal byte _IDFuncao;
-			internal string _Funcao;
+			internal objFuncao _Funcao;
+			//internal byte _IDFuncao;
+			//internal string _Funcao;
+			//internal string _ImagemCartaoFrente;
+			//internal string _ImagemCartaoVerso;
 			internal bool _Imprimir;
 			internal bool _NaLista;
 			internal byte _IDSituacao;
@@ -45,13 +48,12 @@ namespace CamadaDTO
 				_EstadoCivil = new objEstadoCivil() { IDEstadoCivil = 1, EstadoCivil = "Solteiro(a)" },
 				_IDMembro = IDMembro,
 				_MembroNome = "",
-				_NascimentoData = null,
+				_NascimentoData = DateTime.Today.AddYears(-10),
 				_IDSituacao = 1,
 				_Situacao = "Ativo",
 				_Imprimir = true,
 				_NaLista = false,
-				_IDFuncao = 2,
-				_Funcao = "Membro",
+				_Funcao = new objFuncao() { IDFuncao = 2, Funcao = "Membro" },
 				//_EmissaoData = DateTime.Today,
 				_IDCongregacao = null,
 				_MembresiaData = DateTime.Today,
@@ -314,12 +316,12 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public byte IDFuncao
 		{
-			get => EditData._IDFuncao;
+			get => EditData._Funcao.IDFuncao;
 			set
 			{
-				if (value != EditData._IDFuncao)
+				if (value != EditData._Funcao.IDFuncao)
 				{
-					EditData._IDFuncao = value;
+					EditData._Funcao.IDFuncao = value;
 					NotifyPropertyChanged("IDFuncao");
 				}
 			}
@@ -329,13 +331,43 @@ namespace CamadaDTO
 		//---------------------------------------------------------------
 		public string Funcao
 		{
-			get => EditData._Funcao;
+			get => EditData._Funcao.Funcao;
 			set
 			{
-				if (value != EditData._Funcao)
+				if (value != EditData._Funcao.Funcao)
 				{
-					EditData._Funcao = value;
+					EditData._Funcao.Funcao = value;
 					NotifyPropertyChanged("Funcao");
+				}
+			}
+		}
+
+		// Property ImagemCartaoFrente
+		//---------------------------------------------------------------
+		public string ImagemCartaoFrente
+		{
+			get => EditData._Funcao.ImagemCartaoFrente;
+			set
+			{
+				if (value != EditData._Funcao.ImagemCartaoFrente)
+				{
+					EditData._Funcao.ImagemCartaoFrente = value;
+					NotifyPropertyChanged("ImagemCartaoFrente");
+				}
+			}
+		}
+
+		// Property ImagemCartaoVerso
+		//---------------------------------------------------------------
+		public string ImagemCartaoVerso
+		{
+			get => EditData._Funcao.ImagemCartaoVerso;
+			set
+			{
+				if (value != EditData._Funcao.ImagemCartaoVerso)
+				{
+					EditData._Funcao.ImagemCartaoVerso = value;
+					NotifyPropertyChanged("ImagemCartaoVerso");
 				}
 			}
 		}

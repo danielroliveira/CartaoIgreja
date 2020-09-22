@@ -3,6 +3,8 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -13,6 +15,7 @@ namespace CamadaUI.Cartao
 	{
 		private List<objMembro> lstMembros = new List<objMembro>();
 		private Form _formOrigem;
+		private MembroBLL mBLL = new MembroBLL(DBPath());
 
 		#region NEW | OPEN FUNCTIONS
 
@@ -23,6 +26,7 @@ namespace CamadaUI.Cartao
 			//--- Add any initialization after the InitializeComponent() call.
 			_formOrigem = formOrigem;
 			ObterDados();
+			ObterMarcados();
 			FormataListagem();
 
 			//--- get dados
@@ -41,9 +45,9 @@ namespace CamadaUI.Cartao
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				MembroBLL cBLL = new MembroBLL(DBPath());
-				lstMembros = cBLL.GetListMembroToPrint();
+				lstMembros = mBLL.GetListMembroToPrint();
 				dgvListagem.DataSource = lstMembros;
+				AtualizarNaLista();
 			}
 			catch (Exception ex)
 			{
@@ -55,6 +59,81 @@ namespace CamadaUI.Cartao
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
+		}
+
+		private void ObterMarcados()
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				int marcados = mBLL.CountMarcados();
+
+				if (marcados == 0)
+				{
+					lblMarcados.Text = "Nenhum Membro foi marcado para impressão";
+				}
+				else if (marcados == 1)
+				{
+					lblMarcados.Text = "Um Membro marcado para impressão";
+				}
+				else
+				{
+					lblMarcados.Text = $"{marcados:D2} Membros marcados para impressão";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a quantidade de membros marcados para impressão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private int AtualizarNaLista()
+		{
+			int count = lstMembros.Count();
+
+			if (count == 0)
+			{
+				lblNaLista.Text = "Nenhum Membro foi inserido na lista de impressão";
+				lblNaLista.ForeColor = Color.Black;
+				lblNaLista.Font = new Font("Pathway Gothic One", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+				btnRemover.Enabled = false;
+				btnAdicionar.Enabled = true;
+			}
+			else if (count == 1)
+			{
+				lblNaLista.Text = "Um Membro foi inserido na lista de impressão";
+				lblNaLista.ForeColor = Color.Black;
+				lblNaLista.Font = new Font("Pathway Gothic One", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+				btnRemover.Enabled = true;
+				btnAdicionar.Enabled = true;
+			}
+			else if (count >= 10)
+			{
+				lblNaLista.Text = "(!) LISTA DE IMPRESSÃO COMPLETA";
+				lblNaLista.ForeColor = Color.Red;
+				lblNaLista.Font = new Font("Pathway Gothic One", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+				btnRemover.Enabled = true;
+				btnAdicionar.Enabled = false;
+			}
+			else
+			{
+				lblNaLista.Text = $"{count:D2} Membros foram inseridos na lista de impressão";
+				lblNaLista.ForeColor = Color.Black;
+				lblNaLista.Font = new Font("Pathway Gothic One", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+				btnRemover.Enabled = true;
+				btnAdicionar.Enabled = true;
+			}
+
+			return count;
 		}
 
 		#endregion
@@ -140,6 +219,8 @@ namespace CamadaUI.Cartao
 			MostraMenuPrincipal();
 		}
 
+		// INSERT MEMBRO LIST
+		//------------------------------------------------------------------------------------------------------------
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			try
@@ -177,7 +258,7 @@ namespace CamadaUI.Cartao
 
 				//--- save membro
 				membro.NaLista = true;
-				new MembroBLL(DBPath()).UpdateMembro(membro);
+				mBLL.UpdateMembro(membro);
 
 				//--- Get Data
 				ObterDados();
@@ -206,6 +287,55 @@ namespace CamadaUI.Cartao
 			}
 		}
 
+		// REMOVE MEMBRO LIST
+		//------------------------------------------------------------------------------------------------------------
+		private void btnRemover_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check selected item
+				if (dgvListagem.SelectedRows.Count == 0)
+				{
+					AbrirDialog("Favor selecionar um registro para Editar...",
+						"Selecionar Registro", DialogType.OK, DialogIcon.Information);
+					return;
+				}
+
+				//--- get Selected item
+				objMembro item = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
+
+				var resp = AbrirDialog("Deseja realmente remover o membro:\n" +
+					item.MembroNome.ToUpper() + "\n" +
+					"da lista de impressão?", "Remover Impressão",
+					DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp == DialogResult.No) return;
+
+				//--- save membro
+				item.NaLista = false;
+				mBLL.UpdateMembro(item);
+
+				//--- Get Data
+				ObterDados();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover Membro na lista de impressão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		// EDIT MEMBRO DATA
+		//------------------------------------------------------------------------------------------------------------
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
 			//--- check selected item
@@ -220,21 +350,170 @@ namespace CamadaUI.Cartao
 			objMembro item = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
 
 			//--- open edit form
-			if (_formOrigem == null)
+			Membros.frmMembro frm = new Membros.frmMembro(item, this);
+			frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
+			DesativaMenuPrincipal();
+			frm.Show();
+		}
+
+		private void btnPrintFrente_Click(object sender, EventArgs e)
+		{
+			if (!CheckQuantidade()) return;
+			if (!CheckFotos()) return;
+			if (!CheckModelos()) return;
+
+			try
 			{
-				/*
-				frmMembro frm = new frmMembro(item);
-				frm.MdiParent = Application.OpenForms.OfType<Main.frmPrincipal>().FirstOrDefault();
-				DesativaMenuPrincipal();
-				Close();
-				frm.Show();
-				*/
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				new frmCartaoReport(lstMembros).ShowDialog();
 			}
-			else
+			catch (Exception ex)
 			{
-				propEscolha = item;
-				DialogResult = DialogResult.Yes;
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de impressão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
+
+		private void btnPrintAtras_Click(object sender, EventArgs e)
+		{
+			if (!CheckQuantidade()) return;
+			if (!CheckFotos()) return;
+			if (!CheckModelos()) return;
+		}
+
+		private void btnPrintConcluido_Click(object sender, EventArgs e)
+		{
+			if (!CheckQuantidade()) return;
+		}
+
+		// VERIFY QUANTITY TO PRINT
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckQuantidade()
+		{
+			if (AtualizarNaLista() != 10)
+			{
+				AbrirDialog("É necessário pelo menos 10 membros inseridos na lista de impressão...",
+					"Lista Incompleta", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+
+			return true;
+		}
+
+		// VERIFICA FOTOS AUSENTES
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckFotos()
+		{
+			string FotosFolder = ObterConfigValorNode("FotosImageFolder");
+
+			if (string.IsNullOrEmpty(FotosFolder))
+			{
+				AbrirDialog("Ainda não existe a pasta de imagens de fotos na configuração\n" +
+					$"Favor definir a pasta de imagens de fotos antes de imprimir.",
+					"Pasta de Imagens Ausente", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+
+			string newFile;
+
+			foreach (objMembro membro in lstMembros)
+			{
+				//--- check folder default
+				newFile = FotosFolder + $"\\{membro.RGMembro}.jpg";
+
+				var file = new FileInfo(newFile);
+
+				if (!file.Exists)
+				{
+					AbrirDialog($"{membro.MembroNome.ToUpper()}\n" +
+						$"ainda não possui foto anexada...\n" +
+						$"Favor anexar a foto do membro antes de imprimir.",
+						"Foto Ausente", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		// VERIFICA MODELOS AUSENTES
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckModelos()
+		{
+			//--- check FOLDER
+			string ModelosFolder = ObterConfigValorNode("DesignImageFolder");
+
+			if (string.IsNullOrEmpty(ModelosFolder))
+			{
+				AbrirDialog("Ainda não existe a pasta de imagens de modelos dos cartões na configuração\n" +
+					$"Favor definir a pasta de imagens de modelos antes de imprimir.",
+					"Pasta de Modelos Ausente", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+
+			//--- check Files models
+			string newFile;
+
+			foreach (objMembro membro in lstMembros)
+			{
+				//--- check model definition
+				if (string.IsNullOrEmpty(membro.ImagemCartaoFrente) || string.IsNullOrEmpty(membro.ImagemCartaoVerso))
+				{
+					AbrirDialog($"{membro.Funcao.ToUpper()} " +
+						$"ainda não possui um modelo de cartão definido...\n" +
+						$"Favor definir um modelo de cartão da função no BD antes de imprimir.",
+						"Modelo Não Definido", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+
+				//--- check modelo file FRENTE
+				newFile = ModelosFolder + $"\\{membro.ImagemCartaoFrente}.jpg";
+
+				var filefrente = new FileInfo(newFile);
+
+				if (!filefrente.Exists)
+				{
+					AbrirDialog($"O modelo da FRENTE do cartão da função:\n" +
+						$"{membro.Funcao.ToUpper()}\n" +
+						$"Está ausente..." +
+						$"Comunique ao administrador do sistema",
+						"Modelo Ausente", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+				else
+				{
+					membro.ImagemCartaoFrente = newFile;
+				}
+
+				//--- check modelo file VERSO
+				newFile = ModelosFolder + $"\\{membro.ImagemCartaoVerso}.jpg";
+
+				var fileverso = new FileInfo(newFile);
+
+				if (!fileverso.Exists)
+				{
+					AbrirDialog($"O modelo da VERSO do cartão da função:\n" +
+						$"{membro.Funcao.ToUpper()}\n" +
+						$"Está ausente..." +
+						$"Comunique ao administrador do sistema",
+						"Modelo Ausente", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+				else
+				{
+					membro.ImagemCartaoVerso = newFile;
+				}
+			}
+
+			return true;
 		}
 
 		#endregion
@@ -258,67 +537,8 @@ namespace CamadaUI.Cartao
 
 				objMembro membro = (objMembro)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
-				if (membro.Imprimir == true)
-				{
-					mnuImprimir.Enabled = false;
-					mnuNaoImprimir.Enabled = true;
-				}
-				else
-				{
-					mnuImprimir.Enabled = true;
-					mnuNaoImprimir.Enabled = false;
-				}
-
-				if (membro.IDSituacao == 1)
-				{
-					mnuAtivar.Enabled = false;
-					mnuDesativar.Enabled = true;
-				}
-				else
-				{
-					mnuAtivar.Enabled = true;
-					mnuDesativar.Enabled = false;
-				}
-
 				// revela menu
 				MenuListagem.Show(c.PointToScreen(e.Location));
-			}
-		}
-
-		private void ImprimirMarcarDesmarcar_Click(object sender, EventArgs e)
-		{
-			ToolStripMenuItem menu = (ToolStripMenuItem)sender;
-
-			bool print = bool.Parse(menu.Tag.ToString());
-
-			//--- verifica se existe alguma cell 
-			if (dgvListagem.SelectedRows.Count == 0) return;
-
-			//--- Verifica o item
-			objMembro membro = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			//--- altera o valor
-			membro.Imprimir = print;
-			dgvListagem.Refresh();
-
-			//--- Salvar o Registro
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				MembroBLL cBLL = new MembroBLL(DBPath());
-				cBLL.UpdateMembro(membro);
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar a Situação do Membro..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
 			}
 		}
 
@@ -383,68 +603,5 @@ namespace CamadaUI.Cartao
 
 		#endregion // CONTROLS FUNCTION --- END
 
-		private void mnuAlterarSituacao_Click(object sender, EventArgs e)
-		{
-			ToolStripMenuItem menu = (ToolStripMenuItem)sender;
-
-			byte newSit = byte.Parse(menu.Tag.ToString());
-			string acao = "";
-
-			switch (newSit)
-			{
-				case 1:
-					acao = "ATIVO";
-					break;
-				case 2:
-					acao = "DESLIGADO";
-					break;
-				case 3:
-					acao = "TRANSFERIDO";
-					break;
-				case 4:
-					acao = "FALECIDO";
-					break;
-				default:
-					break;
-			}
-
-			//--- verifica se existe alguma cell 
-			if (dgvListagem.SelectedRows.Count == 0) return;
-
-			//--- Verifica o item
-			objMembro membro = (objMembro)dgvListagem.SelectedRows[0].DataBoundItem;
-
-			//---pergunta ao usuário
-			var response = AbrirDialog($"Deseja realmente alterar a situação do membro para: {acao}?\n",
-					(membro.IDSituacao == 1 ? "DESATIVAR " : "ATIVAR"),
-					DialogType.SIM_NAO, DialogIcon.Question);
-			if (response == DialogResult.No) return;
-
-			//--- altera o valor
-			membro.IDSituacao = newSit;
-
-			//--- Salvar o Registro
-			try
-			{
-				// --- Ampulheta ON
-				Cursor.Current = Cursors.WaitCursor;
-
-				MembroBLL cBLL = new MembroBLL(DBPath());
-				cBLL.UpdateMembro(membro);
-
-				//--- altera a imagem
-				ObterDados();
-			}
-			catch (Exception ex)
-			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar a Situação do Membro..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-			}
-			finally
-			{
-				// --- Ampulheta OFF
-				Cursor.Current = Cursors.Default;
-			}
-		}
 	}
 }

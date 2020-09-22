@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
@@ -17,6 +18,7 @@ namespace CamadaUI.Membros
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
+		private Image FotoImage = null;
 		public objMembro propEscolha { get; set; }
 
 		#region SUB NEW | PROPERTIES
@@ -31,6 +33,7 @@ namespace CamadaUI.Membros
 			_formOrigem = formOrigem;
 			bind.DataSource = _membro;
 			BindingCreator();
+			VisualizarFoto();
 
 			_membro.PropertyChanged += RegistroAlterado;
 
@@ -43,6 +46,10 @@ namespace CamadaUI.Membros
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 
+			//--- Nascimento Date Controlling
+			dtpMembresiaData.MaxDate = DateTime.Today;
+			dtpNascimentoData.MaxDate = DateTime.Today.AddYears(-1);
+
 			// ADD HANDLERS
 			HandlerKeyDownControl(this);
 			txtRGMembro.LostFocus += TxtIDMembro_LostFocus;
@@ -50,6 +57,16 @@ namespace CamadaUI.Membros
 			txtCongregacao.Enter += text_Enter;
 
 			txtMembroNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtMembroNome);
+		}
+
+		// ON SHOW
+		//------------------------------------------------------------------------------------------------------------
+		private void frmMembro_Shown(object sender, EventArgs e)
+		{
+			if (FotoImage == null)
+			{
+				picFoto.Image = Properties.Resources.sem_foto;
+			}
 		}
 
 		// PROPERTY SITUACAO
@@ -66,21 +83,31 @@ namespace CamadaUI.Membros
 						btnNovo.Enabled = true;
 						btnSalvar.Enabled = false;
 						btnCancelar.Enabled = false;
+						btnAnexarFoto.Enabled = true;
+						//btnAnexarFoto.BackColor = Color.FromArgb(255, 237, 215);
+						btnAnexarFoto.BackColor = Color.White;
 						break;
 					case EnumFlagEstado.Alterado:
 						btnNovo.Enabled = false;
 						btnSalvar.Enabled = true;
 						btnCancelar.Enabled = true;
+						btnAnexarFoto.Enabled = true;
+						//btnAnexarFoto.BackColor = Color.FromArgb(255, 237, 215);
+						btnAnexarFoto.BackColor = Color.White;
 						break;
 					case EnumFlagEstado.NovoRegistro:
 						btnNovo.Enabled = false;
 						btnSalvar.Enabled = true;
 						btnCancelar.Enabled = true;
+						btnAnexarFoto.Enabled = false;
+						btnAnexarFoto.BackColor = Color.Gainsboro;
 						break;
 					case EnumFlagEstado.RegistroBloqueado:
 						btnNovo.Enabled = true;
 						btnSalvar.Enabled = false;
 						btnCancelar.Enabled = false;
+						btnAnexarFoto.Enabled = false;
+						btnAnexarFoto.BackColor = Color.Gainsboro;
 						break;
 					default:
 						break;
@@ -130,7 +157,7 @@ namespace CamadaUI.Membros
 		}
 		private void BindRegistroChanged(object sender, EventArgs e)
 		{
-			MessageBox.Show("alterado");
+			//MessageBox.Show("alterado");
 		}
 
 		// CARREGA COMBO
@@ -239,7 +266,10 @@ namespace CamadaUI.Membros
 			_membro = new objMembro(null);
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _membro;
-			txtMembroNome.Focus();
+			txtRGMembro.Focus();
+			txtRGMembro.SelectAll();
+			if (FotoImage != null) FotoImage.Dispose();
+			picFoto.Image = Properties.Resources.sem_foto;
 		}
 
 		#endregion
@@ -501,6 +531,8 @@ namespace CamadaUI.Membros
 
 		private void form_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			if (FotoImage != null) FotoImage.Dispose();
+
 			if (_formOrigem != null)
 			{
 				if (_formOrigem.GetType() != typeof(Main.frmPrincipal))
@@ -615,5 +647,91 @@ namespace CamadaUI.Membros
 		}
 
 		#endregion // SET DADOS --- END
+
+		#region FOTOS FUNCTION
+
+		private void btnAnexarFoto_Click(object sender, EventArgs e)
+		{
+			//--- check folder default
+			string FotosFolder = ObterConfigValorNode("FotosImageFolder");
+
+			if (string.IsNullOrEmpty(FotosFolder))
+			{
+				AbrirDialog("A pasta de iamgens não foi selecionada na configuração do sistema...\n" +
+					"Favor indicar a pasta de fotos padrão do sistema...", "Pasta de Fotos",
+					DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			if (FotoImage != null)
+			{
+				var resp = AbrirDialog("Já existe uma foto anexada ao Registro de Membro\n" +
+								"Deseja alterar a foto atual?", "Alterar Foto",
+								DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+				if (resp == DialogResult.No) return;
+			}
+
+			string ImagePath = "";
+
+			using (OpenFileDialog OFD = new OpenFileDialog() { Filter = "JPG (*.jpg)|*.jpg" })
+			{
+				if (OFD.ShowDialog() == DialogResult.OK)
+				{
+					ImagePath = OFD.FileName;
+				}
+			}
+
+			// move foto to default folder
+			if (ImagePath.Length > 0)
+				FotoCopia(ImagePath, FotosFolder);
+			else
+				return;
+		}
+
+		private bool FotoCopia(string ImagePath, string FotosFolder)
+		{
+			try
+			{
+				if (!Directory.Exists(FotosFolder))
+				{
+					Directory.CreateDirectory(FotosFolder);
+				}
+
+				picFoto.Image = null;
+				if (FotoImage != null) FotoImage.Dispose();
+
+				string newFile = FotosFolder + $"\\{_membro.RGMembro}.jpg";
+
+				File.Copy(ImagePath, newFile, true);
+				FotoImage = Image.FromFile(newFile);
+				picFoto.Image = FotoImage;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Um erro aconteceu ao copiar a LogoColor para o diretório padrão...\n" +
+					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				return false;
+			}
+			return true;
+		}
+
+		private void VisualizarFoto()
+		{
+			//--- check folder default
+			string FotosFolder = ObterConfigValorNode("FotosImageFolder");
+			string newFile = FotosFolder + $"\\{_membro.RGMembro}.jpg";
+
+			var file = new FileInfo(newFile);
+
+			if (!file.Exists)
+			{
+				return;
+			}
+
+			FotoImage = Image.FromFile(newFile);
+			picFoto.Image = FotoImage;
+		}
+
+		#endregion // FOTOS FUNCTION --- END
 	}
 }

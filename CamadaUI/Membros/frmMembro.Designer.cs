@@ -60,7 +60,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.picFoto = new System.Windows.Forms.PictureBox();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnAnexarFoto = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -119,7 +119,7 @@
 			this.Label15.AutoSize = true;
 			this.Label15.BackColor = System.Drawing.Color.Transparent;
 			this.Label15.ForeColor = System.Drawing.Color.Black;
-			this.Label15.Location = new System.Drawing.Point(223, 148);
+			this.Label15.Location = new System.Drawing.Point(240, 148);
 			this.Label15.Name = "Label15";
 			this.Label15.Size = new System.Drawing.Size(105, 19);
 			this.Label15.TabIndex = 7;
@@ -142,7 +142,7 @@
 			this.txtMembroNome.Location = new System.Drawing.Point(127, 109);
 			this.txtMembroNome.MaxLength = 100;
 			this.txtMembroNome.Name = "txtMembroNome";
-			this.txtMembroNome.Size = new System.Drawing.Size(371, 27);
+			this.txtMembroNome.Size = new System.Drawing.Size(348, 27);
 			this.txtMembroNome.TabIndex = 4;
 			// 
 			// lblID
@@ -332,7 +332,7 @@
 			// dtpNascimentoData
 			// 
 			this.dtpNascimentoData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpNascimentoData.Location = new System.Drawing.Point(334, 145);
+			this.dtpNascimentoData.Location = new System.Drawing.Point(351, 145);
 			this.dtpNascimentoData.Name = "dtpNascimentoData";
 			this.dtpNascimentoData.Size = new System.Drawing.Size(124, 27);
 			this.dtpNascimentoData.TabIndex = 8;
@@ -460,26 +460,32 @@
 			// picFoto
 			// 
 			this.picFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.picFoto.Location = new System.Drawing.Point(545, 69);
+			this.picFoto.Image = global::CamadaUI.Properties.Resources.sem_foto;
+			this.picFoto.Location = new System.Drawing.Point(545, 92);
 			this.picFoto.Name = "picFoto";
 			this.picFoto.Size = new System.Drawing.Size(180, 240);
+			this.picFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picFoto.TabIndex = 22;
 			this.picFoto.TabStop = false;
 			// 
-			// button1
+			// btnAnexarFoto
 			// 
-			this.button1.BackColor = System.Drawing.Color.Transparent;
-			this.button1.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
-			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button1.Location = new System.Drawing.Point(568, 315);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(136, 27);
-			this.button1.TabIndex = 12;
-			this.button1.TabStop = false;
-			this.button1.Text = "Obter Foto";
-			this.button1.UseCompatibleTextRendering = true;
-			this.button1.UseVisualStyleBackColor = false;
-			this.button1.Click += new System.EventHandler(this.btnCongregacaoEscolher_Click);
+			this.btnAnexarFoto.BackColor = System.Drawing.Color.White;
+			this.btnAnexarFoto.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnAnexarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnAnexarFoto.Image = global::CamadaUI.Properties.Resources.attachment;
+			this.btnAnexarFoto.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.btnAnexarFoto.Location = new System.Drawing.Point(545, 338);
+			this.btnAnexarFoto.Name = "btnAnexarFoto";
+			this.btnAnexarFoto.Size = new System.Drawing.Size(180, 35);
+			this.btnAnexarFoto.TabIndex = 12;
+			this.btnAnexarFoto.TabStop = false;
+			this.btnAnexarFoto.Text = "Anexar Foto";
+			this.btnAnexarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnAnexarFoto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnAnexarFoto.UseCompatibleTextRendering = true;
+			this.btnAnexarFoto.UseVisualStyleBackColor = false;
+			this.btnAnexarFoto.Click += new System.EventHandler(this.btnAnexarFoto_Click);
 			// 
 			// frmMembro
 			// 
@@ -498,7 +504,7 @@
 			this.Controls.Add(this.btnSetFuncao);
 			this.Controls.Add(this.line1);
 			this.Controls.Add(this.btnSetEstadoCivil);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnAnexarFoto);
 			this.Controls.Add(this.btnCongregacaoEscolher);
 			this.Controls.Add(this.tspMenu);
 			this.Controls.Add(this.txtMembroNome);
@@ -514,6 +520,7 @@
 			this.Name = "frmMembro";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
+			this.Shown += new System.EventHandler(this.frmMembro_Shown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmMembro_KeyPress);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
@@ -527,7 +534,7 @@
 			this.Controls.SetChildIndex(this.panel1, 0);
 			this.Controls.SetChildIndex(this.tspMenu, 0);
 			this.Controls.SetChildIndex(this.btnCongregacaoEscolher, 0);
-			this.Controls.SetChildIndex(this.button1, 0);
+			this.Controls.SetChildIndex(this.btnAnexarFoto, 0);
 			this.Controls.SetChildIndex(this.btnSetEstadoCivil, 0);
 			this.Controls.SetChildIndex(this.line1, 0);
 			this.Controls.SetChildIndex(this.btnSetFuncao, 0);
@@ -584,6 +591,6 @@
 		internal System.Windows.Forms.Label label1;
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.PictureBox picFoto;
-		internal System.Windows.Forms.Button button1;
+		internal System.Windows.Forms.Button btnAnexarFoto;
 	}
 }

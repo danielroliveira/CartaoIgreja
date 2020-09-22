@@ -86,6 +86,8 @@ namespace CamadaBLL
 
 					obj.IDFuncao = (byte)row["IDFuncao"];
 					obj.Funcao = (string)row["Funcao"];
+					obj.ImagemCartaoFrente = row["ImagemCartaoFrente"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoFrente"];
+					obj.ImagemCartaoVerso = row["ImagemCartaoVerso"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoVerso"];
 
 					listagem.Add(obj);
 				}
