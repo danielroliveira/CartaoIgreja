@@ -17,6 +17,8 @@ namespace CamadaUI.Cartao
 		private Form _formOrigem;
 		private MembroBLL mBLL = new MembroBLL(DBPath());
 
+		public Image _barcode { get; set; }
+
 		#region NEW | OPEN FUNCTIONS
 
 		public frmCartaoLista(Form formOrigem = null)

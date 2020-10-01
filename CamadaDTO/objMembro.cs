@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
@@ -432,5 +433,6 @@ namespace CamadaDTO
 			}
 		}
 
+		public Image CodBarras { get; set; }
 	}
 }
