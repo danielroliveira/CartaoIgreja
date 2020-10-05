@@ -31,6 +31,9 @@
 			this.btnSalvarConfig = new System.Windows.Forms.Button();
 			this.btnCancelar = new System.Windows.Forms.Button();
 			this.pnlPastas = new System.Windows.Forms.Panel();
+			this.txtFotosFolder = new System.Windows.Forms.TextBox();
+			this.numValidade = new System.Windows.Forms.NumericUpDown();
+			this.label8 = new System.Windows.Forms.Label();
 			this.btnBackupDesign = new MBGlassStyleButton.MBGlassButton();
 			this.btnBackupFotos = new MBGlassStyleButton.MBGlassButton();
 			this.btnProcDesignFolder = new MBGlassStyleButton.MBGlassButton();
@@ -38,7 +41,6 @@
 			this.txtDesignFolder = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
-			this.txtFotosFolder = new System.Windows.Forms.TextBox();
 			this.Label18 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.txtIgrejaTitulo = new System.Windows.Forms.TextBox();
@@ -48,8 +50,6 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtUFPadrao = new System.Windows.Forms.TextBox();
 			this.txtCidadePadrao = new System.Windows.Forms.TextBox();
-			this.label8 = new System.Windows.Forms.Label();
-			this.numValidade = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.pnlPastas.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numValidade)).BeginInit();
@@ -117,6 +117,7 @@
 			// pnlPastas
 			// 
 			this.pnlPastas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(221)))), ((int)(((byte)(234)))));
+			this.pnlPastas.Controls.Add(this.txtFotosFolder);
 			this.pnlPastas.Controls.Add(this.numValidade);
 			this.pnlPastas.Controls.Add(this.label8);
 			this.pnlPastas.Controls.Add(this.btnBackupDesign);
@@ -126,7 +127,6 @@
 			this.pnlPastas.Controls.Add(this.txtDesignFolder);
 			this.pnlPastas.Controls.Add(this.label6);
 			this.pnlPastas.Controls.Add(this.label7);
-			this.pnlPastas.Controls.Add(this.txtFotosFolder);
 			this.pnlPastas.Controls.Add(this.Label18);
 			this.pnlPastas.Controls.Add(this.label4);
 			this.pnlPastas.Controls.Add(this.txtIgrejaTitulo);
@@ -141,6 +141,46 @@
 			this.pnlPastas.Name = "pnlPastas";
 			this.pnlPastas.Size = new System.Drawing.Size(720, 477);
 			this.pnlPastas.TabIndex = 1;
+			// 
+			// txtFotosFolder
+			// 
+			this.txtFotosFolder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtFotosFolder.Location = new System.Drawing.Point(72, 224);
+			this.txtFotosFolder.Name = "txtFotosFolder";
+			this.txtFotosFolder.Size = new System.Drawing.Size(565, 27);
+			this.txtFotosFolder.TabIndex = 19;
+			this.txtFotosFolder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
+			// 
+			// numValidade
+			// 
+			this.numValidade.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.numValidade.Location = new System.Drawing.Point(187, 128);
+			this.numValidade.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.numValidade.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numValidade.Name = "numValidade";
+			this.numValidade.Size = new System.Drawing.Size(79, 27);
+			this.numValidade.TabIndex = 8;
+			this.numValidade.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.BackColor = System.Drawing.Color.Transparent;
+			this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(19, 130);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(162, 19);
+			this.label8.TabIndex = 7;
+			this.label8.Text = "Validade da Credencial:";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// btnBackupDesign
 			// 
@@ -278,17 +318,6 @@
 			this.label7.TabIndex = 14;
 			this.label7.Text = "Pasta do Design dos Cartões:";
 			// 
-			// txtFotosFolder
-			// 
-			this.txtFotosFolder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFotosFolder.Location = new System.Drawing.Point(72, 224);
-			this.txtFotosFolder.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.txtFotosFolder.MaxLength = 200;
-			this.txtFotosFolder.Name = "txtFotosFolder";
-			this.txtFotosFolder.Size = new System.Drawing.Size(565, 27);
-			this.txtFotosFolder.TabIndex = 11;
-			this.txtFotosFolder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
-			// 
 			// Label18
 			// 
 			this.Label18.AutoSize = true;
@@ -387,37 +416,6 @@
 			this.txtCidadePadrao.Size = new System.Drawing.Size(212, 27);
 			this.txtCidadePadrao.TabIndex = 4;
 			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.BackColor = System.Drawing.Color.Transparent;
-			this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label8.Location = new System.Drawing.Point(19, 130);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(162, 19);
-			this.label8.TabIndex = 7;
-			this.label8.Text = "Validade da Credencial:";
-			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// numValidade
-			// 
-			this.numValidade.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.numValidade.Location = new System.Drawing.Point(187, 128);
-			this.numValidade.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.numValidade.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numValidade.Name = "numValidade";
-			this.numValidade.Size = new System.Drawing.Size(79, 27);
-			this.numValidade.TabIndex = 8;
-			this.numValidade.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
 			// frmConfigGeral
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -452,10 +450,8 @@
 		internal System.Windows.Forms.Label label2;
 		internal System.Windows.Forms.TextBox txtUFPadrao;
 		internal System.Windows.Forms.TextBox txtCidadePadrao;
-		internal System.Windows.Forms.TextBox txtFotosFolder;
 		internal System.Windows.Forms.Label Label18;
 		private System.Windows.Forms.Label label3;
-		internal System.Windows.Forms.TextBox txtDesignFolder;
 		internal System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private MBGlassStyleButton.MBGlassButton btnProcFotosFolder;
@@ -464,5 +460,7 @@
 		private MBGlassStyleButton.MBGlassButton btnBackupDesign;
 		private System.Windows.Forms.NumericUpDown numValidade;
 		internal System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox txtDesignFolder;
+		private System.Windows.Forms.TextBox txtFotosFolder;
 	}
 }

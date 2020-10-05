@@ -1,6 +1,6 @@
 ﻿namespace CamadaUI.Cartao
 {
-	partial class frmCartaoReport
+	partial class frmCartaoReportVerso
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,6 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 			this.rptvPadrao = new Microsoft.Reporting.WinForms.ReportViewer();
 			this.btnFechar = new System.Windows.Forms.Button();
 			this.Panel1.SuspendLayout();
@@ -54,16 +56,18 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(410, 1);
-			this.lblTitulo.Size = new System.Drawing.Size(311, 50);
-			this.lblTitulo.Text = "Impressão de Cartão - Frente";
+			this.lblTitulo.Location = new System.Drawing.Point(415, 1);
+			this.lblTitulo.Size = new System.Drawing.Size(306, 50);
+			this.lblTitulo.Text = "Impressão de Cartão - Verso";
 			// 
 			// rptvPadrao
 			// 
 			this.rptvPadrao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.rptvPadrao.LocalReport.ReportEmbeddedResource = "CamadaUI.Cartao.rptCartaoFrente.rdlc";
+			reportDataSource1.Name = "dstMembro";
+			this.rptvPadrao.LocalReport.DataSources.Add(reportDataSource1);
+			this.rptvPadrao.LocalReport.ReportEmbeddedResource = "CamadaUI.Cartao.rptCartaoVerso.rdlc";
 			this.rptvPadrao.Location = new System.Drawing.Point(19, 72);
 			this.rptvPadrao.Margin = new System.Windows.Forms.Padding(10);
 			this.rptvPadrao.Name = "rptvPadrao";
@@ -88,14 +92,14 @@
 			this.btnFechar.UseVisualStyleBackColor = true;
 			this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
-			// frmCartaoReport
+			// frmCartaoReportVerso
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(802, 734);
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.rptvPadrao);
-			this.Name = "frmCartaoReport";
-			this.Load += new System.EventHandler(this.frmCartaoReport_Load);
+			this.Name = "frmCartaoReportVerso";
+			this.Load += new System.EventHandler(this.frmCartaoReportVerso_Load);
 			this.Controls.SetChildIndex(this.rptvPadrao, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
 			this.Controls.SetChildIndex(this.Panel1, 0);

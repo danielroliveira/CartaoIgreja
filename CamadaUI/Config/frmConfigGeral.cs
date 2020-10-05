@@ -268,6 +268,7 @@ namespace CamadaUI.Config
 				{
 					if (!Directory.Exists(oldPath))
 					{
+						txtFotosFolder.Text = "";
 						oldPath = "";
 						btnProcFotosFolder_Click(sender, e);
 						return;
@@ -312,7 +313,7 @@ namespace CamadaUI.Config
 		{
 			try
 			{
-				string oldPath = txtFotosFolder.Text;
+				string oldPath = txtDesignFolder.Text;
 				string path = "";
 
 				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
@@ -349,6 +350,7 @@ namespace CamadaUI.Config
 					if (!Directory.Exists(oldPath))
 					{
 						oldPath = "";
+						txtDesignFolder.Text = "";
 						btnProcDesignFolder_Click(sender, e);
 						return;
 					}

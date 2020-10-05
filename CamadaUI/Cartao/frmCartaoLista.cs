@@ -360,6 +360,8 @@ namespace CamadaUI.Cartao
 
 		private void btnPrintFrente_Click(object sender, EventArgs e)
 		{
+			ObterDados();
+
 			if (!CheckQuantidade()) return;
 			if (!CheckFotos()) return;
 			if (!CheckModelos()) return;
@@ -441,6 +443,9 @@ namespace CamadaUI.Cartao
 						"Foto Ausente", DialogType.OK, DialogIcon.Exclamation);
 					return false;
 				}
+
+				membro.ImagemFoto = newFile;
+
 			}
 
 			return true;

@@ -17,10 +17,10 @@
                   <CellContents>
                     <Rectangle Name="Rectangle1">
                       <ReportItems>
-                        <Image Name="Image3">
+                        <Image Name="FundoCartao">
                           <Source>External</Source>
                           <Value>=Fields!ImagemCartaoFrente.Value</Value>
-                          <Sizing>FitProportional</Sizing>
+                          <Sizing>Fit</Sizing>
                           <Height>5.8cm</Height>
                           <Width>9cm</Width>
                           <Style>
@@ -30,8 +30,6 @@
                           </Style>
                         </Image>
                         <Textbox Name="txtMmebroNome">
-                          <CanGrow>true</CanGrow>
-                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -48,10 +46,10 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <Top>1.9976cm</Top>
-                          <Left>3.30465cm</Left>
-                          <Height>0.5cm</Height>
-                          <Width>4.14854cm</Width>
+                          <Top>2.17cm</Top>
+                          <Left>2.9554cm</Left>
+                          <Height>0.88557cm</Height>
+                          <Width>4.02888cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -59,6 +57,81 @@
                             </Border>
                           </Style>
                         </Textbox>
+                        <Textbox Name="txtFuncao">
+                          <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Funcao.Value</Value>
+                                  <Style>
+                                    <FontFamily>Franklin Gothic Medium Cond</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>1pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Top>3.97cm</Top>
+                          <Left>2.9554cm</Left>
+                          <Height>0.43352cm</Height>
+                          <Width>4.02888cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="txtFuncao2">
+                          <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Congregacao.Value</Value>
+                                  <Style>
+                                    <FontFamily>Franklin Gothic Medium Cond</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>1pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Top>3.23196cm</Top>
+                          <Left>2.9554cm</Left>
+                          <Height>0.43352cm</Height>
+                          <Width>4.02888cm</Width>
+                          <ZIndex>3</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Textbox>
+                        <Image Name="imgFoto">
+                          <Source>External</Source>
+                          <Value>=Fields!ImagemFoto.Value</Value>
+                          <Sizing>FitProportional</Sizing>
+                          <Top>1.8979cm</Top>
+                          <Left>0.69cm</Left>
+                          <Height>2.6cm</Height>
+                          <Width>1.93146cm</Width>
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -95,14 +168,14 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.28346in</Height>
+    <Height>5.8cm</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>3.54331in</Width>
+  <Width>9cm</Width>
   <Page>
     <PageHeight>30cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -111,7 +184,7 @@
     <TopMargin>0.4cm</TopMargin>
     <BottomMargin>0.4cm</BottomMargin>
     <Columns>2</Columns>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <ColumnSpacing>1cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -131,6 +204,10 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="CodBarras">
+          <DataField>CodBarras</DataField>
+          <rd:TypeName>System.Drawing.Image</rd:TypeName>
+        </Field>
         <Field Name="Congregacao">
           <DataField>Congregacao</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -181,6 +258,10 @@
         </Field>
         <Field Name="ImagemCartaoVerso">
           <DataField>ImagemCartaoVerso</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ImagemFoto">
+          <DataField>ImagemFoto</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Imprimir">

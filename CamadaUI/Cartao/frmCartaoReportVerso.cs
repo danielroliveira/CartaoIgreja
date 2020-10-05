@@ -7,13 +7,13 @@ using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Cartao
 {
-	public partial class frmCartaoReport : CamadaUI.Models.frmModFinBorderSizeable
+	public partial class frmCartaoReportVerso : CamadaUI.Models.frmModFinBorderSizeable
 	{
 		private List<objMembro> _MembroList;
 
 		#region SUB NEW | CONSTRUCTOR
 
-		public frmCartaoReport(List<objMembro> MembroList)
+		public frmCartaoReportVerso(List<objMembro> MembroList)
 		{
 			InitializeComponent();
 
@@ -41,7 +41,7 @@ namespace CamadaUI.Cartao
 
 		}
 
-		private void frmCartaoReport_Load(object sender, EventArgs e)
+		private void frmCartaoReportVerso_Load(object sender, EventArgs e)
 		{
 			//--- define o tamanho
 			int tamMaxH = Screen.PrimaryScreen.Bounds.Height;

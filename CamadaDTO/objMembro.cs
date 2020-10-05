@@ -30,6 +30,7 @@ namespace CamadaDTO
 			//internal string _Funcao;
 			//internal string _ImagemCartaoFrente;
 			//internal string _ImagemCartaoVerso;
+			//internal string _ImagemFoto;
 			internal bool _Imprimir;
 			internal bool _NaLista;
 			internal byte _IDSituacao;
@@ -372,6 +373,10 @@ namespace CamadaDTO
 				}
 			}
 		}
+
+		// Property ImagemFoto
+		//---------------------------------------------------------------
+		public string ImagemFoto { get; set; }
 
 		// Property Imprimir
 		//---------------------------------------------------------------

@@ -133,6 +133,12 @@
     <Compile Include="Cartao\frmCartaoReport.designer.cs">
       <DependentUpon>frmCartaoReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cartao\frmCartaoReportVerso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cartao\frmCartaoReportVerso.designer.cs">
+      <DependentUpon>frmCartaoReportVerso.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\frmConfigDados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,8 +240,11 @@
     <EmbeddedResource Include="Cartao\frmCartaoReport.resx">
       <DependentUpon>frmCartaoReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cartao\rptCartaoFrente.rdlc" />
+    <EmbeddedResource Include="Cartao\frmCartaoReportVerso.resx">
+      <DependentUpon>frmCartaoReportVerso.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cartao\rptCartaoVerso.rdlc" />
+    <EmbeddedResource Include="Cartao\rptCartaoFrente.rdlc" />
     <EmbeddedResource Include="Config\frmConfigDados.resx">
       <DependentUpon>frmConfigDados.cs</DependentUpon>
     </EmbeddedResource>
