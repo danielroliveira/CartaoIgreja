@@ -302,7 +302,13 @@
     </Compile>
     <None Include="CamadaUI_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CamadaDTO.AppException.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objCongregacao.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objDadosIgreja.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objEstadoCivil.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objFuncao.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objMembro.datasource" />
+    <None Include="Properties\DataSources\CamadaDTO.objSituacao.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

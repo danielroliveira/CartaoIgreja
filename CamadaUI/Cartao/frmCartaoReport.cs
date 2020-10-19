@@ -52,46 +52,7 @@ namespace CamadaUI.Cartao
 		}
 
 		#endregion // SUB NEW --- END
-
-		#region PARAMETERS
-
-		private void addParameters(DateTime dtInicial, DateTime dtFinal)
-		{
-			List<ReportParameter> @params = new List<ReportParameter>();
-
-			// obter Dados da Igreja
-			objDadosIgreja dadosIgreja = ObterDadosIgreja();
-
-			//--- set Periodo
-			setPeriodo(dtInicial, dtFinal, @params);
-
-			//--- set Logo Path
-			setLogo(dadosIgreja.ArquivoLogoMono, @params);
-
-			//--- add Parameters
-			rptvPadrao.LocalReport.SetParameters(@params);
-			rptvPadrao.LocalReport.Refresh();
-		}
-
-		private void setLogo(string path, List<ReportParameter> @params)
-		{
-			rptvPadrao.LocalReport.EnableExternalImages = true;
-			ReportParameter parameterLogo = new ReportParameter("LogoPath", @"file://" + path);
-
-			@params.Add(parameterLogo);
-		}
-
-		private void setPeriodo(DateTime dtInicial, DateTime dtFinal, List<ReportParameter> @params)
-		{
-			ReportParameter DataInicial = new ReportParameter("dtInicial", dtInicial.ToShortDateString());
-			ReportParameter DataFinal = new ReportParameter("dtFinal", dtFinal.ToShortDateString());
-
-			@params.Add(DataInicial);
-			@params.Add(DataFinal);
-		}
-
-		#endregion // PARAMETERS --- END
-
+		
 		#region BUTTONS
 
 		private void btnFechar_Click(object sender, EventArgs e)

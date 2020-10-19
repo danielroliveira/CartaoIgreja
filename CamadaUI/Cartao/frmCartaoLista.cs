@@ -388,9 +388,28 @@ namespace CamadaUI.Cartao
 
 		private void btnPrintAtras_Click(object sender, EventArgs e)
 		{
+			ObterDados();
+
 			if (!CheckQuantidade()) return;
-			if (!CheckFotos()) return;
 			if (!CheckModelos()) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				new frmCartaoReportVerso(lstMembros).ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Abrir formulário de impressão..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		private void btnPrintConcluido_Click(object sender, EventArgs e)

@@ -438,6 +438,8 @@ namespace CamadaDTO
 			}
 		}
 
-		public Image CodBarras { get; set; }
+		//public Image CodBarras { get; set; }
+
+		public string CodBarrasFile { get; set; }
 	}
 }

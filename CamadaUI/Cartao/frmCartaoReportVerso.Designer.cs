@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 			this.rptvPadrao = new Microsoft.Reporting.WinForms.ReportViewer();
 			this.btnFechar = new System.Windows.Forms.Button();
@@ -66,7 +65,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			reportDataSource1.Name = "dstMembro";
+			reportDataSource1.Value = null;
 			this.rptvPadrao.LocalReport.DataSources.Add(reportDataSource1);
+			this.rptvPadrao.LocalReport.EnableExternalImages = true;
 			this.rptvPadrao.LocalReport.ReportEmbeddedResource = "CamadaUI.Cartao.rptCartaoVerso.rdlc";
 			this.rptvPadrao.Location = new System.Drawing.Point(19, 72);
 			this.rptvPadrao.Margin = new System.Windows.Forms.Padding(10);
@@ -81,7 +82,7 @@
 			this.btnFechar.CausesValidation = false;
 			this.btnFechar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.fechar_24;
-			this.btnFechar.Location = new System.Drawing.Point(645, 682);
+			this.btnFechar.Location = new System.Drawing.Point(645, 680);
 			this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(138, 41);
@@ -99,6 +100,8 @@
 			this.Controls.Add(this.btnFechar);
 			this.Controls.Add(this.rptvPadrao);
 			this.Name = "frmCartaoReportVerso";
+			this.Text = "Imprimir Cartão";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCartaoReportVerso_FormClosed);
 			this.Load += new System.EventHandler(this.frmCartaoReportVerso_Load);
 			this.Controls.SetChildIndex(this.rptvPadrao, 0);
 			this.Controls.SetChildIndex(this.btnFechar, 0);
