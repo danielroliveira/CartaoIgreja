@@ -41,7 +41,7 @@ namespace CamadaUI.Cartao
 			pg.Margins.Bottom = 10;
 			pg.Margins.Left = 30;
 			pg.Margins.Right = 10;
-									
+												
 			//var pgSet = rptvPadrao.GetPageSettings();
 			//MessageBox.Show($"{pgSet.PaperSize.Height} {pgSet.PaperSize.Width}");
 

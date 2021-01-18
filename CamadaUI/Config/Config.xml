@@ -5,8 +5,8 @@
     <CidadePadrao>Rio de Janeiro</CidadePadrao>
     <UFPadrao>RJ</UFPadrao>
     <FotosImageFolder>C:\Users\drojf\Igreja Cartão\Fotos</FotosImageFolder>
-    <DesignImageFolder>C:\Users\drojf\Igreja Cartão\Fotos</DesignImageFolder>
-	<ValidadeAnos></ValidadeAnos>
+    <DesignImageFolder>C:\Users\drojf\Igreja Cartão\Design</DesignImageFolder>
+    <ValidadeAnos>3</ValidadeAnos>
   </DefaultValues>
   <DadosIgreja>
     <RazaoSocial>Teste</RazaoSocial>
