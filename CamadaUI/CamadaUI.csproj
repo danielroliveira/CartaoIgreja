@@ -64,7 +64,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -121,6 +121,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cadastros\frmCongregacaoControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\frmCongregacaoControle.designer.cs">
+      <DependentUpon>frmCongregacaoControle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\frmFuncaoControle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\frmFuncaoControle.designer.cs">
+      <DependentUpon>frmFuncaoControle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cartao\frmCartaoLista.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +246,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <EmbeddedResource Include="Cadastros\frmCongregacaoControle.resx">
+      <DependentUpon>frmCongregacaoControle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\frmFuncaoControle.resx">
+      <DependentUpon>frmFuncaoControle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cartao\frmCartaoLista.resx">
       <DependentUpon>frmCartaoLista.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,6 +429,7 @@
   <ItemGroup>
     <Content Include="Config\Config.xml" />
     <Content Include="program_icon.ico" />
+    <None Include="Resources\novo_peq_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -455,5 +474,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

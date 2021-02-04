@@ -363,6 +363,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap novo_peq_24 {
+            get {
+                object obj = ResourceManager.GetObject("novo_peq_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap print_16 {
             get {
                 object obj = ResourceManager.GetObject("print_16", resourceCulture);

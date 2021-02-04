@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CongregacaoBLL.cs" />
     <Compile Include="DiversosBLL.cs" />
+    <Compile Include="FuncaoBLL.cs" />
     <Compile Include="MembroBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -186,7 +186,7 @@
 			this.mnuMembroAdicionar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuMembroAdicionar.Name = "mnuMembroAdicionar";
 			this.mnuMembroAdicionar.Padding = new System.Windows.Forms.Padding(0);
-			this.mnuMembroAdicionar.Size = new System.Drawing.Size(266, 36);
+			this.mnuMembroAdicionar.Size = new System.Drawing.Size(267, 36);
 			this.mnuMembroAdicionar.Text = "Adicionar Membro";
 			// 
 			// mnuMembroProcurar
@@ -195,13 +195,13 @@
 			this.mnuMembroProcurar.Image = global::CamadaUI.Properties.Resources.search_user;
 			this.mnuMembroProcurar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.mnuMembroProcurar.Name = "mnuMembroProcurar";
-			this.mnuMembroProcurar.Size = new System.Drawing.Size(266, 38);
+			this.mnuMembroProcurar.Size = new System.Drawing.Size(267, 38);
 			this.mnuMembroProcurar.Text = "Procurar Membro";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(263, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(264, 6);
 			// 
 			// cadastroDeFunçõesToolStripMenuItem
 			// 
@@ -209,7 +209,7 @@
 			this.cadastroDeFunçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.funcoes_32;
 			this.cadastroDeFunçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.cadastroDeFunçõesToolStripMenuItem.Name = "cadastroDeFunçõesToolStripMenuItem";
-			this.cadastroDeFunçõesToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
+			this.cadastroDeFunçõesToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
 			this.cadastroDeFunçõesToolStripMenuItem.Text = "Cadastro de Funções";
 			// 
 			// cadstrosDeCongregaçõesToolStripMenuItem
@@ -218,8 +218,8 @@
 			this.cadstrosDeCongregaçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.igreja_32;
 			this.cadstrosDeCongregaçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.cadstrosDeCongregaçõesToolStripMenuItem.Name = "cadstrosDeCongregaçõesToolStripMenuItem";
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Size = new System.Drawing.Size(266, 38);
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Text = "Cadstros de Congregações";
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
+			this.cadstrosDeCongregaçõesToolStripMenuItem.Text = "Cadastro de Congregações";
 			// 
 			// btnImprimir
 			// 
