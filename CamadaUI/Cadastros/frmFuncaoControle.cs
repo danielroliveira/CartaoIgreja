@@ -3,6 +3,7 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -11,9 +12,9 @@ namespace CamadaUI.Cadastros
 {
 	public partial class frmFuncaoControle : CamadaUI.Models.frmModFinBorder
 	{
-		private List<classCong> list;
+		private List<classFuncao> list;
 		private BindingSource bindList = new BindingSource();
-		DiversosBLL bBLL = new DiversosBLL(DBPath());
+		FuncaoBLL fBLL = new FuncaoBLL(DBPath());
 
 		private Form _formOrigem;
 
@@ -23,7 +24,7 @@ namespace CamadaUI.Cadastros
 
 		private EnumFlagEstado _Sit;
 
-		public objCongregacao propEscolhido { get; set; }
+		public objFuncao propEscolhido { get; set; }
 
 		//=================================================================================================
 		// SUB NEW
@@ -35,10 +36,10 @@ namespace CamadaUI.Cadastros
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
-			AtivarToolStripMenuItem.Text = "Ativar congregacao";
-			DesativarToolStripMenuItem.Text = "Desativar congregacao";
+			mnuAtivar.Text = "Ativar Função";
+			mnuDesativar.Text = "Desativar Função";
 
-			bindList.DataSource = typeof(classCong);
+			bindList.DataSource = typeof(classFuncao);
 			ObterDados();
 			FormataListagem();
 
@@ -59,26 +60,25 @@ namespace CamadaUI.Cadastros
 				dgvListagem.CurrentCell = dgvListagem.Rows[dgvListagem.CurrentRow.Index].Cells[1];
 				dgvListagem.BeginEdit(false);
 			}
-
-			dgvListagem.CellEnter += DgvListagem_CellEnter;
-
 		}
 
-		private class classCong : objCongregacao
+		private class classFuncao : objFuncao
 		{
 			public EnumFlagEstado RowSit { get; set; }
 
-			public static List<classCong> convertFrom(List<objCongregacao> lstcongregacao)
+			public static List<classFuncao> convertFrom(List<objFuncao> lstFuncao)
 			{
-				var novaClasse = new List<classCong>();
+				var novaClasse = new List<classFuncao>();
 
-				foreach (var congregacao in lstcongregacao)
+				foreach (var funcao in lstFuncao)
 				{
-					var cl = new classCong()
+					var cl = new classFuncao()
 					{
-						Congregacao = congregacao.Congregacao,
-						IDCongregacao = congregacao.IDCongregacao,
-						RowSit = congregacao.IDCongregacao == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
+						Funcao = funcao.Funcao,
+						IDFuncao = funcao.IDFuncao,
+						Posicao = funcao.Posicao,
+						Ativo = funcao.Ativo,
+						RowSit = funcao.IDFuncao == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
 					};
 
 					novaClasse.Add(cl);
@@ -86,7 +86,6 @@ namespace CamadaUI.Cadastros
 
 				return novaClasse;
 			}
-
 		}
 
 		// PROPERTY SITUACAO
@@ -105,6 +104,8 @@ namespace CamadaUI.Cadastros
 						btnNovo.Enabled = true;
 						lblAcao.Visible = false;
 						lblAcao.Text = "";
+						btnDescer.Enabled = true;
+						btnSubir.Enabled = true;
 						break;
 					case EnumFlagEstado.Alterado:
 						btnSalvar.Enabled = true;
@@ -112,6 +113,8 @@ namespace CamadaUI.Cadastros
 						btnNovo.Enabled = false;
 						lblAcao.Visible = true;
 						lblAcao.Text = $"Editando {dgvListagem.CurrentRow.Cells[1].Value}";
+						btnDescer.Enabled = false;
+						btnSubir.Enabled = false;
 						break;
 					case EnumFlagEstado.NovoRegistro:
 						btnSalvar.Enabled = true;
@@ -119,6 +122,8 @@ namespace CamadaUI.Cadastros
 						btnNovo.Enabled = false;
 						lblAcao.Visible = true;
 						lblAcao.Text = "Adicionando Novo Registro";
+						btnDescer.Enabled = false;
+						btnSubir.Enabled = false;
 						break;
 					default:
 						break;
@@ -134,10 +139,9 @@ namespace CamadaUI.Cadastros
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				list = classCong.convertFrom(bBLL.GetListCongregacao());
+				list = classFuncao.convertFrom(fBLL.GetListFuncao());
 				bindList.DataSource = list;
 				dgvListagem.DataSource = bindList;
-
 			}
 			catch (Exception ex)
 			{
@@ -175,33 +179,24 @@ namespace CamadaUI.Cadastros
 			dgvListagem.StandardTab = false;
 			dgvListagem.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
 
-			//--- (1) COLUNA REG
+			//--- (1) COLUNA POSICAO
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDcongregacao";
-			clnID.Visible = true;
-			clnID.ReadOnly = true;
-			clnID.Resizable = DataGridViewTriState.False;
-			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnID.DefaultCellStyle.Padding = newPadding;
-			clnID.DefaultCellStyle.Format = "0000";
+			clnPosicao.DataPropertyName = "Posicao";
+			clnPosicao.Visible = true;
+			clnPosicao.ReadOnly = true;
+			clnPosicao.Resizable = DataGridViewTriState.False;
+			clnPosicao.SortMode = DataGridViewColumnSortMode.NotSortable;
+			clnPosicao.DefaultCellStyle.Padding = newPadding;
+			clnPosicao.DefaultCellStyle.Format = "00";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "congregacaoNome";
+			clnCadastro.DataPropertyName = "Funcao";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = false;
 			clnCadastro.Resizable = DataGridViewTriState.False;
 			clnCadastro.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-			//--- (3) COLUNA SIGLA
-			clnSigla.DataPropertyName = "Sigla";
-			clnSigla.Visible = true;
-			clnSigla.ReadOnly = false;
-			clnSigla.Resizable = DataGridViewTriState.False;
-			clnSigla.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSigla.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnSigla.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
 			//--- (4) Coluna da imagem
 			clnImage.Name = "Ativo";
@@ -211,7 +206,7 @@ namespace CamadaUI.Cadastros
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnSigla, clnImage);
+			dgvListagem.Columns.AddRange(clnPosicao, clnCadastro, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
@@ -220,9 +215,9 @@ namespace CamadaUI.Cadastros
 		{
 			if (e.ColumnIndex == clnImage.Index)
 			{
-				objCongregacao item = (objCongregacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+				objFuncao item = (objFuncao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (item.IDcongregacao == null)
+				if (item.IDFuncao == null)
 				{
 					e.Value = ImgNew;
 				}
@@ -244,13 +239,13 @@ namespace CamadaUI.Cadastros
 		private void dgvListagem_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
 		{
 			//--- impede alteracoes nas colunas
-			if (e.ColumnIndex == clnID.Index || e.ColumnIndex == clnImage.Index)
+			if (e.ColumnIndex == clnPosicao.Index || e.ColumnIndex == clnImage.Index)
 			{
 				e.Cancel = true;
 				return;
 			}
 
-			classCong currentItem = (classCong)dgvListagem.Rows[e.RowIndex].DataBoundItem;
+			classFuncao currentItem = (classFuncao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
 			if (Sit != EnumFlagEstado.RegistroSalvo && currentItem.RowSit == EnumFlagEstado.RegistroSalvo)
 			{
@@ -258,7 +253,7 @@ namespace CamadaUI.Cadastros
 				return;
 			}
 
-			if (currentItem.IDcongregacao == null)
+			if (currentItem.IDFuncao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				currentItem.RowSit = EnumFlagEstado.NovoRegistro;
@@ -312,7 +307,7 @@ namespace CamadaUI.Cadastros
 				e.SuppressKeyPress = true;
 				e.Handled = true;
 
-				classCong myItem = (classCong)dgvListagem.CurrentRow.DataBoundItem;
+				classFuncao myItem = (classFuncao)dgvListagem.CurrentRow.DataBoundItem;
 
 				if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 				{
@@ -341,23 +336,7 @@ namespace CamadaUI.Cadastros
 					return;
 				}
 
-				if (ProcuracongregacaoDuplicado(e.FormattedValue.ToString()) == false)
-				{
-					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
-					e.Cancel = true;
-					return;
-				}
-			}
-
-			if (e.ColumnIndex == 2)
-			{
-				if (String.IsNullOrEmpty(e.FormattedValue.ToString()))
-				{
-					e.Cancel = false;
-					return;
-				}
-
-				if (ProcuraSiglaDuplicado(e.FormattedValue.ToString()) == false)
+				if (ProcuraFuncaoDuplicada(e.FormattedValue.ToString()) == false)
 				{
 					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
 					e.Cancel = true;
@@ -367,30 +346,13 @@ namespace CamadaUI.Cadastros
 		}
 
 		// PROCURA DUPLICADO congregacao NOME & congregacao NUMERO
-		private bool ProcuracongregacaoDuplicado(string valor)
+		private bool ProcuraFuncaoDuplicada(string valor)
 		{
-			foreach (classCong congregacao in bindList.List)
+			foreach (classFuncao funcao in bindList.List)
 			{
-				if (congregacao.congregacaoNome?.ToUpper() == valor.ToUpper())
+				if (funcao.Funcao?.ToUpper() == valor.ToUpper())
 				{
-					AbrirDialog($"congregacao duplicado...\n O congregacao {valor.ToUpper()} já foi inserido.",
-						"Duplicado",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private bool ProcuraSiglaDuplicado(string valor)
-		{
-			foreach (classCong congregacao in bindList.List)
-			{
-				if (congregacao.Sigla?.ToUpper() == valor.ToUpper())
-				{
-					AbrirDialog($"O número do congregacao precisa ser exclusivo...\n O número {valor.ToUpper()} já foi inserido.",
+					AbrirDialog($"Função duplicada...\n A Função {valor.ToUpper()} já foi inserida.",
 						"Duplicado",
 						DialogType.OK,
 						DialogIcon.Exclamation);
@@ -402,18 +364,19 @@ namespace CamadaUI.Cadastros
 		}
 
 		// ON CELL ENTER GOTO NEXT CELL
+		/*
 		private void DgvListagem_CellEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.ColumnIndex == 0)
 			{
 				SendKeys.Send("{TAB}");
 			}
-			else if (e.ColumnIndex == 3)
+			else if (e.ColumnIndex == 2)
 			{
 				SendKeys.Send("+{TAB}");
 			}
 		}
-
+		*/
 
 		#endregion // EDITING DATAGRID ITENS --- END
 
@@ -434,8 +397,7 @@ namespace CamadaUI.Cadastros
 		{
 			bindList.AddNew();
 			Sit = EnumFlagEstado.NovoRegistro;
-			dgvListagem.CurrentCell = dgvListagem.CurrentRow.Cells[0];
-			//dgvListagem.CurrentCell = dgvListagem.CurrentRow.Cells[1];
+			dgvListagem.CurrentCell = dgvListagem.CurrentRow.Cells[1];
 			dgvListagem.BeginEdit(false);
 		}
 
@@ -463,21 +425,21 @@ namespace CamadaUI.Cadastros
 			if (VerificaItems() == false) return;
 
 			//--- verifica se é um ROW editado ou novo
-			classCong myItem;
+			classFuncao myItem;
 			bool everyOK = true;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
 				try
 				{
-					myItem = (classCong)row.DataBoundItem;
+					myItem = (classFuncao)row.DataBoundItem;
 
 					if (myItem.RowSit == EnumFlagEstado.NovoRegistro || myItem.RowSit == EnumFlagEstado.Alterado)
 					{
 						if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 						{
 							var newItem = ItemInserir(myItem);
-							myItem.IDcongregacao = newItem;
+							myItem.IDFuncao = newItem;
 							bindList.ResetBindings(false);
 						}
 						else if (myItem.RowSit == EnumFlagEstado.Alterado)
@@ -507,7 +469,7 @@ namespace CamadaUI.Cadastros
 		//--- VERIFICACAO SE O ITEM ESTA PRONTO PARA SER INSERIDO OU ALTERADO
 		private bool VerificaItems()
 		{
-			classCong Item = null;
+			classFuncao Item = null;
 
 			foreach (DataGridViewRow row in dgvListagem.Rows)
 			{
@@ -515,52 +477,43 @@ namespace CamadaUI.Cadastros
 
 				try
 				{
-					Item = (classCong)row.DataBoundItem;
+					Item = (classFuncao)row.DataBoundItem;
 				}
 				catch
 				{
 					continue;
 				}
 
-				if (string.IsNullOrEmpty(Item.congregacaoNome))
+				if (string.IsNullOrEmpty(Item.Funcao))
 				{
 					dgvListagem.CurrentCell = row.Cells[1];
-					MessageBox.Show("A descrição do congregacao não pode ficar vazia...",
+					MessageBox.Show("A descrição da Função não pode ficar vazia...",
 									"Campo Vazio",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
 					return false;
 				}
 
-				if (string.IsNullOrEmpty(Item.Sigla))
-				{
-					dgvListagem.CurrentCell = row.Cells[2];
-					MessageBox.Show("O número do congregacao não pode ficar vazio...",
-									"Campo Vazio",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Information);
-					return false;
-				}
 			}
 
 			return true;
 		}
 
 		//--- INSERE NOVO ITEM NO TBL congregacao
-		public int ItemInserir(objCongregacao congregacao)
+		public byte ItemInserir(objFuncao funcao)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				int newID = bBLL.Insertcongregacao(congregacao);
-				congregacao.IDcongregacao = newID;
+				byte newID = fBLL.InsertFuncao(funcao);
+				funcao.IDFuncao = newID;
 				return newID;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao inserir um novo congregacao\n" +
+				MessageBox.Show("Ocorreu uma exceção ao inserir uma nova Função\n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -573,19 +526,19 @@ namespace CamadaUI.Cadastros
 			}
 		}
 
-		//--- INSERE NOVO ITEM NO TBL congregacao
-		public void ItemAlterar(objCongregacao congregacao)
+		//--- INSERE NOVO ITEM NO TBL Funcao
+		public void ItemAlterar(objFuncao funcao)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				bBLL.Updatecongregacao(congregacao);
+				fBLL.UpdateFuncao(funcao);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Ocorreu uma exceção ao atualizar o congregacao/n" +
+				MessageBox.Show("Ocorreu uma exceção ao atualizar a Função/n" +
 								ex.Message, "Exceção",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 				throw ex;
@@ -617,23 +570,23 @@ namespace CamadaUI.Cadastros
 				if (hit.Type != DataGridViewHitTestType.Cell) return;
 
 				// seleciona o ROW
-				dgvListagem.Rows[hit.RowIndex].Cells[0].Selected = true;
+				dgvListagem.Rows[hit.RowIndex].Cells[1].Selected = true;
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
 				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
 				{
-					objCongregacao congregacao = (objCongregacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
+					objFuncao congregacao = (objFuncao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
 					if (congregacao.Ativo == true)
 					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
+						mnuAtivar.Enabled = false;
+						mnuDesativar.Enabled = true;
 					}
 					else
 					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
+						mnuAtivar.Enabled = true;
+						mnuDesativar.Enabled = false;
 					}
 
 					// revela menu
@@ -648,16 +601,16 @@ namespace CamadaUI.Cadastros
 			if (dgvListagem.SelectedCells.Count == 0) return;
 
 			//--- Verifica o item
-			objCongregacao congregacao = (objCongregacao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+			objFuncao funcao = (objFuncao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(congregacao.Ativo ? "DESATIVAR " : "ATIVAR")} esse congregacao?\n" +
-									  congregacao.congregacaoNome.ToUpper(), (congregacao.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(funcao.Ativo ? "DESATIVAR " : "ATIVAR")} essa Função?\n" +
+									  funcao.Funcao.ToUpper(), (funcao.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
 			//--- altera o valor
-			congregacao.Ativo = !congregacao.Ativo;
+			funcao.Ativo = !funcao.Ativo;
 
 			//--- Salvar o Registro
 			try
@@ -665,7 +618,7 @@ namespace CamadaUI.Cadastros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bBLL.Updatecongregacao(congregacao);
+				fBLL.UpdateFuncao(funcao);
 
 				//--- altera a imagem
 				dgvListagem.Refresh();
@@ -673,7 +626,7 @@ namespace CamadaUI.Cadastros
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Uma exceção ocorreu ao Alterar o registro do congregacao..." + "\n" +
+				AbrirDialog("Uma exceção ocorreu ao Alterar o registro da Função..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 			finally
@@ -685,32 +638,141 @@ namespace CamadaUI.Cadastros
 
 		#endregion // ATIVAR DESATIVAR MENU --- END
 
-		//=================================================================================================
-		// FORM SELECTED APPARENCE
-		//=================================================================================================
-		#region DESIGN FORM FUNCTIONS
-
-		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
-		//------------------------------------------------------------------------------------------------------------
-		private void frmContribuinteListagem_Activated(object sender, EventArgs e)
+		private void btnSubir_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
+			if (dgvListagem.Rows.Count == 0) return;
+
+			if (dgvListagem.SelectedCells.Count == 0)
 			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.Silver;
+				AbrirDialog("Selecione uma Função para alterar a posição...", "");
+				return;
+			}
+
+			objFuncao funcao = (objFuncao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+
+			if (funcao.Posicao == 1) return;
+
+			//--- get the old Funcao with posicao
+			int selIndex = list.IndexOf((classFuncao)funcao);
+			var oldFuncaoPos = list[selIndex - 1];
+
+			//--- change alternate positions
+			oldFuncaoPos.Posicao += 1;
+			funcao.Posicao -= 1;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				fBLL.UpdateFuncao(oldFuncaoPos);
+				fBLL.UpdateFuncao(funcao);
+
+				ObterDados();
+
+				dgvListagem.CurrentCell = dgvListagem.Rows[funcao.Posicao - 1].Cells[1];
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Elevar a posição da Função..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
-		private void frmContribuinteListagem_FormClosed(object sender, FormClosedEventArgs e)
+		private void btnDescer_Click(object sender, EventArgs e)
 		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
-			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.SlateGray;
+			if (dgvListagem.Rows.Count == 0) return;
 
+			if (dgvListagem.SelectedCells.Count == 0)
+			{
+				AbrirDialog("Selecione uma Função para alterar a posição...", "");
+				return;
+			}
+
+			objFuncao funcao = (objFuncao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+
+			//--- get max posicao
+			var maxPos = list.Max(x => x.Posicao);
+
+			if (funcao.Posicao == maxPos) return;
+
+			//--- get the old Funcao with posicao
+			int selIndex = list.IndexOf((classFuncao)funcao);
+			var oldFuncaoPos = list[selIndex + 1];
+
+			//--- change alternate positions
+			oldFuncaoPos.Posicao -= 1;
+			funcao.Posicao += 1;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				fBLL.UpdateFuncao(oldFuncaoPos);
+				fBLL.UpdateFuncao(funcao);
+
+				ObterDados();
+
+				dgvListagem.CurrentCell = dgvListagem.Rows[funcao.Posicao - 1].Cells[1];
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Sublevar a posição da Função..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
 			}
 		}
 
-		#endregion // DESIGN FORM FUNCTIONS --- END
+		private void mnuExcluir_Click(object sender, EventArgs e)
+		{
+			//--- verifica se existe alguma cell 
+			if (dgvListagem.SelectedCells.Count == 0) return;
+
+			//--- Verifica o item
+			objFuncao funcao = (objFuncao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
+
+			//---pergunta ao usuário
+			var reponse = AbrirDialog($"Deseja realmente EXCLUIR definitivamente essa Função?\n" +
+									  funcao.Funcao.ToUpper(),
+									  "Excluir",
+									  DialogType.SIM_NAO,
+									  DialogIcon.Question);
+			if (reponse == DialogResult.No) return;
+
+			//--- Salvar o Registro
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				fBLL.DeleteFuncao(funcao);
+
+				//--- altera a imagem
+				ObterDados();
+
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Excluir o registro da Função..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
 	}
 }

@@ -430,6 +430,9 @@
     <Content Include="Config\Config.xml" />
     <Content Include="program_icon.ico" />
     <None Include="Resources\novo_peq_24.png" />
+    <None Include="Resources\top_arrow_32.png" />
+    <None Include="Resources\down_arrow_32.png" />
+    <None Include="Resources\lixeira_24.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -73,8 +73,8 @@ namespace CamadaUI.Main
 				//--- PREENCHE AS LISTAGENS
 				//------------------------------------------------------------------------------------------------------------
 				DiversosBLL div = new DiversosBLL(pathDB);
-				Program.lstCongregacao = div.GetListCongregacao();
-				Program.lstFuncao = div.GetListFuncao();
+				Program.lstCongregacao = new CongregacaoBLL(pathDB).GetListCongregacao();
+				Program.lstFuncao = new FuncaoBLL(pathDB).GetListFuncao();
 				Program.lstEstadoCivil = div.GetListEstadoCivil();
 				Program.lstSituacao = div.GetListSituacao();
 			}
@@ -128,20 +128,8 @@ namespace CamadaUI.Main
 			mnuMembroAdicionar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembro(new objMembro(null), this));
 			mnuMembroProcurar.Click += (a, b) => MenuClickOpenForm(new Membros.frmMembroListagem());
 			mnuImpressaoLista.Click += (a, b) => MenuClickOpenForm(new Cartao.frmCartaoLista());
-			/*
-
-			mnuCredores.Click += (a, b) => MenuClickOpenForm(new Registres.frmCredorListagem(false, this));
-			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoListagem());
-			mnuSetoresCongregacao.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoSetorListagem());
-			mnuReunioes.Click += (a, b) => MenuClickOpenForm(new Congregacoes.frmCongregacaoReuniaoListagem());
-
-			// MENU ENTRADAS
-			mnuCampanhas.Click += (a, b) => MenuClickOpenForm(new Entradas.frmCampanhaListagem());
-			mnuContribuicaoInserir.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicao(new objContribuicao(null)));
-			mnuContribuicaoProcurar.Click += (a, b) => MenuClickOpenForm(new Entradas.frmContribuicaoListagem());
-			mnuAReceberProcurar.Click += (a, b) => MenuClickOpenForm(new frmAReceberListagem());
-
-			*/
+			mnuFuncoes.Click += (a, b) => MenuClickOpenForm(new Cadastros.frmFuncaoControle());
+			mnuCongregacoes.Click += (a, b) => MenuClickOpenForm(new Cadastros.frmCongregacaoControle());
 		}
 
 		private void MenuClickOpenForm(Form form)

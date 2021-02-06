@@ -13,7 +13,7 @@ namespace CamadaUI.Cadastros
 	{
 		private List<classCong> list;
 		private BindingSource bindList = new BindingSource();
-		DiversosBLL bBLL = new DiversosBLL(DBPath());
+		CongregacaoBLL bBLL = new CongregacaoBLL(DBPath());
 
 		private Form _formOrigem;
 
@@ -78,6 +78,7 @@ namespace CamadaUI.Cadastros
 					{
 						Congregacao = congregacao.Congregacao,
 						IDCongregacao = congregacao.IDCongregacao,
+						Ativo = congregacao.Ativo,
 						RowSit = congregacao.IDCongregacao == null ? EnumFlagEstado.NovoRegistro : EnumFlagEstado.RegistroSalvo
 					};
 
@@ -177,7 +178,7 @@ namespace CamadaUI.Cadastros
 
 			//--- (1) COLUNA REG
 			Padding newPadding = new Padding(5, 0, 0, 0);
-			clnID.DataPropertyName = "IDcongregacao";
+			clnID.DataPropertyName = "IDCongregacao";
 			clnID.Visible = true;
 			clnID.ReadOnly = true;
 			clnID.Resizable = DataGridViewTriState.False;
@@ -186,7 +187,7 @@ namespace CamadaUI.Cadastros
 			clnID.DefaultCellStyle.Format = "0000";
 
 			//--- (2) COLUNA CADASTRO
-			clnCadastro.DataPropertyName = "congregacaoNome";
+			clnCadastro.DataPropertyName = "Congregacao";
 			clnCadastro.Visible = true;
 			clnCadastro.ReadOnly = false;
 			clnCadastro.Resizable = DataGridViewTriState.False;
@@ -194,16 +195,7 @@ namespace CamadaUI.Cadastros
 			clnCadastro.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-			//--- (3) COLUNA SIGLA
-			clnSigla.DataPropertyName = "Sigla";
-			clnSigla.Visible = true;
-			clnSigla.ReadOnly = false;
-			clnSigla.Resizable = DataGridViewTriState.False;
-			clnSigla.SortMode = DataGridViewColumnSortMode.NotSortable;
-			clnSigla.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			clnSigla.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-			//--- (4) Coluna da imagem
+			//--- (3) Coluna da imagem
 			clnImage.Name = "Ativo";
 			clnImage.ReadOnly = true;
 			clnImage.Resizable = DataGridViewTriState.False;
@@ -211,7 +203,7 @@ namespace CamadaUI.Cadastros
 			clnImage.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			//--- Add Columns
-			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnSigla, clnImage);
+			dgvListagem.Columns.AddRange(clnID, clnCadastro, clnImage);
 		}
 
 		// CONTROL IMAGES OF LIST DATAGRID
@@ -222,7 +214,7 @@ namespace CamadaUI.Cadastros
 			{
 				objCongregacao item = (objCongregacao)dgvListagem.Rows[e.RowIndex].DataBoundItem;
 
-				if (item.IDcongregacao == null)
+				if (item.IDCongregacao == null)
 				{
 					e.Value = ImgNew;
 				}
@@ -258,7 +250,7 @@ namespace CamadaUI.Cadastros
 				return;
 			}
 
-			if (currentItem.IDcongregacao == null)
+			if (currentItem.IDCongregacao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				currentItem.RowSit = EnumFlagEstado.NovoRegistro;
@@ -341,23 +333,7 @@ namespace CamadaUI.Cadastros
 					return;
 				}
 
-				if (ProcuracongregacaoDuplicado(e.FormattedValue.ToString()) == false)
-				{
-					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
-					e.Cancel = true;
-					return;
-				}
-			}
-
-			if (e.ColumnIndex == 2)
-			{
-				if (String.IsNullOrEmpty(e.FormattedValue.ToString()))
-				{
-					e.Cancel = false;
-					return;
-				}
-
-				if (ProcuraSiglaDuplicado(e.FormattedValue.ToString()) == false)
+				if (ProcuraCongregacaoDuplicado(e.FormattedValue.ToString()) == false)
 				{
 					dgvListagem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
 					e.Cancel = true;
@@ -367,31 +343,14 @@ namespace CamadaUI.Cadastros
 		}
 
 		// PROCURA DUPLICADO congregacao NOME & congregacao NUMERO
-		private bool ProcuracongregacaoDuplicado(string valor)
+		private bool ProcuraCongregacaoDuplicado(string valor)
 		{
 			foreach (classCong congregacao in bindList.List)
 			{
-				if (congregacao.congregacaoNome?.ToUpper() == valor.ToUpper())
+				if (congregacao.Congregacao?.ToUpper() == valor.ToUpper())
 				{
-					AbrirDialog($"congregacao duplicado...\n O congregacao {valor.ToUpper()} já foi inserido.",
-						"Duplicado",
-						DialogType.OK,
-						DialogIcon.Exclamation);
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private bool ProcuraSiglaDuplicado(string valor)
-		{
-			foreach (classCong congregacao in bindList.List)
-			{
-				if (congregacao.Sigla?.ToUpper() == valor.ToUpper())
-				{
-					AbrirDialog($"O número do congregacao precisa ser exclusivo...\n O número {valor.ToUpper()} já foi inserido.",
-						"Duplicado",
+					AbrirDialog($"Congregação duplicada...\n A congregação {valor.ToUpper()} já foi inserida.",
+						"Duplicada",
 						DialogType.OK,
 						DialogIcon.Exclamation);
 					return false;
@@ -477,7 +436,7 @@ namespace CamadaUI.Cadastros
 						if (myItem.RowSit == EnumFlagEstado.NovoRegistro)
 						{
 							var newItem = ItemInserir(myItem);
-							myItem.IDcongregacao = newItem;
+							myItem.IDCongregacao = newItem;
 							bindList.ResetBindings(false);
 						}
 						else if (myItem.RowSit == EnumFlagEstado.Alterado)
@@ -522,40 +481,31 @@ namespace CamadaUI.Cadastros
 					continue;
 				}
 
-				if (string.IsNullOrEmpty(Item.congregacaoNome))
+				if (string.IsNullOrEmpty(Item.Congregacao))
 				{
 					dgvListagem.CurrentCell = row.Cells[1];
-					MessageBox.Show("A descrição do congregacao não pode ficar vazia...",
+					MessageBox.Show("A descrição do congregação não pode ficar vazia...",
 									"Campo Vazio",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
 					return false;
 				}
 
-				if (string.IsNullOrEmpty(Item.Sigla))
-				{
-					dgvListagem.CurrentCell = row.Cells[2];
-					MessageBox.Show("O número do congregacao não pode ficar vazio...",
-									"Campo Vazio",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Information);
-					return false;
-				}
 			}
 
 			return true;
 		}
 
 		//--- INSERE NOVO ITEM NO TBL congregacao
-		public int ItemInserir(objCongregacao congregacao)
+		public byte ItemInserir(objCongregacao congregacao)
 		{
 			try
 			{
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				int newID = bBLL.Insertcongregacao(congregacao);
-				congregacao.IDcongregacao = newID;
+				byte newID = bBLL.InsertCongregacao(congregacao);
+				congregacao.IDCongregacao = newID;
 				return newID;
 			}
 			catch (Exception ex)
@@ -581,7 +531,7 @@ namespace CamadaUI.Cadastros
 				//--- Ampulheta ON
 				Cursor = Cursors.WaitCursor;
 
-				bBLL.Updatecongregacao(congregacao);
+				bBLL.UpdateCongregacao(congregacao);
 			}
 			catch (Exception ex)
 			{
@@ -621,7 +571,7 @@ namespace CamadaUI.Cadastros
 				dgvListagem.Rows[hit.RowIndex].Selected = true;
 
 				// mostra o MENU ativar e desativar
-				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativo")
+				if (dgvListagem.Columns[hit.ColumnIndex].Name == "Ativa")
 				{
 					objCongregacao congregacao = (objCongregacao)dgvListagem.Rows[hit.RowIndex].DataBoundItem;
 
@@ -651,8 +601,8 @@ namespace CamadaUI.Cadastros
 			objCongregacao congregacao = (objCongregacao)dgvListagem.SelectedCells[0].OwningRow.DataBoundItem;
 
 			//---pergunta ao usuário
-			var reponse = AbrirDialog($"Deseja realmente {(congregacao.Ativo ? "DESATIVAR " : "ATIVAR")} esse congregacao?\n" +
-									  congregacao.congregacaoNome.ToUpper(), (congregacao.Ativo ? "DESATIVAR " : "ATIVAR"),
+			var reponse = AbrirDialog($"Deseja realmente {(congregacao.Ativo ? "DESATIVAR " : "ATIVAR")} essa Congregação?\n" +
+									  congregacao.Congregacao.ToUpper(), (congregacao.Ativo ? "DESATIVAR " : "ATIVAR"),
 									  DialogType.SIM_NAO, DialogIcon.Question);
 			if (reponse == DialogResult.No) return;
 
@@ -665,7 +615,7 @@ namespace CamadaUI.Cadastros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				bBLL.Updatecongregacao(congregacao);
+				bBLL.UpdateCongregacao(congregacao);
 
 				//--- altera a imagem
 				dgvListagem.Refresh();
@@ -688,6 +638,8 @@ namespace CamadaUI.Cadastros
 		//=================================================================================================
 		// FORM SELECTED APPARENCE
 		//=================================================================================================
+		/*
+
 		#region DESIGN FORM FUNCTIONS
 
 		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
@@ -712,5 +664,8 @@ namespace CamadaUI.Cadastros
 		}
 
 		#endregion // DESIGN FORM FUNCTIONS --- END
+
+		*/
+
 	}
 }

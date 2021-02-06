@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tspMenu = new System.Windows.Forms.ToolStrip();
 			this.btnNovo = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -44,7 +44,6 @@
 			this.dgvListagem = new CamadaUC.ucDataGridView();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnSigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
@@ -55,7 +54,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(409, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(309, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(172, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Congregações";
@@ -65,7 +64,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(581, 0);
+			this.btnClose.Location = new System.Drawing.Point(481, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -73,7 +72,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblAcao);
 			this.panel1.Location = new System.Drawing.Point(2, 2);
-			this.panel1.Size = new System.Drawing.Size(621, 50);
+			this.panel1.Size = new System.Drawing.Size(521, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lblAcao, 0);
@@ -91,9 +90,9 @@
             this.btnCancelar,
             this.toolStripSeparator2,
             this.btnFechar});
-			this.tspMenu.Location = new System.Drawing.Point(2, 468);
+			this.tspMenu.Location = new System.Drawing.Point(2, 552);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(621, 44);
+			this.tspMenu.Size = new System.Drawing.Size(521, 44);
 			this.tspMenu.TabIndex = 2;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -189,30 +188,29 @@
 			this.dgvListagem.AllowUserToDeleteRows = false;
 			this.dgvListagem.AllowUserToResizeColumns = false;
 			this.dgvListagem.AllowUserToResizeRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.OldLace;
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.OldLace;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSteelBlue;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clnID,
             this.clnCadastro,
-            this.clnSigla,
             this.clnImage});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
@@ -225,7 +223,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(601, 391);
+			this.dgvListagem.Size = new System.Drawing.Size(501, 475);
 			this.dgvListagem.StandardTab = true;
 			this.dgvListagem.TabIndex = 1;
 			this.dgvListagem.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvListagem_CellBeginEdit);
@@ -245,21 +243,14 @@
 			// clnCadastro
 			// 
 			this.clnCadastro.Frozen = true;
-			this.clnCadastro.HeaderText = "Banco";
+			this.clnCadastro.HeaderText = "Congregação";
 			this.clnCadastro.Name = "clnCadastro";
 			this.clnCadastro.Width = 300;
-			// 
-			// clnSigla
-			// 
-			this.clnSigla.Frozen = true;
-			this.clnSigla.HeaderText = "Número";
-			this.clnSigla.MaxInputLength = 10;
-			this.clnSigla.Name = "clnSigla";
 			// 
 			// clnImage
 			// 
 			this.clnImage.Frozen = true;
-			this.clnImage.HeaderText = "Ativo";
+			this.clnImage.HeaderText = "Ativa";
 			this.clnImage.Name = "clnImage";
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
@@ -279,7 +270,7 @@
 			// frmCongregacaoControle
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(625, 514);
+			this.ClientSize = new System.Drawing.Size(525, 598);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.tspMenu);
 			this.Name = "frmCongregacaoControle";
@@ -310,10 +301,9 @@
 		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
 		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
 		internal CamadaUC.ucDataGridView dgvListagem;
+		private System.Windows.Forms.Label lblAcao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCadastro;
-		private System.Windows.Forms.DataGridViewTextBoxColumn clnSigla;
 		private System.Windows.Forms.DataGridViewImageColumn clnImage;
-		private System.Windows.Forms.Label lblAcao;
 	}
 }

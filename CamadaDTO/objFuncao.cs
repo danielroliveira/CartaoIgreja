@@ -8,6 +8,5 @@
 		public string ImagemCartaoVerso { get; set; }
 		public byte Posicao { get; set; }
 		public bool Ativo { get; set; }
-
 	}
 }

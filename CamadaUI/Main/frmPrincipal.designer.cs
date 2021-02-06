@@ -40,8 +40,8 @@
 			this.mnuMembroAdicionar = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuMembroProcurar = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.cadastroDeFunçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.cadstrosDeCongregaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFuncoes = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnImprimir = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuImpressaoLista = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlTop.SuspendLayout();
@@ -169,8 +169,8 @@
             this.mnuMembroAdicionar,
             this.mnuMembroProcurar,
             this.toolStripSeparator1,
-            this.cadastroDeFunçõesToolStripMenuItem,
-            this.cadstrosDeCongregaçõesToolStripMenuItem});
+            this.mnuFuncoes,
+            this.mnuCongregacoes});
 			this.btnCadastros.Image = global::CamadaUI.Properties.Resources.contribuinte_32;
 			this.btnCadastros.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.btnCadastros.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -203,23 +203,23 @@
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(264, 6);
 			// 
-			// cadastroDeFunçõesToolStripMenuItem
+			// mnuFuncoes
 			// 
-			this.cadastroDeFunçõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
-			this.cadastroDeFunçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.funcoes_32;
-			this.cadastroDeFunçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.cadastroDeFunçõesToolStripMenuItem.Name = "cadastroDeFunçõesToolStripMenuItem";
-			this.cadastroDeFunçõesToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
-			this.cadastroDeFunçõesToolStripMenuItem.Text = "Cadastro de Funções";
+			this.mnuFuncoes.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuFuncoes.Image = global::CamadaUI.Properties.Resources.funcoes_32;
+			this.mnuFuncoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuFuncoes.Name = "mnuFuncoes";
+			this.mnuFuncoes.Size = new System.Drawing.Size(267, 38);
+			this.mnuFuncoes.Text = "Cadastro de Funções";
 			// 
-			// cadstrosDeCongregaçõesToolStripMenuItem
+			// mnuCongregacoes
 			// 
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 12F);
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.igreja_32;
-			this.cadstrosDeCongregaçõesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Name = "cadstrosDeCongregaçõesToolStripMenuItem";
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
-			this.cadstrosDeCongregaçõesToolStripMenuItem.Text = "Cadastro de Congregações";
+			this.mnuCongregacoes.Font = new System.Drawing.Font("Calibri", 12F);
+			this.mnuCongregacoes.Image = global::CamadaUI.Properties.Resources.igreja_32;
+			this.mnuCongregacoes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuCongregacoes.Name = "mnuCongregacoes";
+			this.mnuCongregacoes.Size = new System.Drawing.Size(267, 38);
+			this.mnuCongregacoes.Text = "Cadastro de Congregações";
 			// 
 			// btnImprimir
 			// 
@@ -290,8 +290,8 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuImpressaoLista;
 		private System.Windows.Forms.ToolStripMenuItem mnuMembroProcurar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem cadastroDeFunçõesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem cadstrosDeCongregaçõesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuFuncoes;
+		private System.Windows.Forms.ToolStripMenuItem mnuCongregacoes;
 	}
 }
 

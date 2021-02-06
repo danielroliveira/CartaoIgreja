@@ -213,6 +213,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap down_arrow_32 {
+            get {
+                object obj = ResourceManager.GetObject("down_arrow_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DropdownIcon {
             get {
                 object obj = ResourceManager.GetObject("DropdownIcon", resourceCulture);
@@ -343,6 +353,16 @@ namespace CamadaUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lixeira_24 {
+            get {
+                object obj = ResourceManager.GetObject("lixeira_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Logo_ADRJ_Fundo {
             get {
                 object obj = ResourceManager.GetObject("Logo_ADRJ_Fundo", resourceCulture);
@@ -456,6 +476,16 @@ namespace CamadaUI.Properties {
         internal static System.Drawing.Bitmap SwitchON_30 {
             get {
                 object obj = ResourceManager.GetObject("SwitchON_30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_arrow_32 {
+            get {
+                object obj = ResourceManager.GetObject("top_arrow_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

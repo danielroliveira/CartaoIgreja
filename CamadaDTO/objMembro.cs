@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.CompilerServices;
 
 namespace CamadaDTO
@@ -316,7 +315,7 @@ namespace CamadaDTO
 
 		// Property IDFuncao
 		//---------------------------------------------------------------
-		public byte IDFuncao
+		public byte? IDFuncao
 		{
 			get => EditData._Funcao.IDFuncao;
 			set
