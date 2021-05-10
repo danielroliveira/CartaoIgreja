@@ -39,13 +39,13 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnFechar = new System.Windows.Forms.ToolStripButton();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.AtivarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DesativarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuAtivar = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDesativar = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvListagem = new CamadaUC.ucDataGridView();
+			this.lblAcao = new System.Windows.Forms.Label();
 			this.clnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.clnImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.lblAcao = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			this.MenuListagem.SuspendLayout();
@@ -54,7 +54,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(309, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(292, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(172, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Congregações";
@@ -64,7 +64,7 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(481, 0);
+			this.btnClose.Location = new System.Drawing.Point(464, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
@@ -72,7 +72,7 @@
 			// 
 			this.panel1.Controls.Add(this.lblAcao);
 			this.panel1.Location = new System.Drawing.Point(2, 2);
-			this.panel1.Size = new System.Drawing.Size(521, 50);
+			this.panel1.Size = new System.Drawing.Size(504, 50);
 			this.panel1.Controls.SetChildIndex(this.btnClose, 0);
 			this.panel1.Controls.SetChildIndex(this.lblTitulo, 0);
 			this.panel1.Controls.SetChildIndex(this.lblAcao, 0);
@@ -92,7 +92,7 @@
             this.btnFechar});
 			this.tspMenu.Location = new System.Drawing.Point(2, 552);
 			this.tspMenu.Name = "tspMenu";
-			this.tspMenu.Size = new System.Drawing.Size(521, 44);
+			this.tspMenu.Size = new System.Drawing.Size(504, 44);
 			this.tspMenu.TabIndex = 2;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
@@ -161,26 +161,26 @@
 			// MenuListagem
 			// 
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AtivarToolStripMenuItem,
-            this.DesativarToolStripMenuItem});
+            this.mnuAtivar,
+            this.mnuDesativar});
 			this.MenuListagem.Name = "MenuFab";
-			this.MenuListagem.Size = new System.Drawing.Size(159, 48);
+			this.MenuListagem.Size = new System.Drawing.Size(197, 70);
 			// 
-			// AtivarToolStripMenuItem
+			// mnuAtivar
 			// 
-			this.AtivarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.accept_16;
-			this.AtivarToolStripMenuItem.Name = "AtivarToolStripMenuItem";
-			this.AtivarToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.AtivarToolStripMenuItem.Text = "Ativar Banco";
-			this.AtivarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			this.mnuAtivar.Image = global::CamadaUI.Properties.Resources.accept_16;
+			this.mnuAtivar.Name = "mnuAtivar";
+			this.mnuAtivar.Size = new System.Drawing.Size(196, 22);
+			this.mnuAtivar.Text = "Ativar Congregação";
+			this.mnuAtivar.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
-			// DesativarToolStripMenuItem
+			// mnuDesativar
 			// 
-			this.DesativarToolStripMenuItem.Image = global::CamadaUI.Properties.Resources.block_16;
-			this.DesativarToolStripMenuItem.Name = "DesativarToolStripMenuItem";
-			this.DesativarToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.DesativarToolStripMenuItem.Text = "Desativar Banco";
-			this.DesativarToolStripMenuItem.Click += new System.EventHandler(this.AtivarDesativar_Click);
+			this.mnuDesativar.Image = global::CamadaUI.Properties.Resources.block_16;
+			this.mnuDesativar.Name = "mnuDesativar";
+			this.mnuDesativar.Size = new System.Drawing.Size(196, 22);
+			this.mnuDesativar.Text = "Desativar Congregação";
+			this.mnuDesativar.Click += new System.EventHandler(this.AtivarDesativar_Click);
 			// 
 			// dgvListagem
 			// 
@@ -223,7 +223,7 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(501, 475);
+			this.dgvListagem.Size = new System.Drawing.Size(484, 475);
 			this.dgvListagem.StandardTab = true;
 			this.dgvListagem.TabIndex = 1;
 			this.dgvListagem.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvListagem_CellBeginEdit);
@@ -232,13 +232,25 @@
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
 			// 
+			// lblAcao
+			// 
+			this.lblAcao.AutoSize = true;
+			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
+			this.lblAcao.Location = new System.Drawing.Point(15, 14);
+			this.lblAcao.Name = "lblAcao";
+			this.lblAcao.Size = new System.Drawing.Size(210, 22);
+			this.lblAcao.TabIndex = 3;
+			this.lblAcao.Text = "Adicionando Novo Registro";
+			this.lblAcao.Visible = false;
+			// 
 			// clnID
 			// 
 			this.clnID.Frozen = true;
 			this.clnID.HeaderText = "Reg.";
 			this.clnID.Name = "clnID";
 			this.clnID.ReadOnly = true;
-			this.clnID.Width = 80;
+			this.clnID.Width = 60;
 			// 
 			// clnCadastro
 			// 
@@ -255,22 +267,10 @@
 			this.clnImage.ReadOnly = true;
 			this.clnImage.Width = 70;
 			// 
-			// lblAcao
-			// 
-			this.lblAcao.AutoSize = true;
-			this.lblAcao.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAcao.ForeColor = System.Drawing.Color.Cornsilk;
-			this.lblAcao.Location = new System.Drawing.Point(15, 14);
-			this.lblAcao.Name = "lblAcao";
-			this.lblAcao.Size = new System.Drawing.Size(210, 22);
-			this.lblAcao.TabIndex = 3;
-			this.lblAcao.Text = "Adicionando Novo Registro";
-			this.lblAcao.Visible = false;
-			// 
 			// frmCongregacaoControle
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(525, 598);
+			this.ClientSize = new System.Drawing.Size(508, 598);
 			this.Controls.Add(this.dgvListagem);
 			this.Controls.Add(this.tspMenu);
 			this.Name = "frmCongregacaoControle";
@@ -298,8 +298,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton btnFechar;
 		internal System.Windows.Forms.ContextMenuStrip MenuListagem;
-		internal System.Windows.Forms.ToolStripMenuItem AtivarToolStripMenuItem;
-		internal System.Windows.Forms.ToolStripMenuItem DesativarToolStripMenuItem;
+		internal System.Windows.Forms.ToolStripMenuItem mnuAtivar;
+		internal System.Windows.Forms.ToolStripMenuItem mnuDesativar;
 		internal CamadaUC.ucDataGridView dgvListagem;
 		private System.Windows.Forms.Label lblAcao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnID;

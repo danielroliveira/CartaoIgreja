@@ -35,8 +35,8 @@ namespace CamadaUI.Cadastros
 			InitializeComponent();
 
 			_formOrigem = formOrigem;
-			AtivarToolStripMenuItem.Text = "Ativar congregacao";
-			DesativarToolStripMenuItem.Text = "Desativar congregacao";
+			mnuAtivar.Text = "Ativar Congregação";
+			mnuDesativar.Text = "Desativar Congregação";
 
 			bindList.DataSource = typeof(classCong);
 			ObterDados();
@@ -184,7 +184,7 @@ namespace CamadaUI.Cadastros
 			clnID.Resizable = DataGridViewTriState.False;
 			clnID.SortMode = DataGridViewColumnSortMode.NotSortable;
 			clnID.DefaultCellStyle.Padding = newPadding;
-			clnID.DefaultCellStyle.Format = "0000";
+			clnID.DefaultCellStyle.Format = "00";
 
 			//--- (2) COLUNA CADASTRO
 			clnCadastro.DataPropertyName = "Congregacao";
@@ -196,7 +196,7 @@ namespace CamadaUI.Cadastros
 			clnCadastro.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
 			//--- (3) Coluna da imagem
-			clnImage.Name = "Ativo";
+			clnImage.Name = "Ativa";
 			clnImage.ReadOnly = true;
 			clnImage.Resizable = DataGridViewTriState.False;
 			clnImage.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -577,13 +577,13 @@ namespace CamadaUI.Cadastros
 
 					if (congregacao.Ativo == true)
 					{
-						AtivarToolStripMenuItem.Enabled = false;
-						DesativarToolStripMenuItem.Enabled = true;
+						mnuAtivar.Enabled = false;
+						mnuDesativar.Enabled = true;
 					}
 					else
 					{
-						AtivarToolStripMenuItem.Enabled = true;
-						DesativarToolStripMenuItem.Enabled = false;
+						mnuAtivar.Enabled = true;
+						mnuDesativar.Enabled = false;
 					}
 
 					// revela menu
@@ -634,38 +634,5 @@ namespace CamadaUI.Cadastros
 		}
 
 		#endregion // ATIVAR DESATIVAR MENU --- END
-
-		//=================================================================================================
-		// FORM SELECTED APPARENCE
-		//=================================================================================================
-		/*
-
-		#region DESIGN FORM FUNCTIONS
-
-		// CRIAR EFEITO VISUAL DE FORM SELECIONADO
-		//------------------------------------------------------------------------------------------------------------
-		private void frmContribuinteListagem_Activated(object sender, EventArgs e)
-		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
-			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.Silver;
-			}
-		}
-
-		private void frmContribuinteListagem_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			if (_formOrigem != null && _formOrigem.GetType() != typeof(frmPrincipal))
-			{
-				Panel pnl = (Panel)_formOrigem.Controls["Panel1"];
-				pnl.BackColor = Color.SlateGray;
-
-			}
-		}
-
-		#endregion // DESIGN FORM FUNCTIONS --- END
-
-		*/
-
 	}
 }

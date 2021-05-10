@@ -90,9 +90,9 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDCongregacao", cong.IDCongregacao);
 				db.AdicionarParametros("@Congregacao", cong.Congregacao);
 				db.AdicionarParametros("@Ativo", cong.Ativo);
+				db.AdicionarParametros("@IDCongregacao", cong.IDCongregacao);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
@@ -154,9 +154,9 @@ namespace CamadaBLL
 				db.LimparParametros();
 
 				//--- define Params
-				db.AdicionarParametros("@IDCongregacao", cong.IDCongregacao);
 				db.AdicionarParametros("@Congregacao", cong.Congregacao);
 				db.AdicionarParametros("@Ativo", cong.Ativo);
+				db.AdicionarParametros("@IDCongregacao", cong.IDCongregacao);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
