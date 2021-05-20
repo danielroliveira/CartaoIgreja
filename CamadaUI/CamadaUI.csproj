@@ -427,6 +427,9 @@
     <None Include="Resources\funcoes_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\CartaoIgrejaDB.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\Config.xml" />
     <Content Include="program_icon.ico" />
     <None Include="Resources\novo_peq_24.png" />

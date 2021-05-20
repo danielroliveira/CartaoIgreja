@@ -23,7 +23,7 @@ namespace CamadaUI
 		//==============================================================================================
 		public static string DBPath()
 		{
-			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"CartaoIgrejaDB.mdb");
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\CartaoIgrejaDB.mdb");
 		}
 
 		#region CONFIG CREATE | LOAD | CHANGE
