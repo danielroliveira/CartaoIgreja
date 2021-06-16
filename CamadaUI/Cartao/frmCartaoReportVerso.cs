@@ -4,11 +4,10 @@ using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using static CamadaUI.Utilidades;
-using static CamadaUI.FuncoesGlobais;
 using System.Drawing.Printing;
-
+using System.Windows.Forms;
+using static CamadaUI.FuncoesGlobais;
+using static CamadaUI.Utilidades;
 
 namespace CamadaUI.Cartao
 {
@@ -24,40 +23,49 @@ namespace CamadaUI.Cartao
 		{
 			InitializeComponent();
 
-			_MembroList = MembroList;
+			List<objMembro> newOrganizedList = new List<objMembro>();
 
+			//---ORGANIZE: inverse order to combine with FRONT CARD
+			// -------------------------------------------------------------
+			for (int i = 0; i < 10; i++)
+			{
+				if (i < 5)
+				{
+					newOrganizedList.Add(MembroList[i + 5]);
+				}
+				else
+				{
+					newOrganizedList.Add(MembroList[i - 5]);
+				}
+			}
+
+			// --- define REPORT DATASOURCE
+			// -------------------------------------------------------------
+			_MembroList = newOrganizedList;
 			ReportDataSource dst = new ReportDataSource("dstMembro", _MembroList);
 
-			// --- define o relatório
+			// --- define o REPORT
 			// -------------------------------------------------------------
-			// --- clear dataSources
-			rptvPadrao.LocalReport.DataSources.Clear();
 
-			//PrinterSettings printer = new PrinterSettings();
-			//MessageBox.Show(printer.GetHdevmode(rptvPadrao.PrinterSettings.DefaultPageSettings).ToString());
-
+			//--- Define Page Settings
 			PageSettings pg = new PageSettings();
 			pg.Margins.Top = 10;
 			pg.Margins.Bottom = 10;
 			pg.Margins.Left = 30;
 			pg.Margins.Right = 10;
-												
-			//var pgSet = rptvPadrao.GetPageSettings();
-			//MessageBox.Show($"{pgSet.PaperSize.Height} {pgSet.PaperSize.Width}");
 
 			PaperSize size = new PaperSize("Cartao Membro", 787, 1181);
-			//size.RawKind = (int)PaperKind.A4;
 			pg.PaperSize = size;
 			rptvPadrao.SetPageSettings(pg);
 			rptvPadrao.RefreshReport();
-			//rptvPadrao.SetPageSettings();
 
+			// --- clear dataSources
+			rptvPadrao.LocalReport.DataSources.Clear();
 
-			//MessageBox.Show(rptvPadrao.PrinterSettings.PaperSizes[0].PaperName);
-
-			// --- insert data
+			//--- Get and Define Temp folder to save BARCODE files
 			TempFolder = System.IO.Path.GetTempPath();
 
+			// --- insert data
 			EditParams();
 			rptvPadrao.LocalReport.DataSources.Add(dst);
 
@@ -68,6 +76,14 @@ namespace CamadaUI.Cartao
 			rptvPadrao.LocalReport.EnableExternalImages = true;
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);
 			rptvPadrao.RefreshReport();
+
+			/*
+			var pgSet = rptvPadrao.GetPageSettings();
+			MessageBox.Show($"{pgSet.PaperSize.Height} {pgSet.PaperSize.Width}");
+			PrinterSettings printer = new PrinterSettings();
+			MessageBox.Show(printer.GetHdevmode(rptvPadrao.PrinterSettings.DefaultPageSettings).ToString());
+			size.RawKind = (int)PaperKind.A4;
+			*/
 
 		}
 
@@ -131,7 +147,7 @@ namespace CamadaUI.Cartao
 		}
 
 		#endregion // SUB NEW --- END
-		
+
 		#region BUTTONS
 
 		private void btnFechar_Click(object sender, EventArgs e)
@@ -143,7 +159,7 @@ namespace CamadaUI.Cartao
 
 		#region FORM FUNCTIONS
 
-				// DELETE BARCODE FILES AFTER CLOSE
+		// DELETE BARCODE FILES AFTER CLOSE
 		//------------------------------------------------------------------------------------------------------------
 		private void frmCartaoReportVerso_FormClosed(object sender, FormClosedEventArgs e)
 		{
