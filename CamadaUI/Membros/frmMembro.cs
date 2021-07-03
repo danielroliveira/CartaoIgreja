@@ -1,5 +1,6 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Main;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -14,12 +15,17 @@ namespace CamadaUI.Membros
 {
 	public partial class frmMembro : CamadaUI.Models.frmModFinBorder
 	{
+		public delegate void DelegateUpdate(long bytes, string msg);
+
 		private objMembro _membro;
 		private BindingSource bind = new BindingSource();
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
 		private Image FotoImage = null;
 		public objMembro propEscolha { get; set; }
+
+		private enum EnumDefineFoto { LOADING, SEM_FOTO, FOTO_OK }
+		private EnumDefineFoto FotoState;
 
 		#region SUB NEW | PROPERTIES
 
@@ -33,7 +39,7 @@ namespace CamadaUI.Membros
 			_formOrigem = formOrigem;
 			bind.DataSource = _membro;
 			BindingCreator();
-			VisualizarFoto();
+			ObterFotoServidor();
 
 			_membro.PropertyChanged += RegistroAlterado;
 
@@ -63,10 +69,42 @@ namespace CamadaUI.Membros
 		//------------------------------------------------------------------------------------------------------------
 		private void frmMembro_Shown(object sender, EventArgs e)
 		{
-			if (FotoImage == null)
+			/*
+			if (FotoImage == null && !picFoto.Image.Equals(Properties.Resources.sem_foto))
 			{
-				picFoto.Image = Properties.Resources.sem_foto;
+				picFoto.Image = Properties.Resources.loading;
 			}
+			*/
+		}
+
+		// DEFINE ESTADO DA FOTO
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineFotoEstado(EnumDefineFoto value)
+		{
+			switch (value)
+			{
+				case EnumDefineFoto.LOADING:
+					if (FotoImage != null) FotoImage.Dispose();
+					FotoImage = null;
+					picFoto.Image = Properties.Resources.loading;
+					break;
+				case EnumDefineFoto.SEM_FOTO:
+					if (FotoImage != null) FotoImage.Dispose();
+					FotoImage = null;
+					picFoto.Image = Properties.Resources.sem_foto;
+					break;
+				case EnumDefineFoto.FOTO_OK:
+					if (FotoImage == null)
+						picFoto.Image = Properties.Resources.sem_foto;
+					else
+						picFoto.Image = FotoImage;
+
+					break;
+				default:
+					break;
+			}
+
+			FotoState = value;
 		}
 
 		// PROPERTY SITUACAO
@@ -181,6 +219,51 @@ namespace CamadaUI.Membros
 		#endregion
 
 		#region BUTTONS
+
+		// ANEXAR SAVE FOTO
+		//------------------------------------------------------------------------------------------------------------
+		private void btnAnexarFoto_Click(object sender, EventArgs e)
+		{
+			if (FotoState == EnumDefineFoto.FOTO_OK)
+			{
+				var resp = AbrirDialog("Já existe uma foto anexada ao Registro de Membro\n" +
+								"Deseja alterar a foto atual?", "Alterar Foto",
+								DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+				if (resp == DialogResult.No) return;
+			}
+
+			//--- Get File Image
+			string ImagePath = "";
+
+			using (OpenFileDialog OFD = new OpenFileDialog() { Filter = "JPG (*.jpg)|*.jpg" })
+			{
+				if (OFD.ShowDialog() == DialogResult.OK)
+				{
+					ImagePath = OFD.FileName;
+				}
+			}
+
+			if (ImagePath.Length == 0) return;
+
+			//--- upload to server
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				FotoServerUpload(ImagePath);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Anexar a foto no servidor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+		}
 
 		// FECHAR FORM
 		//------------------------------------------------------------------------------------------------------------
@@ -648,9 +731,68 @@ namespace CamadaUI.Membros
 
 		#endregion // SET DADOS --- END
 
-		#region FOTOS FUNCTION
+		#region FOTOS SEVER FUNCTION
 
-		private void btnAnexarFoto_Click(object sender, EventArgs e)
+		// SEND/UPLOAD IMAGE FOTO TO SERVER
+		//------------------------------------------------------------------------------------------------------------
+		private async void FotoServerUpload(string ImagePath)
+		{
+			try
+			{
+				//--- clear Image
+				DefineFotoEstado(EnumDefineFoto.LOADING);
+
+				//--- define new Name
+				string newFileName = $"{_membro.RGMembro}.jpg";
+
+				//--- upload to GOOGLE DRIVE
+				await GDriveControl.SaveFileInDriveImageFolder(ImagePath, newFileName, this);
+
+				//--- define new Image
+				FotoImage = Image.FromFile(ImagePath);
+				DefineFotoEstado(EnumDefineFoto.FOTO_OK);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Um erro aconteceu ao copiar a Imagem para a Nuvem...\n" +
+					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+			}
+		}
+
+		// GET AND VIZUALIZE FOTO IMAGE FROM SERVER
+		//------------------------------------------------------------------------------------------------------------
+		private async void ObterFotoServidor()
+		{
+			DefineFotoEstado(EnumDefineFoto.LOADING);
+
+			try
+			{
+				var image = await GDriveControl.GetImageFromDrive($"{_membro.RGMembro}.jpg");
+
+				if (image != null)
+				{
+					FotoImage = image;
+					DefineFotoEstado(EnumDefineFoto.FOTO_OK);
+				}
+				else
+				{
+					DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a Imagem da Foto no Drive..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+			}
+		}
+
+		#endregion // FOTOS SEVER FUNCTION --- END
+
+		#region FOTOS LOCAL FUNCTION
+
+		private void AnexarFotoLocal()
 		{
 			//--- check folder default
 			string FotosFolder = ObterConfigValorNode("FotosImageFolder");
@@ -671,6 +813,7 @@ namespace CamadaUI.Membros
 				if (resp == DialogResult.No) return;
 			}
 
+			//--- Get File Image
 			string ImagePath = "";
 
 			using (OpenFileDialog OFD = new OpenFileDialog() { Filter = "JPG (*.jpg)|*.jpg" })
@@ -683,12 +826,12 @@ namespace CamadaUI.Membros
 
 			// move foto to default folder
 			if (ImagePath.Length > 0)
-				FotoCopia(ImagePath, FotosFolder);
+				FotoCopiaLocal(ImagePath, FotosFolder);
 			else
 				return;
 		}
 
-		private bool FotoCopia(string ImagePath, string FotosFolder)
+		private bool FotoCopiaLocal(string ImagePath, string FotosFolder)
 		{
 			try
 			{
@@ -708,13 +851,15 @@ namespace CamadaUI.Membros
 			}
 			catch (Exception ex)
 			{
-				AbrirDialog("Um erro aconteceu ao copiar a LogoColor para o diretório padrão...\n" +
+				AbrirDialog("Um erro aconteceu ao copiar a Foto/Imagem para o diretório padrão...\n" +
 					ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				return false;
 			}
 			return true;
 		}
 
+		// GET AND VIZUALIZE FOTO IMAGE FROM LOCAL DRIVE
+		//------------------------------------------------------------------------------------------------------------
 		private void VisualizarFoto()
 		{
 			//--- check folder default
@@ -733,5 +878,23 @@ namespace CamadaUI.Membros
 		}
 
 		#endregion // FOTOS FUNCTION --- END
+
+		public void updateStatusBar(long bytes, string msg)
+		{
+			if (InvokeRequired)
+			{
+				//Invoke(new Action<long, string>(updateStatusBar), new object[] { bytes, msg });
+				var d = new DelegateUpdate(updateStatusBar);
+				BeginInvoke(d, new object[] { bytes, msg });
+			}
+			else
+			{
+				progressBar.Value = (int)bytes;
+				lblProgress.Text = msg;
+				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 20, 4);
+			}
+		}
+
+
 	}
 }

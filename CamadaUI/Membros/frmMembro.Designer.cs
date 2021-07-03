@@ -61,6 +61,8 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.picFoto = new System.Windows.Forms.PictureBox();
 			this.btnAnexarFoto = new System.Windows.Forms.Button();
+			this.lblProgress = new System.Windows.Forms.Label();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -460,7 +462,8 @@
 			// picFoto
 			// 
 			this.picFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.picFoto.Image = global::CamadaUI.Properties.Resources.sem_foto;
+			this.picFoto.Image = global::CamadaUI.Properties.Resources.loading;
+			this.picFoto.InitialImage = null;
 			this.picFoto.Location = new System.Drawing.Point(545, 92);
 			this.picFoto.Name = "picFoto";
 			this.picFoto.Size = new System.Drawing.Size(180, 240);
@@ -487,10 +490,32 @@
 			this.btnAnexarFoto.UseVisualStyleBackColor = false;
 			this.btnAnexarFoto.Click += new System.EventHandler(this.btnAnexarFoto_Click);
 			// 
+			// lblProgress
+			// 
+			this.lblProgress.AutoSize = true;
+			this.lblProgress.BackColor = System.Drawing.Color.Transparent;
+			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+			this.lblProgress.ForeColor = System.Drawing.Color.Black;
+			this.lblProgress.Location = new System.Drawing.Point(344, 383);
+			this.lblProgress.Name = "lblProgress";
+			this.lblProgress.Size = new System.Drawing.Size(120, 17);
+			this.lblProgress.TabIndex = 104;
+			this.lblProgress.Text = "DownLoading...";
+			// 
+			// progressBar
+			// 
+			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar.Location = new System.Drawing.Point(473, 379);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(252, 23);
+			this.progressBar.TabIndex = 103;
+			// 
 			// frmMembro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(756, 462);
+			this.Controls.Add(this.lblProgress);
+			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.picFoto);
 			this.Controls.Add(this.txtFuncao);
 			this.Controls.Add(this.lblFunção);
@@ -548,6 +573,8 @@
 			this.Controls.SetChildIndex(this.lblFunção, 0);
 			this.Controls.SetChildIndex(this.txtFuncao, 0);
 			this.Controls.SetChildIndex(this.picFoto, 0);
+			this.Controls.SetChildIndex(this.progressBar, 0);
+			this.Controls.SetChildIndex(this.lblProgress, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -592,5 +619,7 @@
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.PictureBox picFoto;
 		internal System.Windows.Forms.Button btnAnexarFoto;
+		private System.Windows.Forms.Label lblProgress;
+		private System.Windows.Forms.ProgressBar progressBar;
 	}
 }

@@ -35,6 +35,10 @@
 			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.btnPrintConcluido = new System.Windows.Forms.Button();
 			this.dgvListagem = new System.Windows.Forms.DataGridView();
+			this.clnRG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnMembro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnFuncao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.clnCongregacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MenuListagem = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.editarMembroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removerDaListaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,10 +47,6 @@
 			this.btnPrintAtras = new System.Windows.Forms.Button();
 			this.lblMarcados = new System.Windows.Forms.Label();
 			this.lblNaLista = new System.Windows.Forms.Label();
-			this.clnRG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnMembro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnFuncao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.clnCongregacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -54,7 +54,7 @@
 			// 
 			// lblTitulo
 			// 
-			this.lblTitulo.Location = new System.Drawing.Point(562, 0);
+			this.lblTitulo.Location = new System.Drawing.Point(564, 0);
 			this.lblTitulo.Size = new System.Drawing.Size(240, 50);
 			this.lblTitulo.TabIndex = 0;
 			this.lblTitulo.Text = "Lista de Impressão";
@@ -64,19 +64,19 @@
 			this.btnClose.FlatAppearance.BorderSize = 0;
 			this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Firebrick;
-			this.btnClose.Location = new System.Drawing.Point(802, 0);
+			this.btnClose.Location = new System.Drawing.Point(804, 0);
 			this.btnClose.TabIndex = 1;
 			this.btnClose.Click += new System.EventHandler(this.btnFechar_Click);
 			// 
 			// panel1
 			// 
-			this.panel1.Size = new System.Drawing.Size(842, 50);
+			this.panel1.Size = new System.Drawing.Size(844, 50);
 			// 
 			// btnFechar
 			// 
 			this.btnFechar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFechar.Image = global::CamadaUI.Properties.Resources.delete_16;
-			this.btnFechar.Location = new System.Drawing.Point(694, 551);
+			this.btnFechar.Location = new System.Drawing.Point(696, 551);
 			this.btnFechar.Name = "btnFechar";
 			this.btnFechar.Size = new System.Drawing.Size(126, 42);
 			this.btnFechar.TabIndex = 8;
@@ -156,10 +156,38 @@
 			this.dgvListagem.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvListagem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.dgvListagem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvListagem.Size = new System.Drawing.Size(798, 381);
+			this.dgvListagem.Size = new System.Drawing.Size(800, 381);
 			this.dgvListagem.TabIndex = 5;
 			this.dgvListagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvListagem_KeyDown);
 			this.dgvListagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvListagem_MouseDown);
+			// 
+			// clnRG
+			// 
+			this.clnRG.HeaderText = "Reg.";
+			this.clnRG.Name = "clnRG";
+			this.clnRG.ReadOnly = true;
+			this.clnRG.Width = 70;
+			// 
+			// clnMembro
+			// 
+			this.clnMembro.HeaderText = "Nome do Membro";
+			this.clnMembro.Name = "clnMembro";
+			this.clnMembro.ReadOnly = true;
+			this.clnMembro.Width = 340;
+			// 
+			// clnFuncao
+			// 
+			this.clnFuncao.HeaderText = "Função";
+			this.clnFuncao.Name = "clnFuncao";
+			this.clnFuncao.ReadOnly = true;
+			this.clnFuncao.Width = 140;
+			// 
+			// clnCongregacao
+			// 
+			this.clnCongregacao.HeaderText = "Congregação";
+			this.clnCongregacao.Name = "clnCongregacao";
+			this.clnCongregacao.ReadOnly = true;
+			this.clnCongregacao.Width = 200;
 			// 
 			// MenuListagem
 			// 
@@ -249,38 +277,10 @@
 			this.lblNaLista.Text = "Nenhum Membro na Lista de Impressão";
 			this.lblNaLista.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// clnRG
-			// 
-			this.clnRG.HeaderText = "Reg.";
-			this.clnRG.Name = "clnRG";
-			this.clnRG.ReadOnly = true;
-			this.clnRG.Width = 70;
-			// 
-			// clnMembro
-			// 
-			this.clnMembro.HeaderText = "Nome do Membro";
-			this.clnMembro.Name = "clnMembro";
-			this.clnMembro.ReadOnly = true;
-			this.clnMembro.Width = 340;
-			// 
-			// clnFuncao
-			// 
-			this.clnFuncao.HeaderText = "Função";
-			this.clnFuncao.Name = "clnFuncao";
-			this.clnFuncao.ReadOnly = true;
-			this.clnFuncao.Width = 140;
-			// 
-			// clnCongregacao
-			// 
-			this.clnCongregacao.HeaderText = "Congregação";
-			this.clnCongregacao.Name = "clnCongregacao";
-			this.clnCongregacao.ReadOnly = true;
-			this.clnCongregacao.Width = 200;
-			// 
 			// frmCartaoLista
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
-			this.ClientSize = new System.Drawing.Size(842, 605);
+			this.ClientSize = new System.Drawing.Size(844, 605);
 			this.Controls.Add(this.lblNaLista);
 			this.Controls.Add(this.lblMarcados);
 			this.Controls.Add(this.btnPrintAtras);
