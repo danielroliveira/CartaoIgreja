@@ -65,18 +65,6 @@ namespace CamadaUI.Membros
 			txtMembroNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtMembroNome);
 		}
 
-		// ON SHOW
-		//------------------------------------------------------------------------------------------------------------
-		private void frmMembro_Shown(object sender, EventArgs e)
-		{
-			/*
-			if (FotoImage == null && !picFoto.Image.Equals(Properties.Resources.sem_foto))
-			{
-				picFoto.Image = Properties.Resources.loading;
-			}
-			*/
-		}
-
 		// DEFINE ESTADO DA FOTO
 		//------------------------------------------------------------------------------------------------------------
 		private void DefineFotoEstado(EnumDefineFoto value)
@@ -227,7 +215,7 @@ namespace CamadaUI.Membros
 			if (FotoState == EnumDefineFoto.FOTO_OK)
 			{
 				var resp = AbrirDialog("Já existe uma foto anexada ao Registro de Membro\n" +
-								"Deseja alterar a foto atual?", "Alterar Foto",
+								"Deseja alterar / substituir a foto atual?", "Alterar Foto",
 								DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (resp == DialogResult.No) return;
 			}
@@ -879,19 +867,86 @@ namespace CamadaUI.Membros
 
 		#endregion // FOTOS FUNCTION --- END
 
+		#region CONTEXT MENU
+
+		private void picFoto_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				//--- check fotostate
+				if (FotoState == EnumDefineFoto.LOADING) return;
+
+				mnuAnexarFoto.Enabled = FotoState == EnumDefineFoto.SEM_FOTO;
+				mnuDownloadFoto.Enabled = FotoState == EnumDefineFoto.FOTO_OK;
+				mnuRemoverFoto.Enabled = FotoState == EnumDefineFoto.FOTO_OK;
+
+				// revela menu
+				Control c = (Control)sender;
+				MenuFoto.Show(c.PointToScreen(e.Location));
+			}
+		}
+
+		private void mnuAnexarFoto_Click(object sender, EventArgs e)
+		{
+			btnAnexarFoto_Click(sender, e);
+		}
+
+		private void mnuDownloadFoto_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Não implementado");
+		}
+
+		private async void mnuRemoverFoto_Click(object sender, EventArgs e)
+		{
+			var resp = AbrirDialog("Deseja realmente excluir / remover a Foto do membro atual?\n" +
+				"Aconselhasse antes fazer download da foto atual para salvar em Backup...",
+				"Excluir Foto do Membro", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp == DialogResult.No) return;
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- remove foto
+				await GDriveControl.RemoveImageFromDefaultFolder($"{_membro.RGMembro}.jpg");
+
+				//--- clear image
+				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Remover a Foto do Drive..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		#endregion // CONTEXT MENU --- END
+
 		public void updateStatusBar(long bytes, string msg)
 		{
 			if (InvokeRequired)
 			{
-				//Invoke(new Action<long, string>(updateStatusBar), new object[] { bytes, msg });
 				var d = new DelegateUpdate(updateStatusBar);
 				BeginInvoke(d, new object[] { bytes, msg });
 			}
 			else
 			{
+				if (bytes > 0)
+				{
+					progressBar.Visible = true;
+					lblProgress.Visible = true;
+				}
+
 				progressBar.Value = (int)bytes;
 				lblProgress.Text = msg;
-				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 20, 4);
+				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 34, 385);
 			}
 		}
 

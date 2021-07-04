@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.txtCongregacao = new System.Windows.Forms.TextBox();
 			this.Label6 = new System.Windows.Forms.Label();
 			this.Label15 = new System.Windows.Forms.Label();
@@ -63,9 +64,14 @@
 			this.btnAnexarFoto = new System.Windows.Forms.Button();
 			this.lblProgress = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.MenuFoto = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mnuAnexarFoto = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuDownloadFoto = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuRemoverFoto = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
+			this.MenuFoto.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblTitulo
@@ -470,6 +476,7 @@
 			this.picFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picFoto.TabIndex = 22;
 			this.picFoto.TabStop = false;
+			this.picFoto.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picFoto_MouseDown);
 			// 
 			// btnAnexarFoto
 			// 
@@ -496,11 +503,12 @@
 			this.lblProgress.BackColor = System.Drawing.Color.Transparent;
 			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
 			this.lblProgress.ForeColor = System.Drawing.Color.Black;
-			this.lblProgress.Location = new System.Drawing.Point(344, 383);
+			this.lblProgress.Location = new System.Drawing.Point(382, 383);
 			this.lblProgress.Name = "lblProgress";
-			this.lblProgress.Size = new System.Drawing.Size(120, 17);
+			this.lblProgress.Size = new System.Drawing.Size(85, 17);
 			this.lblProgress.TabIndex = 104;
-			this.lblProgress.Text = "DownLoading...";
+			this.lblProgress.Text = "Obtendo...";
+			this.lblProgress.Visible = false;
 			// 
 			// progressBar
 			// 
@@ -509,6 +517,46 @@
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size(252, 23);
 			this.progressBar.TabIndex = 103;
+			this.progressBar.Visible = false;
+			// 
+			// MenuFoto
+			// 
+			this.MenuFoto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MenuFoto.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAnexarFoto,
+            this.mnuDownloadFoto,
+            this.mnuRemoverFoto});
+			this.MenuFoto.Name = "MenuFab";
+			this.MenuFoto.Size = new System.Drawing.Size(256, 94);
+			// 
+			// mnuAnexarFoto
+			// 
+			this.mnuAnexarFoto.Image = global::CamadaUI.Properties.Resources.attachment;
+			this.mnuAnexarFoto.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuAnexarFoto.Name = "mnuAnexarFoto";
+			this.mnuAnexarFoto.Size = new System.Drawing.Size(255, 30);
+			this.mnuAnexarFoto.Tag = "True";
+			this.mnuAnexarFoto.Text = "Anexar/Inserir Foto";
+			this.mnuAnexarFoto.Click += new System.EventHandler(this.mnuAnexarFoto_Click);
+			// 
+			// mnuDownloadFoto
+			// 
+			this.mnuDownloadFoto.Image = global::CamadaUI.Properties.Resources.save_24;
+			this.mnuDownloadFoto.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuDownloadFoto.Name = "mnuDownloadFoto";
+			this.mnuDownloadFoto.Size = new System.Drawing.Size(255, 30);
+			this.mnuDownloadFoto.Tag = "False";
+			this.mnuDownloadFoto.Text = "Fazer Download da Foto";
+			this.mnuDownloadFoto.Click += new System.EventHandler(this.mnuDownloadFoto_Click);
+			// 
+			// mnuRemoverFoto
+			// 
+			this.mnuRemoverFoto.Image = global::CamadaUI.Properties.Resources.lixeira_24;
+			this.mnuRemoverFoto.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.mnuRemoverFoto.Name = "mnuRemoverFoto";
+			this.mnuRemoverFoto.Size = new System.Drawing.Size(255, 30);
+			this.mnuRemoverFoto.Text = "Remover/Apagar Foto";
+			this.mnuRemoverFoto.Click += new System.EventHandler(this.mnuRemoverFoto_Click);
 			// 
 			// frmMembro
 			// 
@@ -545,7 +593,6 @@
 			this.Name = "frmMembro";
 			this.Activated += new System.EventHandler(this.form_Activated);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form_FormClosed);
-			this.Shown += new System.EventHandler(this.frmMembro_Shown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmMembro_KeyPress);
 			this.Controls.SetChildIndex(this.label3, 0);
 			this.Controls.SetChildIndex(this.lblCongregacao, 0);
@@ -580,6 +627,7 @@
 			this.tspMenu.ResumeLayout(false);
 			this.tspMenu.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).EndInit();
+			this.MenuFoto.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -621,5 +669,9 @@
 		internal System.Windows.Forms.Button btnAnexarFoto;
 		private System.Windows.Forms.Label lblProgress;
 		private System.Windows.Forms.ProgressBar progressBar;
+		internal System.Windows.Forms.ContextMenuStrip MenuFoto;
+		internal System.Windows.Forms.ToolStripMenuItem mnuAnexarFoto;
+		internal System.Windows.Forms.ToolStripMenuItem mnuDownloadFoto;
+		private System.Windows.Forms.ToolStripMenuItem mnuRemoverFoto;
 	}
 }

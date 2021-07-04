@@ -20,8 +20,8 @@ namespace CamadaUI.Main
 		private static string[] Scopes = { DriveService.Scope.Drive };
 
 		private const string _ApplicationName = "Tesouraria Igreja";
-		private static string FolderImageName = "FotosSecretaria";
-		private static string appDataSavePath = "";
+		private const string FolderImageName = "FotosSecretaria";
+		private const string appDataSavePath = "";
 
 		//private static string appDataSavePath = Environment.GetFolderPath(
 		//	Environment.SpecialFolder.ApplicationData)
@@ -156,16 +156,23 @@ namespace CamadaUI.Main
 
 		// RETORNA ID DA PASTA DE FOTOS
 		//------------------------------------------------------------------------------------------------------------
-		public static async Task<string> FotosFolderID()
+		public static async Task<string> GetFotosFolderID()
 		{
-			string[] teste = await ProcurarArquivoId(FolderImageName, "", false);
-
-			if (teste != null && teste.Count() > 0)
+			try
 			{
-				return teste[0];
-			}
+				string[] ID = await ProcurarArquivoId(FolderImageName, "", false);
 
-			return "";
+				if (ID != null && ID.Count() > 0)
+				{
+					return ID[0];
+				}
+
+				return string.Empty;
+			}
+			catch
+			{
+				throw;
+			}
 		}
 
 		// RETORNA UMA IMAGEM DA PASTA DE FOTOS
@@ -174,8 +181,6 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				//throw new Exception("Erro");
-
 				if (!GoogleDriveConnection("credentials.json", "Daniel"))
 				{
 					throw new Exception("Não conectado");
@@ -184,15 +189,15 @@ namespace CamadaUI.Main
 				Image image = null;
 
 				//--- check IMAGE FOLDER
-				string[] IDImageFolder = await ProcurarArquivoId(FolderImageName, "", false);
+				string IDFotoFolder = await GetFotosFolderID();
 
-				if (IDImageFolder == null || IDImageFolder.Count() == 0)
+				if (IDFotoFolder == null)
 				{
 					throw new Exception("Não há pasta de Fotos no Drive...");
 				}
 
 				//--- check FILE ID
-				string[] IDImageFile = await ProcurarArquivoId(nome, IDImageFolder.First());
+				string[] IDImageFile = await ProcurarArquivoId(nome, IDFotoFolder);
 
 				if (IDImageFile != null && IDImageFile.Any())
 				{
@@ -230,22 +235,22 @@ namespace CamadaUI.Main
 				}
 
 				//--- check IMAGE FOLDER
-				string[] ImageFolderID = await ProcurarArquivoId(FolderImageName, "", false); //await ProcurarArquivoId(FolderImageName, "", false);
+				string IDFotoFolder = await GetFotosFolderID();
 
-				if (ImageFolderID == null || ImageFolderID.Count() == 0)
+				if (string.IsNullOrEmpty(IDFotoFolder))
 				{
 					throw new Exception("Não há pasta de Fotos no Drive...");
 				}
 
 				//--- Check file already exists in folder
-				string[] OlderFileID = await ProcurarArquivoId(_newName, ImageFolderID.First(), false);
+				string[] OlderFileID = await ProcurarArquivoId(_newName, IDFotoFolder, false);
 
 				//--- Define/Create file to UPLOAD
 				var arquivo = new Google.Apis.Drive.v3.Data.File()
 				{
 					Name = _newName,
 					MimeType = "image/jpeg",
-					Parents = new List<string> { ImageFolderID.First() }
+					Parents = new List<string> { IDFotoFolder }
 				};
 
 				string newFileID;
@@ -306,43 +311,22 @@ namespace CamadaUI.Main
 			{
 				case Google.Apis.Upload.UploadStatus.Uploading:
 					{
-						parent.updateStatusBar((progress.BytesSent * 100) / totalSize, "Uploading...");
-						System.Diagnostics.Debug.WriteLine(progress.BytesSent);
+						parent.updateStatusBar((progress.BytesSent * 100) / totalSize, "Enviando...");
 						break;
 					}
 				case Google.Apis.Upload.UploadStatus.Completed:
 					{
-
-						parent.updateStatusBar(100, "Upload complete.");
-						System.Diagnostics.Debug.WriteLine("Upload complete.");
+						parent.updateStatusBar(100, "Envio Completo.");
 						break;
 					}
 				case Google.Apis.Upload.UploadStatus.Failed:
 					{
-						parent.updateStatusBar(0, "Upload failed.");
-						System.Diagnostics.Debug.WriteLine("Upload failed.");
-						//MessageBox.Show("File failed to upload!!!", "Upload Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						parent.updateStatusBar(0, "Falha no Envio.");
 						Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
-									Environment.NewLine + "Upload failed.\n");
+									Environment.NewLine + "Falha no Envio.\n");
 						break;
 					}
 			}
-
-
-			//Console.WriteLine($"STATUS: {obj.Status} SEND: {obj.BytesSent}");
-		}
-
-		private static void Request_ProgressChanged1(Google.Apis.Upload.IUploadProgress obj)
-		{
-			//double pc = (obj.BytesSent * 100) / FileUpload1.PostedFile.ContentLength;
-			//File.AppendAllText(@"d:\date.txt", DateTime.Now.ToString("hh:mm:ss.fff") + obj.Status.ToString() + " - " + obj.BytesSent + "____" + pc.ToString("0.00") + Environment.NewLine);
-			//Label2.Text += DateTime.Now.ToString("hh:mm:ss.fff") + obj.Status.ToString() + " - " + obj.BytesSent + "____" + pc + "<br>";
-			//Response.Write(DateTime.Now.ToString("hh:mm:ss.fff") + obj.Status.ToString() + " - " + obj.BytesSent + "____" + pc + "<br>");
-			// close the stream
-
-			//  HttpContext.Current.Response.Write(string.Format(obj.Status + " " + obj.BytesSent));
-			//   HttpContext.Current.Response.Write(obj.BytesSent.ToString());
-
 		}
 
 		// GET MIME TYPE
@@ -357,25 +341,9 @@ namespace CamadaUI.Main
 			return mimeType;
 		}
 
-		// C#
-		private static void Upload(DriveService servico, string caminhoArquivo)
-		{
-			var arquivo = new Google.Apis.Drive.v3.Data.File();
-			arquivo.Name = Path.GetFileName(caminhoArquivo);
-			arquivo.MimeType = "image/jpeg";
-			//arquivo.Parents
-
-			using (var stream = new FileStream(caminhoArquivo, FileMode.Open, FileAccess.Read))
-			{
-				var request = servico.Files.Create(arquivo, stream, arquivo.MimeType);
-				request.Upload();
-			}
-		}
-
-
 		// GET ALL FILES FROM GOOGLE DRIVE AND RETURN LIST
 		//------------------------------------------------------------------------------------------------------------
-		public static IList<Google.Apis.Drive.v3.Data.File> listDriveFilesOriginal(string fileName = null, string fileType = null, string parentID = null)
+		public static IList<Google.Apis.Drive.v3.Data.File> ListDriveFilesOriginal(string fileName = null, string fileType = null, string parentID = null)
 		{
 			IList<Google.Apis.Drive.v3.Data.File> filesList = new List<Google.Apis.Drive.v3.Data.File>();
 
@@ -454,6 +422,64 @@ namespace CamadaUI.Main
 			}
 
 			return filesList;
+		}
+
+		// REMOVE IMAGE/FOTO FROM GOOGLE DRIVE DEFAULT FOLDER
+		//------------------------------------------------------------------------------------------------------------
+		public async static Task<bool> RemoveImageFromDefaultFolder(string imageFileName)
+		{
+			try
+			{
+				//--- check Drive CONNECTION
+				if (!GoogleDriveConnection("credentials.json", "Daniel"))
+				{
+					throw new Exception("Não conectado");
+				}
+
+				//--- check IMAGE FOLDER
+				string IDFotoFolder = await GetFotosFolderID();
+
+				if (string.IsNullOrEmpty(IDFotoFolder))
+				{
+					throw new Exception("Não há pasta de Fotos no Drive...");
+				}
+
+				//--- Get FileID from FileName
+				string[] IDImageFile = await ProcurarArquivoId(imageFileName, IDFotoFolder);
+
+				if (IDImageFile == null || !IDImageFile.Any())
+				{
+					throw new Exception("Não há imagem/foto com esse nome...");
+				}
+
+				//--- Preserve one copy on Local Desktop Folder
+
+
+				//--- Remove File From Drive
+				RemoveFile(IDImageFile.First());
+
+				//--- return
+				return true;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		// DELETE / REMOVE FILE FROM GOOGLE DRIVE
+		//------------------------------------------------------------------------------------------------------------
+		public async static void RemoveFile(string fileID)
+		{
+			try
+			{
+				var request = driveService.Files.Delete(fileID);
+				await request.ExecuteAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 
