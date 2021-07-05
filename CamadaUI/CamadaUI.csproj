@@ -386,9 +386,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="CamadaUI_TemporaryKey.pfx" />
-    <None Include="credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CamadaDTO.AppException.datasource" />
     <None Include="Properties\DataSources\CamadaDTO.objCongregacao.datasource" />
