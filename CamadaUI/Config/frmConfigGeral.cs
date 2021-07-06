@@ -10,6 +10,10 @@ namespace CamadaUI.Config
 {
 	public partial class frmConfigGeral : Models.frmModConfig
 	{
+		private static string appDataSavePath = Environment.GetFolderPath(
+			Environment.SpecialFolder.ApplicationData)
+			+ "\\CartaoIgreja";
+
 		#region SUB NEW | LOAD
 
 		// SUB NEW | CONSTRUCTOR
@@ -70,8 +74,12 @@ namespace CamadaUI.Config
 		//------------------------------------------------------------------------------------------------------------
 		private void Control_KeyDown(object sender, KeyEventArgs e)
 		{
-
 			Control ctr = (Control)sender;
+
+			if (ctr.Name == "txtFotosFolder" && cmbImageOrigin.SelectedItem.ToString() == "GoogleDrive")
+			{
+				return;
+			}
 
 			if (e.KeyCode == Keys.Add || e.KeyCode == Keys.F4)
 			{
@@ -149,6 +157,8 @@ namespace CamadaUI.Config
 				txtUFPadrao.Text = LoadNode(doc, "UFPadrao");
 
 				// IMAGES FOLDER
+				cmbImageOrigin.SelectedItem = LoadNode(doc, "ImageOrigin");
+				Change_cmbImageOrigin();
 				txtFotosFolder.Text = LoadNode(doc, "FotosImageFolder");
 				txtDesignFolder.Text = LoadNode(doc, "DesignImageFolder");
 
@@ -197,6 +207,7 @@ namespace CamadaUI.Config
 				SaveConfigValorNode("ValidadeAnos", numValidade.Value.ToString());
 				SaveConfigValorNode("FotosImageFolder", txtFotosFolder.Text);
 				SaveConfigValorNode("DesignImageFolder", txtDesignFolder.Text);
+				SaveConfigValorNode("ImageOrigin", cmbImageOrigin.SelectedItem.ToString());
 
 				AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
 					DialogType.OK, DialogIcon.Information);
@@ -386,6 +397,93 @@ namespace CamadaUI.Config
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta do Design dos Cartões..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		private void cmbImageOrigin_SelectionChangeCommitted(object sender, EventArgs e)
+		{
+			Change_cmbImageOrigin();
+		}
+
+		// CHANGE COMBO IMAGE ORIGIN
+		//------------------------------------------------------------------------------------------------------------
+		private void Change_cmbImageOrigin()
+		{
+			if (cmbImageOrigin.SelectedItem.ToString() == "Drive Local")
+			{
+				lblOrigemPath.Text = "Pasta Local das Fotos de Membros:";
+				btnCredencial.Visible = false;
+				btnProcFotosFolder.Visible = true;
+			}
+			else
+			{
+				lblOrigemPath.Text = "Pasta das Fotos de Membros no Google Drive:";
+				btnCredencial.Visible = true;
+				btnProcFotosFolder.Visible = false;
+				CheckCredentialFile(true);
+			}
+		}
+
+		// CHECK CREDENTIAL FILE
+		//------------------------------------------------------------------------------------------------------------
+		private bool CheckCredentialFile(bool showmessage)
+		{
+			if (cmbImageOrigin.SelectedItem.ToString() != "GoogleDrive") return true;
+
+			var filepath = ObterDefault("CredentialPath");
+
+			if (string.IsNullOrEmpty(filepath) || !File.Exists(filepath))
+			{
+				if (showmessage)
+					AbrirDialog("A Credencial de acesso ao GoogleDrive ainda não foi definida...\n" +
+						"Favor definir o arquivo da credencial.", "Credencial", DialogType.OK, DialogIcon.Exclamation);
+
+				btnCredencial.Text = "Definir Credencial...";
+				btnCredencial.BackColor = System.Drawing.Color.MistyRose;
+				return false;
+			}
+
+			btnCredencial.BackColor = System.Drawing.Color.Azure;
+			btnCredencial.Text = "Alterar Credencial...";
+			return true;
+		}
+
+		// DEFINIR A CREDENCIAL
+		//------------------------------------------------------------------------------------------------------------
+		private void btnCredencial_Click(object sender, EventArgs e)
+		{
+			//--- open dialog
+			DialogResult result = ofgJsonFile.ShowDialog();
+
+			//--- get result
+			if (result != DialogResult.OK) return;
+
+			//--- check exists credential
+			if (CheckCredentialFile(false))
+			{
+				var resp = AbrirDialog("Já existe uma credencial definida...\n" +
+					"Deseja realmente alterar o arquivo de credencial atual?",
+					"Credencial Existente", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+				if (resp == DialogResult.No) return;
+			}
+
+			try
+			{
+				//--- create directory
+				Directory.CreateDirectory(appDataSavePath);
+
+				//--- copy Credential
+				var jsonfile = ofgJsonFile.FileName;
+				File.Copy(jsonfile, Path.Combine(appDataSavePath, "credential.json"), true);
+
+				//--- save Config
+				SaveConfigValorNode("CredentialPath", Path.Combine(appDataSavePath, "credential.json"));
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar a Credencial..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}

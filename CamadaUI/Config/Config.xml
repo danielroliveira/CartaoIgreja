@@ -7,6 +7,8 @@
     <FotosImageFolder>C:\Users\drojf\Igreja Cartão\Fotos</FotosImageFolder>
     <DesignImageFolder>C:\Users\drojf\Igreja Cartão\Design</DesignImageFolder>
     <ValidadeAnos>3</ValidadeAnos>
+	<ImageOrigin></ImageOrigin>
+	<CredentialPath></CredentialPath>
   </DefaultValues>
   <DadosIgreja>
     <RazaoSocial>Teste</RazaoSocial>

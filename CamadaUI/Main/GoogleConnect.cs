@@ -71,8 +71,10 @@ namespace CamadaUI.Main
 				catch (Exception exc)
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Get Credential Error");
+					//--- Write LOG FILE
 					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Get Credential Error.\n");
+					//--- return
 					return false;
 				}
 			}
@@ -117,7 +119,7 @@ namespace CamadaUI.Main
 		public static async Task<string[]> ProcurarArquivoId(string nome, string IDFolderParent = "", bool procurarNaLixeira = false)
 		{
 
-			if (!GoogleDriveConnection("credentials.json", "Daniel"))
+			if (!GoogleDriveConnection("credentials.json", "User"))
 			{
 				throw new Exception("Não conectado");
 			}
@@ -181,7 +183,7 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "Daniel"))
+				if (!GoogleDriveConnection("credentials.json", "User"))
 				{
 					throw new Exception("Não conectado");
 				}
@@ -229,7 +231,7 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "Daniel"))
+				if (!GoogleDriveConnection("credentials.json", "User"))
 				{
 					throw new Exception("Não conectado");
 				}
@@ -349,7 +351,7 @@ namespace CamadaUI.Main
 
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "Daniel"))
+				if (!GoogleDriveConnection("credentials.json", "User"))
 				{
 					throw new Exception("Não conectado");
 				}
@@ -431,7 +433,7 @@ namespace CamadaUI.Main
 			try
 			{
 				//--- check Drive CONNECTION
-				if (!GoogleDriveConnection("credentials.json", "Daniel"))
+				if (!GoogleDriveConnection("credentials.json", "User"))
 				{
 					throw new Exception("Não conectado");
 				}
