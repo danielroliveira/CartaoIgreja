@@ -460,6 +460,7 @@ namespace GoogleDriveManager
 			frmMain parent = parentForm;
 			long totalSize = 100000;
 			parent.updateStatusBar(0, "Downloading...");
+
 			try
 			{
 				if (Path.HasExtension(filename))

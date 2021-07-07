@@ -155,7 +155,7 @@
 			this.btnCredencial.FlatAppearance.BorderColor = System.Drawing.Color.SlateGray;
 			this.btnCredencial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnCredencial.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnCredencial.Location = new System.Drawing.Point(265, 194);
+			this.btnCredencial.Location = new System.Drawing.Point(254, 194);
 			this.btnCredencial.Name = "btnCredencial";
 			this.btnCredencial.Size = new System.Drawing.Size(145, 26);
 			this.btnCredencial.TabIndex = 10;

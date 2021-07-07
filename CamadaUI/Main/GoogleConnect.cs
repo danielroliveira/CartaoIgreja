@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using CamadaDTO;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static CamadaUI.FuncoesGlobais;
 
 namespace CamadaUI.Main
 {
@@ -20,22 +22,21 @@ namespace CamadaUI.Main
 		private static string[] Scopes = { DriveService.Scope.Drive };
 
 		private const string _ApplicationName = "Tesouraria Igreja";
-		private const string FolderImageName = "FotosSecretaria";
-		private const string appDataSavePath = "";
-
-		//private static string appDataSavePath = Environment.GetFolderPath(
-		//	Environment.SpecialFolder.ApplicationData)
-		//	+ "\\BackUpManager";
+		private const string _CredentialName = "credential.json";
+		private const string _UserName = "User";
+		private static string appDataSavePath = Environment.GetFolderPath(
+			Environment.SpecialFolder.ApplicationData)
+			+ "\\CartaoIgreja";
 
 		#region AUTENTICAR GOOGLE DRIVE
 
 		// CHECK ACTIVE CONNECTION
 		//------------------------------------------------------------------------------------------------------------
-		public static bool GoogleDriveConnection(string jsonSecretPath, string userName)
+		public static bool GoogleDriveConnection()
 		{
 			try
 			{
-				return (getCredential(jsonSecretPath, userName) && createDriveService());
+				return (getCredential($"{appDataSavePath}\\{_CredentialName}", _UserName) && createDriveService());
 			}
 			catch (Exception ex)
 			{
@@ -50,6 +51,7 @@ namespace CamadaUI.Main
 			if (credential != null) return true;
 
 			string savePath = Path.Combine(appDataSavePath, Path.GetFileName(clientSecretPath));
+
 			if (System.IO.File.Exists(savePath))
 			{
 				try
@@ -119,7 +121,7 @@ namespace CamadaUI.Main
 		public static async Task<string[]> ProcurarArquivoId(string nome, string IDFolderParent = "", bool procurarNaLixeira = false)
 		{
 
-			if (!GoogleDriveConnection("credentials.json", "User"))
+			if (!GoogleDriveConnection())
 			{
 				throw new Exception("Não conectado");
 			}
@@ -162,6 +164,14 @@ namespace CamadaUI.Main
 		{
 			try
 			{
+				//--- GET FotosImage Folder
+				string FolderImageName = ObterDefault("FotosImageFolder");
+
+				if (string.IsNullOrEmpty(FolderImageName))
+				{
+					throw new Exception("A pasta de Fotos no Google Drive não foi definida ainda...");
+				}
+
 				string[] ID = await ProcurarArquivoId(FolderImageName, "", false);
 
 				if (ID != null && ID.Count() > 0)
@@ -183,7 +193,7 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "User"))
+				if (!GoogleDriveConnection())
 				{
 					throw new Exception("Não conectado");
 				}
@@ -231,7 +241,7 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "User"))
+				if (!GoogleDriveConnection())
 				{
 					throw new Exception("Não conectado");
 				}
@@ -351,7 +361,7 @@ namespace CamadaUI.Main
 
 			try
 			{
-				if (!GoogleDriveConnection("credentials.json", "User"))
+				if (!GoogleDriveConnection())
 				{
 					throw new Exception("Não conectado");
 				}
@@ -413,8 +423,6 @@ namespace CamadaUI.Main
 
 					return filesList;
 				}
-
-
 			}
 			catch (Exception exc)
 			{
@@ -433,7 +441,7 @@ namespace CamadaUI.Main
 			try
 			{
 				//--- check Drive CONNECTION
-				if (!GoogleDriveConnection("credentials.json", "User"))
+				if (!GoogleDriveConnection())
 				{
 					throw new Exception("Não conectado");
 				}
@@ -483,6 +491,89 @@ namespace CamadaUI.Main
 				throw ex;
 			}
 		}
+
+		// GET IMAGE/FOTO FILE AND DOWNLOAD IN FOLDER
+		//------------------------------------------------------------------------------------------------------------
+		public async static Task<string> DownloadImageAndSaveLocal(string ImageFileName, string FolderToSave)
+		{
+			try
+			{
+				//--- check Drive CONNECTION
+				if (!GoogleDriveConnection())
+				{
+					throw new Exception("Não há nenhuma conexão com o Google Drive...");
+				}
+
+				//--- check IMAGE FOLDER
+				string IDFotoFolder = await GetFotosFolderID();
+
+				if (string.IsNullOrEmpty(IDFotoFolder))
+				{
+					throw new AppException("Não há pasta de Fotos no Drive...");
+				}
+
+				//--- Get FileID from FileName
+				string[] IDImageFile = await ProcurarArquivoId(ImageFileName, IDFotoFolder);
+
+				if (IDImageFile == null || !IDImageFile.Any())
+				{
+					throw new AppException("Não foi encontrada imagem/foto desse registro...");
+				}
+
+				//--- Download File
+				await downloadFromDrive(ImageFileName, IDImageFile[0], FolderToSave);
+
+				//--- return
+				return Path.Combine(FolderToSave, ImageFileName);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// EXECUTE FILE DOWNLOAD
+		//------------------------------------------------------------------------------------------------------------
+		public async static Task downloadFromDrive(string filename, string fileId, string savePath)
+		{
+			try
+			{
+				var request = driveService.Files.Get(fileId);
+				var stream = new System.IO.MemoryStream();
+				System.Diagnostics.Debug.WriteLine(fileId);
+				await request.DownloadAsync(stream);
+				convertMemoryStreamToFileStream(stream, savePath + @"\" + @filename);
+				stream.Dispose();
+			}
+			catch (Exception exc)
+			{
+				System.Diagnostics.Debug.WriteLine(exc.Message + " Download From Drive Error");
+				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Environment.NewLine + exc.Message + " Download From Drive.\n");
+			}
+		}
+
+		private static void convertMemoryStreamToFileStream(MemoryStream stream, string savePath)
+		{
+			FileStream fileStream;
+			using (fileStream = new System.IO.FileStream(savePath, FileMode.OpenOrCreate, FileAccess.Write))
+			{
+				try
+				{
+					// System.IO.File.Create(saveFile)
+					stream.WriteTo(fileStream);
+					fileStream.Close();
+				}
+				catch (Exception exc)
+				{
+					System.Diagnostics.Debug.WriteLine(exc.Message + " Convert Memory stream Error");
+					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Environment.NewLine + exc.Message + " Convert Memory stream Error.\n");
+				}
+			}
+		}
+
 
 
 		/*

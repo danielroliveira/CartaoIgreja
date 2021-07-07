@@ -14,7 +14,7 @@ namespace CamadaUI.Cartao
 	public partial class frmCartaoReportVerso : CamadaUI.Models.frmModFinBorderSizeable
 	{
 		private List<objMembro> _MembroList;
-		private string TempFolder;
+		//private string TempFolder;
 		private List<string> lstCodBarras = new List<string>();
 
 		#region SUB NEW | CONSTRUCTOR

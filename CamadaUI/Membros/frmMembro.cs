@@ -250,7 +250,6 @@ namespace CamadaUI.Membros
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		// FECHAR FORM
@@ -869,6 +868,8 @@ namespace CamadaUI.Membros
 
 		#region CONTEXT MENU
 
+		// OPEN CONTEXT MENU
+		//------------------------------------------------------------------------------------------------------------
 		private void picFoto_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
@@ -886,16 +887,65 @@ namespace CamadaUI.Membros
 			}
 		}
 
+		// INSERIR NOVA IMAGEM DE FOTO E ENVIAR PARA O SERVIDOR
+		//------------------------------------------------------------------------------------------------------------
 		private void mnuAnexarFoto_Click(object sender, EventArgs e)
 		{
 			btnAnexarFoto_Click(sender, e);
 		}
 
-		private void mnuDownloadFoto_Click(object sender, EventArgs e)
+		// DOWNLOAD DA FOTO
+		//------------------------------------------------------------------------------------------------------------
+		private async void mnuDownloadFoto_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Não implementado");
+			if (FotoState != EnumDefineFoto.FOTO_OK)
+			{
+				AbrirDialog("Não existe uma foto anexada ao Registro de Membro...\n" +
+								"Não é possível realizar o Download da Foto.", "Obter Foto",
+								DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			//--- Get File Image
+			string ImagePath = "";
+
+			using (FolderBrowserDialog OFD = new FolderBrowserDialog()
+			{
+				ShowNewFolderButton = true,
+				RootFolder = Environment.SpecialFolder.Desktop
+			})
+			{
+				if (OFD.ShowDialog() == DialogResult.OK)
+				{
+					ImagePath = OFD.SelectedPath;
+				}
+			}
+
+			if (ImagePath.Length == 0) return;
+
+			//--- DOWNLOAD from server
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+				await GDriveControl.DownloadImageAndSaveLocal($"{_membro.RGMembro}.jpg", ImagePath);
+
+				AbrirDialog("Foto obtida com sucesso!", "Download de Foto", DialogType.OK, DialogIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter a foto do servidor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
+		// REMOVE FOTO FROM SERVER
+		//------------------------------------------------------------------------------------------------------------
 		private async void mnuRemoverFoto_Click(object sender, EventArgs e)
 		{
 			var resp = AbrirDialog("Deseja realmente excluir / remover a Foto do membro atual?\n" +

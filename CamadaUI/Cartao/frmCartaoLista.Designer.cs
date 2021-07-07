@@ -47,6 +47,7 @@
 			this.btnPrintAtras = new System.Windows.Forms.Button();
 			this.lblMarcados = new System.Windows.Forms.Label();
 			this.lblNaLista = new System.Windows.Forms.Label();
+			this.lblAguarde = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).BeginInit();
 			this.MenuListagem.SuspendLayout();
@@ -124,9 +125,9 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvListagem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dgvListagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvListagem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvListagem.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -140,10 +141,10 @@
 			this.dgvListagem.ColumnHeadersHeight = 33;
 			this.dgvListagem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dgvListagem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clnRG,
-            this.clnMembro,
-            this.clnFuncao,
-            this.clnCongregacao});
+			this.clnRG,
+			this.clnMembro,
+			this.clnFuncao,
+			this.clnCongregacao});
 			this.dgvListagem.EnableHeadersVisualStyles = false;
 			this.dgvListagem.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dgvListagem.Location = new System.Drawing.Point(22, 123);
@@ -193,8 +194,8 @@
 			// 
 			this.MenuListagem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MenuListagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editarMembroToolStripMenuItem,
-            this.removerDaListaToolStripMenuItem});
+			this.editarMembroToolStripMenuItem,
+			this.removerDaListaToolStripMenuItem});
 			this.MenuListagem.Name = "MenuFab";
 			this.MenuListagem.Size = new System.Drawing.Size(201, 56);
 			// 
@@ -277,10 +278,23 @@
 			this.lblNaLista.Text = "Nenhum Membro na Lista de Impressão";
 			this.lblNaLista.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// lblAguarde
+			// 
+			this.lblAguarde.AutoSize = true;
+			this.lblAguarde.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAguarde.ForeColor = System.Drawing.Color.Red;
+			this.lblAguarde.Location = new System.Drawing.Point(650, 511);
+			this.lblAguarde.Name = "lblAguarde";
+			this.lblAguarde.Size = new System.Drawing.Size(172, 32);
+			this.lblAguarde.TabIndex = 11;
+			this.lblAguarde.Text = "Aguarde...";
+			this.lblAguarde.Visible = false;
+			// 
 			// frmCartaoLista
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(844, 605);
+			this.Controls.Add(this.lblAguarde);
 			this.Controls.Add(this.lblNaLista);
 			this.Controls.Add(this.lblMarcados);
 			this.Controls.Add(this.btnPrintAtras);
@@ -303,6 +317,7 @@
 			this.Controls.SetChildIndex(this.btnPrintAtras, 0);
 			this.Controls.SetChildIndex(this.lblMarcados, 0);
 			this.Controls.SetChildIndex(this.lblNaLista, 0);
+			this.Controls.SetChildIndex(this.lblAguarde, 0);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvListagem)).EndInit();
 			this.MenuListagem.ResumeLayout(false);
@@ -329,5 +344,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnMembro;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnFuncao;
 		private System.Windows.Forms.DataGridViewTextBoxColumn clnCongregacao;
+		private System.Windows.Forms.Label lblAguarde;
 	}
 }

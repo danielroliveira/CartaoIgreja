@@ -1,10 +1,12 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
+using CamadaUI.Main;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
@@ -16,8 +18,6 @@ namespace CamadaUI.Cartao
 		private List<objMembro> lstMembros = new List<objMembro>();
 		private Form _formOrigem;
 		private MembroBLL mBLL = new MembroBLL(DBPath());
-
-		public Image _barcode { get; set; }
 
 		#region NEW | OPEN FUNCTIONS
 
@@ -215,6 +215,8 @@ namespace CamadaUI.Cartao
 
 		#region BUTTONS FUNCTION
 
+		// FECHAR
+		//------------------------------------------------------------------------------------------------------------
 		private void btnFechar_Click(object sender, EventArgs e)
 		{
 			Close();
@@ -358,20 +360,55 @@ namespace CamadaUI.Cartao
 			frm.Show();
 		}
 
+		private Task Teste()
+		{
+			return new Task(() =>
+			{
+				var lblTeste = new Label();
+
+				lblTeste.AutoSize = true;
+				lblTeste.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				lblTeste.ForeColor = System.Drawing.Color.Red;
+				lblTeste.Location = new System.Drawing.Point(650, 509);
+				lblTeste.Name = "lblAguarde";
+				lblTeste.Size = new System.Drawing.Size(172, 32);
+				lblTeste.TabIndex = 11;
+				lblTeste.Text = "Aguarde...";
+				lblTeste.Visible = false;
+				lblTeste.Blink(50, 500);
+
+			});
+
+		}
+
 		private void btnPrintFrente_Click(object sender, EventArgs e)
 		{
 			ObterDados();
-
-			if (!CheckQuantidade()) return;
-			if (!CheckFotos()) return;
-			if (!CheckModelos()) return;
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
+				lblAguarde.Visible = true;
+
+				//--- Checking
+				if (!CheckQuantidade()) return;
+				if (!CheckModelos()) return;
+
+				//--- check fotos
+				var task = Task.Run(async () => await CheckAndGetFotosFromServer());
+				var result = task.Result;
+				if (!result) return;
+
+				//--- open print form
 				new frmCartaoReport(lstMembros).ShowDialog();
+
+				//--- delete temporary fotos
+				DeleteTemporaryPhotos();
+
+				lblAguarde.Visible = false;
+
 			}
 			catch (Exception ex)
 			{
@@ -383,7 +420,6 @@ namespace CamadaUI.Cartao
 				// --- Ampulheta OFF
 				Cursor.Current = Cursors.Default;
 			}
-
 		}
 
 		private void btnPrintAtras_Click(object sender, EventArgs e)
@@ -433,7 +469,7 @@ namespace CamadaUI.Cartao
 
 		// VERIFICA FOTOS AUSENTES
 		//------------------------------------------------------------------------------------------------------------
-		private bool CheckFotos()
+		private bool CheckFotosLocal()
 		{
 			string FotosFolder = ObterConfigValorNode("FotosImageFolder");
 
@@ -468,6 +504,98 @@ namespace CamadaUI.Cartao
 			}
 
 			return true;
+		}
+
+		// CHECK FOTOS FORM SERVER
+		//------------------------------------------------------------------------------------------------------------
+		private async Task<bool> CheckAndGetFotosFromServer()
+		{
+			//--- Get Directory to Download
+			string appDataSavePath = Environment.GetFolderPath(
+				Environment.SpecialFolder.ApplicationData)
+				+ "\\CartaoIgreja\\PrintFotos";
+
+			if (!Directory.Exists(appDataSavePath))
+			{
+				Directory.CreateDirectory(appDataSavePath);
+			}
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				foreach (objMembro membro in lstMembros)
+				{
+					try
+					{
+						await GDriveControl.DownloadImageAndSaveLocal($"{membro.RGMembro}.jpg", appDataSavePath);
+						membro.ImagemFoto = Path.Combine(appDataSavePath, $"{membro.RGMembro}.jpg");
+					}
+					catch (AppException)
+					{
+						AbrirDialog("Ainda não existe a foto do Membro no GoogleDrive:\n" +
+								$"{membro.MembroNome}.",
+								"Imagem/Foto Ausente", DialogType.OK, DialogIcon.Exclamation);
+						return false;
+					}
+					catch (Exception ex)
+					{
+						AbrirDialog("Uma exceção ocorreu ao Obter as Fotos do Servidor..." + "\n" +
+									ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+						break;
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter as Fotos do Servidor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
+			return true;
+		}
+
+		// DELETE TEMPORARY PHOTOS FROM DEFAULT FOLDER
+		//------------------------------------------------------------------------------------------------------------
+		private void DeleteTemporaryPhotos()
+		{
+			//--- Get Directory to Download
+			string appDataSavePath = Environment.GetFolderPath(
+				Environment.SpecialFolder.ApplicationData)
+				+ "\\CartaoIgreja\\PrintFotos";
+
+			if (!Directory.Exists(appDataSavePath))
+			{
+				return;
+			}
+
+			try
+			{
+				var dir = new DirectoryInfo(appDataSavePath);
+
+				foreach (var file in dir.GetFiles())
+				{
+					file.Delete();
+				}
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Obter as Fotos do Servidor..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
+
 		}
 
 		// VERIFICA MODELOS AUSENTES
@@ -628,6 +756,5 @@ namespace CamadaUI.Cartao
 		}
 
 		#endregion // CONTROLS FUNCTION --- END
-
 	}
 }

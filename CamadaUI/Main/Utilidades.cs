@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Resources;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CamadaUI
@@ -364,6 +364,45 @@ namespace CamadaUI
 
 
 
+	}
+
+	//=================================================================================================
+	// USED TO BLINKING LABEL TEXT
+	//=================================================================================================
+	public static class LabelExtension
+	{
+		public static void Blink(this Label label, int blinks, int interval)
+		{
+			Action<Label, int, int> innerBlinkDelegate = new Action<Label, int, int>(InnerBlink);
+			innerBlinkDelegate.BeginInvoke(label, blinks, interval, InnerBlinkCB, innerBlinkDelegate);
+		}
+
+		private static void InnerBlink(Label label, int blinks, int interval)
+		{
+			SwitchVisibility(label);
+			for (int i = 1; i < blinks * 2; i++)
+			{
+				Thread.Sleep(interval);
+				SwitchVisibility(label);
+			}
+		}
+
+		private static void InnerBlinkCB(IAsyncResult ar)
+		{
+			((Action<Label, int, int>)ar.AsyncState).EndInvoke(ar);
+		}
+
+		private static void SwitchVisibility(Label label)
+		{
+			if (label.InvokeRequired)
+			{
+				label.BeginInvoke(new Action<Label>(SwitchVisibility), label);
+			}
+			else
+			{
+				label.Visible = !label.Visible;
+			}
+		}
 	}
 
 }

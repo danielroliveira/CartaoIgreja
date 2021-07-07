@@ -234,6 +234,19 @@ namespace CamadaUI.Config
 			if (!VerificaControle(txtFotosFolder, "PASTA DAS FOTOS")) return false;
 			if (!VerificaControle(txtDesignFolder, "PASTA DO DESIGN DO CARTÃO")) return false;
 
+			if (cmbImageOrigin.SelectedItem.ToString() == "GoogleDrive")
+			{
+				if (txtFotosFolder.Text.Contains(":") || txtFotosFolder.Text.Contains("/"))
+				{
+					AbrirDialog("Favor definir a pasta do GoogleDrive que contém as fotos...\n" +
+						"Digite somente o nome da pasta. Essa pasta deve ter um nome exclusivo.",
+						"Pasta do Google Drive", DialogType.OK, DialogIcon.Exclamation);
+					txtFotosFolder.Focus();
+					txtFotosFolder.SelectAll();
+					return false;
+				}
+			}
+
 			return true;
 		}
 

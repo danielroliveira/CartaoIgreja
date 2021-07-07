@@ -51,7 +51,6 @@ namespace CamadaUI.Cartao
 			rptvPadrao.LocalReport.EnableExternalImages = true;
 			rptvPadrao.SetDisplayMode(DisplayMode.PrintLayout);
 			rptvPadrao.RefreshReport();
-
 		}
 
 		private void frmCartaoReport_Load(object sender, EventArgs e)
