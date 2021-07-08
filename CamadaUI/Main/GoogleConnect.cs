@@ -36,7 +36,7 @@ namespace CamadaUI.Main
 		{
 			try
 			{
-				return (getCredential($"{appDataSavePath}\\{_CredentialName}", _UserName) && createDriveService());
+				return (GetCredential($"{appDataSavePath}\\{_CredentialName}", _UserName) && CreateDriveService());
 			}
 			catch (Exception ex)
 			{
@@ -46,7 +46,7 @@ namespace CamadaUI.Main
 
 		// OBTER CREDENTIAL
 		//------------------------------------------------------------------------------------------------------------
-		private static bool getCredential(string clientSecretPath, string userName)
+		private static bool GetCredential(string clientSecretPath, string userName)
 		{
 			if (credential != null) return true;
 
@@ -83,14 +83,14 @@ namespace CamadaUI.Main
 			else
 			{
 				System.IO.File.Copy(clientSecretPath, Path.Combine(appDataSavePath, Path.GetFileName(clientSecretPath)));
-				return getCredential(clientSecretPath, userName);
+				return GetCredential(clientSecretPath, userName);
 			}
 
 		}
 
 		// INICIALIZA O SERVICO GOOGLE DRIVE
 		//------------------------------------------------------------------------------------------------------------
-		private static bool createDriveService()
+		private static bool CreateDriveService()
 		{
 			if (driveService != null) return true;
 
@@ -341,18 +341,6 @@ namespace CamadaUI.Main
 			}
 		}
 
-		// GET MIME TYPE
-		//------------------------------------------------------------------------------------------------------------
-		private static string GetMimeType(string fileName)
-		{
-			string mimeType = "application/unknown";
-			string ext = System.IO.Path.GetExtension(fileName).ToLower();
-			Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-			if (regKey != null && regKey.GetValue("Content Type") != null)
-				mimeType = regKey.GetValue("Content Type").ToString();
-			return mimeType;
-		}
-
 		// GET ALL FILES FROM GOOGLE DRIVE AND RETURN LIST
 		//------------------------------------------------------------------------------------------------------------
 		public static IList<Google.Apis.Drive.v3.Data.File> ListDriveFilesOriginal(string fileName = null, string fileType = null, string parentID = null)
@@ -521,7 +509,7 @@ namespace CamadaUI.Main
 				}
 
 				//--- Download File
-				await downloadFromDrive(ImageFileName, IDImageFile[0], FolderToSave);
+				await DownloadFromDrive(ImageFileName, IDImageFile[0], FolderToSave);
 
 				//--- return
 				return Path.Combine(FolderToSave, ImageFileName);
@@ -535,7 +523,7 @@ namespace CamadaUI.Main
 
 		// EXECUTE FILE DOWNLOAD
 		//------------------------------------------------------------------------------------------------------------
-		public async static Task downloadFromDrive(string filename, string fileId, string savePath)
+		public async static Task DownloadFromDrive(string filename, string fileId, string savePath)
 		{
 			try
 			{
@@ -543,7 +531,7 @@ namespace CamadaUI.Main
 				var stream = new System.IO.MemoryStream();
 				System.Diagnostics.Debug.WriteLine(fileId);
 				await request.DownloadAsync(stream);
-				convertMemoryStreamToFileStream(stream, savePath + @"\" + @filename);
+				ConvertMemoryStreamToFileStream(stream, savePath + @"\" + @filename);
 				stream.Dispose();
 			}
 			catch (Exception exc)
@@ -554,7 +542,9 @@ namespace CamadaUI.Main
 			}
 		}
 
-		private static void convertMemoryStreamToFileStream(MemoryStream stream, string savePath)
+		// CONVERT MEMORY STREAM TO FILE STREAM
+		//------------------------------------------------------------------------------------------------------------
+		private static void ConvertMemoryStreamToFileStream(MemoryStream stream, string savePath)
 		{
 			FileStream fileStream;
 			using (fileStream = new System.IO.FileStream(savePath, FileMode.OpenOrCreate, FileAccess.Write))
@@ -574,7 +564,53 @@ namespace CamadaUI.Main
 			}
 		}
 
+		// CREATE FOLDER IN GOOLGE DRIVE
+		//------------------------------------------------------------------------------------------------------------
+		public static string CreateFolderToDrive(string folderName, string parentId)
+		{
+			try
+			{
+				var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+				{
+					Name = folderName,
+					MimeType = "application/vnd.google-apps.folder",
 
+				};
+
+				if (parentId != null)
+				{
+					fileMetadata.Parents = new List<string>
+					{
+						parentId
+					};
+				}
+
+				var request = driveService.Files.Create(fileMetadata);
+				request.Fields = "id";
+				var file = request.Execute();
+				System.Diagnostics.Debug.WriteLine("{0} {1}", file.Name, file.Id);
+				return file.Id;
+			}
+			catch (Exception exc)
+			{
+				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Folder to Drive Error");
+				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Environment.NewLine + exc.Message + " Create Folder to Drive Error.\n");
+				return null;
+			}
+		}
+
+		// GET MIME TYPE
+		//------------------------------------------------------------------------------------------------------------
+		private static string GetMimeType(string fileName)
+		{
+			string mimeType = "application/unknown";
+			string ext = System.IO.Path.GetExtension(fileName).ToLower();
+			Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+			if (regKey != null && regKey.GetValue("Content Type") != null)
+				mimeType = regKey.GetValue("Content Type").ToString();
+			return mimeType;
+		}
 
 		/*
 		public static async Google.Apis.Drive.v3.Data.File uploadFile(DriveService _service, string _uploadFile, string _parent, string _descrp = "Uploaded with .NET!")

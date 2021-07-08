@@ -14,7 +14,7 @@ namespace CamadaUI.Cartao
 	public partial class frmCartaoReportVerso : CamadaUI.Models.frmModFinBorderSizeable
 	{
 		private List<objMembro> _MembroList;
-		//private string TempFolder;
+		private string TempFolder;
 		private List<string> lstCodBarras = new List<string>();
 
 		#region SUB NEW | CONSTRUCTOR
@@ -63,7 +63,9 @@ namespace CamadaUI.Cartao
 			rptvPadrao.LocalReport.DataSources.Clear();
 
 			//--- Get and Define Temp folder to save BARCODE files
-			TempFolder = System.IO.Path.GetTempPath();
+			TempFolder = Environment.GetFolderPath(
+				Environment.SpecialFolder.ApplicationData)
+				+ "\\CartaoIgreja\\PrintBarCodes";
 
 			// --- insert data
 			EditParams();
@@ -87,6 +89,8 @@ namespace CamadaUI.Cartao
 
 		}
 
+		// LOAD FORM - DEFINE SIZE FORM
+		//------------------------------------------------------------------------------------------------------------
 		private void frmCartaoReportVerso_Load(object sender, EventArgs e)
 		{
 			//--- define o tamanho
@@ -111,12 +115,20 @@ namespace CamadaUI.Cartao
 			}
 		}
 
+		// CREATE BARCODE IMAGES IN TEMP FOLDER
+		//------------------------------------------------------------------------------------------------------------
 		private string CreateBarCodeImage(int RGMembro, string TempFolder)
 		{
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
+
+				//--- check Folder
+				if (!System.IO.Directory.Exists(TempFolder))
+				{
+					System.IO.Directory.CreateDirectory(TempFolder);
+				}
 
 				Barcode barcode = new Barcode();
 
