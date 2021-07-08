@@ -74,7 +74,7 @@ namespace CamadaUI.Main
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Get Credential Error");
 					//--- Write LOG FILE
-					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Get Credential Error.\n");
 					//--- return
 					return false;
@@ -107,7 +107,7 @@ namespace CamadaUI.Main
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Drive Service Error.\n");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Create Drive Service Error.\n");
 				return false;
 			}
@@ -169,7 +169,7 @@ namespace CamadaUI.Main
 
 				if (string.IsNullOrEmpty(FolderImageName))
 				{
-					throw new Exception("A pasta de Fotos no Google Drive não foi definida ainda...");
+					throw new Exception("A pasta de Fotos no Google Drive não foi definida ainda na configuração...");
 				}
 
 				string[] ID = await ProcurarArquivoId(FolderImageName, "", false);
@@ -177,6 +177,19 @@ namespace CamadaUI.Main
 				if (ID != null && ID.Count() > 0)
 				{
 					return ID[0];
+				}
+				else
+				{
+					//--- find Membresia folder
+					string[] IDParentArray = await ProcurarArquivoId("Membresia", "", false);
+					string IDParent = (IDParentArray != null && IDParentArray.Count() > 0) ? IDParentArray[0] : string.Empty;
+
+					if (string.IsNullOrEmpty(IDParent))
+					{
+						IDParent = CreateFolderToDrive("Membresia", "");
+					}
+
+					CreateFolderToDrive(FolderImageName, IDParent);
 				}
 
 				return string.Empty;
@@ -334,7 +347,7 @@ namespace CamadaUI.Main
 				case Google.Apis.Upload.UploadStatus.Failed:
 					{
 						parent.updateStatusBar(0, "Falha no Envio.");
-						Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+						Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 									Environment.NewLine + "Falha no Envio.\n");
 						break;
 					}
@@ -415,7 +428,7 @@ namespace CamadaUI.Main
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Drivefile list Error");
-				Gtools.writeToFile(CamadaUI.Main.frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(CamadaUI.Main.frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Drivefile list Error.\n");
 			}
 
@@ -537,7 +550,7 @@ namespace CamadaUI.Main
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Download From Drive Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Download From Drive.\n");
 			}
 		}
@@ -558,7 +571,7 @@ namespace CamadaUI.Main
 				catch (Exception exc)
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Convert Memory stream Error");
-					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Convert Memory stream Error.\n");
 				}
 			}
@@ -577,7 +590,7 @@ namespace CamadaUI.Main
 
 				};
 
-				if (parentId != null)
+				if (parentId != null && !string.IsNullOrEmpty(parentId))
 				{
 					fileMetadata.Parents = new List<string>
 					{
@@ -593,10 +606,7 @@ namespace CamadaUI.Main
 			}
 			catch (Exception exc)
 			{
-				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Folder to Drive Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
-					Environment.NewLine + exc.Message + " Create Folder to Drive Error.\n");
-				return null;
+				throw new Exception(exc.Message + " Create Folder to Drive Error");
 			}
 		}
 

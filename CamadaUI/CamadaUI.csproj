@@ -246,12 +246,6 @@
     <Compile Include="Main\frmDateMesAnoGet.designer.cs">
       <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main\frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main\frmMessage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,9 +341,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmDateMesAnoGet.resx">
       <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Main\frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmMessage.resx">
       <DependentUpon>frmMessage.cs</DependentUpon>

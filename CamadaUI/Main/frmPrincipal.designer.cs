@@ -44,6 +44,8 @@
 			this.mnuCongregacoes = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnImprimir = new System.Windows.Forms.ToolStripSplitButton();
 			this.mnuImpressaoLista = new System.Windows.Forms.ToolStripMenuItem();
+			this.lblProgress = new System.Windows.Forms.Label();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.pnlTop.SuspendLayout();
 			this.mnuPrincipal.SuspendLayout();
 			this.SuspendLayout();
@@ -247,12 +249,36 @@
 			this.mnuImpressaoLista.Size = new System.Drawing.Size(213, 34);
 			this.mnuImpressaoLista.Text = "Lista de Impressão";
 			// 
+			// lblProgress
+			// 
+			this.lblProgress.AutoSize = true;
+			this.lblProgress.BackColor = System.Drawing.SystemColors.Control;
+			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+			this.lblProgress.ForeColor = System.Drawing.Color.Black;
+			this.lblProgress.Location = new System.Drawing.Point(595, 59);
+			this.lblProgress.Name = "lblProgress";
+			this.lblProgress.Size = new System.Drawing.Size(120, 17);
+			this.lblProgress.TabIndex = 106;
+			this.lblProgress.Text = "DownLoading...";
+			this.lblProgress.Visible = false;
+			// 
+			// progressBar
+			// 
+			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar.Location = new System.Drawing.Point(724, 55);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(252, 23);
+			this.progressBar.TabIndex = 105;
+			this.progressBar.Visible = false;
+			// 
 			// frmPrincipal
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1110, 732);
+			this.Controls.Add(this.lblProgress);
+			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.mnuPrincipal);
 			this.Controls.Add(this.pnlTop);
 			this.DoubleBuffered = true;
@@ -292,6 +318,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem mnuFuncoes;
 		private System.Windows.Forms.ToolStripMenuItem mnuCongregacoes;
+		private System.Windows.Forms.Label lblProgress;
+		private System.Windows.Forms.ProgressBar progressBar;
 	}
 }
 

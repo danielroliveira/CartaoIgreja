@@ -1,6 +1,7 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
@@ -10,6 +11,9 @@ namespace CamadaUI.Main
 {
 	public partial class frmPrincipal : Form
 	{
+		public static string errorLog;
+		public delegate void DelegateUpdate(long bytes, string msg);
+
 		#region SUB NEW | LOAD
 
 		// SUB NEW
@@ -229,5 +233,26 @@ namespace CamadaUI.Main
 		}
 
 		#endregion
+
+		public void updateStatusBar(long bytes, string msg)
+		{
+			if (InvokeRequired)
+			{
+				var d = new DelegateUpdate(updateStatusBar);
+				BeginInvoke(d, new object[] { bytes, msg });
+			}
+			else
+			{
+				if (bytes > 0)
+				{
+					progressBar.Visible = true;
+					lblProgress.Visible = true;
+				}
+
+				progressBar.Value = (int)bytes;
+				lblProgress.Text = msg;
+				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 34, 385);
+			}
+		}
 	}
 }

@@ -423,7 +423,7 @@ namespace CamadaUI.Config
 		//------------------------------------------------------------------------------------------------------------
 		private void Change_cmbImageOrigin()
 		{
-			if (cmbImageOrigin.SelectedItem.ToString() == "Drive Local")
+			if (cmbImageOrigin.SelectedItem != null && cmbImageOrigin.SelectedItem.ToString() == "Drive Local")
 			{
 				lblOrigemPath.Text = "Pasta Local das Fotos de Membros:";
 				btnCredencial.Visible = false;
@@ -442,7 +442,7 @@ namespace CamadaUI.Config
 		//------------------------------------------------------------------------------------------------------------
 		private bool CheckCredentialFile(bool showmessage)
 		{
-			if (cmbImageOrigin.SelectedItem.ToString() != "GoogleDrive") return true;
+			if (cmbImageOrigin.SelectedItem != null && cmbImageOrigin.SelectedItem.ToString() != "GoogleDrive") return true;
 
 			var filepath = ObterDefault("CredentialPath");
 

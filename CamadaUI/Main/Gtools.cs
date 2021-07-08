@@ -33,7 +33,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Compress IO.File Error");
-				Gtools.writeToFile(CamadaUI.Main.frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(CamadaUI.Main.frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Compress IO.File Error.\n");
 				return null;
 			}
@@ -58,7 +58,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Create IO.File Error");
-				writeToFile(CamadaUI.Main.frmMain.errorLog, DateTime.Now.ToString() +
+				writeToFile(CamadaUI.Main.frmPrincipal.errorLog, DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Create IO.File Error.\n");
 				return false;
 			}
@@ -77,7 +77,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Write to IO.File Error");
-				writeToFile(CamadaUI.Main.frmMain.errorLog, DateTime.Now.ToString() +
+				writeToFile(CamadaUI.Main.frmPrincipal.errorLog, DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Write to IO.File Error.\n");
 				return false;
 			}
@@ -103,7 +103,7 @@ namespace GoogleDriveManager
 				catch (Exception exc)
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Hash Generator Error");
-					writeToFile(CamadaUI.Main.frmMain.errorLog, DateTime.Now.ToString() +
+					writeToFile(CamadaUI.Main.frmPrincipal.errorLog, DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Hash Generator Error.\n");
 					return null;
 				}
@@ -161,7 +161,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Convert to DataTable Error");
-				writeToFile(frmMain.errorLog, DateTime.Now.ToString() +
+				writeToFile(frmPrincipal.errorLog, DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Convert to DataTable Error.\n");
 				return null;
 			}

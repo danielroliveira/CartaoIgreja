@@ -138,7 +138,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Drivefile list Error");
-				Gtools.writeToFile(CamadaUI.Main.frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(CamadaUI.Main.frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Drivefile list Error.\n");
 			}
 			return filesList;
@@ -191,7 +191,7 @@ namespace GoogleDriveManager
 				catch (Exception exc)
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Get Credential Error");
-					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Get Credential Error.\n");
 					return false;
 				}
@@ -219,17 +219,17 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Drive Service Error.\n");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Create Drive Service Error.\n");
 				return false;
 			}
 
 		}
 
-		private static bool uploadFileToDrive(string folderId, string fileName, string filePath, string fileType, frmMain parentForm)
+		private static bool uploadFileToDrive(string folderId, string fileName, string filePath, string fileType, frmPrincipal parentForm)
 		{
 
-			frmMain parent = parentForm;
+			frmPrincipal parent = parentForm;
 			parent.updateStatusBar(0, "Uploading...");
 			long totalSize = 100000;
 			try
@@ -276,7 +276,7 @@ namespace GoogleDriveManager
 									parent.updateStatusBar(0, "Upload failed.");
 									System.Diagnostics.Debug.WriteLine("Upload failed.");
 									//MessageBox.Show("File failed to upload!!!", "Upload Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-									Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+									Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 												Environment.NewLine + "Upload failed.\n");
 									break;
 								}
@@ -292,13 +292,13 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Upload file to Drive Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Upload file to Drive Error.\n");
 				return false;
 			}
 		}
 
-		private static bool uploadFileToDrive(string folderId, string fileName, string filePath, string fileType, bool onlyNew, frmMain parentForm)
+		private static bool uploadFileToDrive(string folderId, string fileName, string filePath, string fileType, bool onlyNew, frmPrincipal parentForm)
 		{
 			if (onlyNew)
 			{
@@ -355,13 +355,13 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Folder to Drive Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Create Folder to Drive Error.\n");
 				return null;
 			}
 		}
 
-		public static void uploadToDrive(string path, string name, string parentId, bool onlyNew, frmMain parentForm)
+		public static void uploadToDrive(string path, string name, string parentId, bool onlyNew, frmPrincipal parentForm)
 		{
 			if (Path.HasExtension(path))
 			{
@@ -378,7 +378,7 @@ namespace GoogleDriveManager
 			}
 		}
 
-		public static void directoryUpload(string path, string parentId, bool onlyNew, frmMain parentForm)
+		public static void directoryUpload(string path, string parentId, bool onlyNew, frmPrincipal parentForm)
 		{
 			try
 			{
@@ -415,7 +415,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Directory upload Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Directory upload Error.\n");
 			}
 		}
@@ -434,7 +434,7 @@ namespace GoogleDriveManager
 				catch (Exception exc)
 				{
 					System.Diagnostics.Debug.WriteLine(exc.Message + " Convert Memory stream Error");
-					Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+					Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Convert Memory stream Error.\n");
 				}
 			}
@@ -450,14 +450,14 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Remove Drive File error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Remove Drive File Error.\n");
 			}
 		}
 
-		public static void downloadFromDrive(string filename, string fileId, string savePath, string mimeType, frmMain parentForm)
+		public static void downloadFromDrive(string filename, string fileId, string savePath, string mimeType, frmPrincipal parentForm)
 		{
-			frmMain parent = parentForm;
+			frmPrincipal parent = parentForm;
 			long totalSize = 100000;
 			parent.updateStatusBar(0, "Downloading...");
 
@@ -556,7 +556,7 @@ namespace GoogleDriveManager
 			catch (Exception exc)
 			{
 				System.Diagnostics.Debug.WriteLine(exc.Message + " Download From Drive Error");
-				Gtools.writeToFile(frmMain.errorLog, Environment.NewLine + DateTime.Now.ToString() +
+				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 					Environment.NewLine + exc.Message + " Download From Drive.\n");
 			}
 		}
