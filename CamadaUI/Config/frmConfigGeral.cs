@@ -76,6 +76,7 @@ namespace CamadaUI.Config
 		{
 			Control ctr = (Control)sender;
 
+			//--- origem Goolgle Drive permite alteracao
 			if (ctr.Name == "txtFotosFolder" && cmbImageOrigin.SelectedItem.ToString() == "GoogleDrive")
 			{
 				return;
@@ -88,9 +89,13 @@ namespace CamadaUI.Config
 				switch (ctr.Name)
 				{
 					case "txtDesignFolder":
+						btnProcDesignFolder_Click(sender, new EventArgs());
 						break;
 					case "txtFotosFolder":
 						btnProcFotosFolder_Click(sender, new EventArgs());
+						break;
+					case "txtDatabase":
+						btnProcDatabase_Click(sender, new EventArgs());
 						break;
 					default:
 						break;
@@ -99,7 +104,7 @@ namespace CamadaUI.Config
 			else
 			{
 				//--- cria um array de controles que serão bloqueados de alteracao
-				Control[] controlesBloqueados = { txtFotosFolder, txtDesignFolder };
+				Control[] controlesBloqueados = { txtFotosFolder, txtDesignFolder, txtDatabase };
 
 				if (controlesBloqueados.Contains(ctr))
 				{
@@ -162,6 +167,9 @@ namespace CamadaUI.Config
 				txtFotosFolder.Text = LoadNode(doc, "FotosImageFolder");
 				txtDesignFolder.Text = LoadNode(doc, "DesignImageFolder");
 
+				// DATABASE PATH
+				txtDatabase.Text = LoadNode(doc, "DBPath");
+
 			}
 			catch (Exception ex)
 			{
@@ -208,6 +216,7 @@ namespace CamadaUI.Config
 				SaveConfigValorNode("FotosImageFolder", txtFotosFolder.Text);
 				SaveConfigValorNode("DesignImageFolder", txtDesignFolder.Text);
 				SaveConfigValorNode("ImageOrigin", cmbImageOrigin.SelectedItem.ToString());
+				SaveConfigValorNode("DBPath", txtDatabase.Text);
 
 				AbrirDialog("Arquivo de Configuração Salvo com sucesso!", "Arquivo Salvo",
 					DialogType.OK, DialogIcon.Information);
@@ -262,8 +271,7 @@ namespace CamadaUI.Config
 				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
 				if (oldPath == string.Empty)
 				{
-					string defFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-					defFolder += "\\Igreja Cartão\\Fotos\\";
+					string defFolder = appDataSavePath + "\\Fotos";
 
 					if (Directory.Exists(defFolder))
 					{
@@ -343,8 +351,7 @@ namespace CamadaUI.Config
 				// CHECK IF EXISTS DEFAULT BACKUP FOLDER
 				if (oldPath == string.Empty)
 				{
-					string defFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-					defFolder += "\\Igreja Cartão\\Design\\";
+					string defFolder = appDataSavePath + "\\Design";
 
 					if (Directory.Exists(defFolder))
 					{
@@ -492,11 +499,95 @@ namespace CamadaUI.Config
 				File.Copy(jsonfile, Path.Combine(appDataSavePath, "credential.json"), true);
 
 				//--- save Config
-				SaveConfigValorNode("CredentialPath", Path.Combine(appDataSavePath, "credential.json"));
+				SaveConfigValorNode("CredentialPath", Path.Combine(appDataSavePath, "credential.json").Trim());
 			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu ao Salvar a Credencial..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+			}
+		}
+
+		// DEFINE AND CREATE BATABASE LOCALIZATION
+		//------------------------------------------------------------------------------------------------------------
+		private void btnProcDatabase_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string oldPath = txtDatabase.Text;
+				string path = "";
+
+				// CHECK IF EXISTS DEFAULT DATABASE FOLDER
+				if (oldPath == string.Empty)
+				{
+					string defFolder = Environment.GetFolderPath(
+						Environment.SpecialFolder.MyDocuments)
+						+ "\\CartaoIgreja" + "\\Database";
+
+					if (Directory.Exists(defFolder))
+					{
+						path = defFolder;
+					}
+					else
+					{
+						DialogResult resp = AbrirDialog("Ainda não foi criada a pasta padrão para o Banco de Dados. \n" +
+							"Deseja criar a pasta padrão?",
+							"Pasta de Banco de Dados",
+							DialogType.SIM_NAO,
+							DialogIcon.Question);
+
+						if (resp == DialogResult.Yes)
+						{
+							Directory.CreateDirectory(defFolder);
+							path = defFolder;
+						}
+						else
+						{
+							path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+						}
+					}
+				}
+				else
+				{
+					if (!Directory.Exists(oldPath))
+					{
+						oldPath = "";
+						txtDatabase.Text = "";
+						btnProcDatabase_Click(sender, e);
+						return;
+					}
+					else
+					{
+						path = oldPath;
+					}
+				}
+
+				// get folder
+				using (FolderBrowserDialog FBDiag = new FolderBrowserDialog()
+				{
+					Description = "Pasta de Banco de Dados dos Cartões",
+					SelectedPath = path,
+					ShowNewFolderButton = true
+				})
+				{
+
+					DialogResult result = FBDiag.ShowDialog();
+					if (result == DialogResult.OK)
+					{
+						path = FBDiag.SelectedPath;
+					}
+					else
+					{
+						return;
+					}
+				}
+
+				SaveConfigValorNode("DBPath", path);
+				txtDatabase.Text = path;
+			}
+			catch (Exception ex)
+			{
+				AbrirDialog("Uma exceção ocorreu ao Salvar a pasta do Banco de Dados dos Cartões..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}

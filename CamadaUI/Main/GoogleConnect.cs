@@ -116,47 +116,7 @@ namespace CamadaUI.Main
 
 		#endregion // AUTENTICAR GOOGLE DRIVE --- END
 
-		// RETORNA FILE ID DO ARQUIVO GOOGLE DRIVE
-		//------------------------------------------------------------------------------------------------------------
-		public static async Task<string[]> ProcurarArquivoId(string nome, string IDFolderParent = "", bool procurarNaLixeira = false)
-		{
-
-			if (!GoogleDriveConnection())
-			{
-				throw new Exception("Não conectado");
-			}
-
-			var retorno = new List<string>();
-
-			var request = driveService.Files.List(); // Files.List();    //.Files.List();
-
-			request.Q = string.Format("name = '{0}'", nome);
-
-			if (!string.IsNullOrEmpty(IDFolderParent))
-			{
-				request.Q += $" and '{IDFolderParent}' in parents";
-			}
-
-			if (!procurarNaLixeira)
-			{
-				request.Q += " and trashed = false";
-			}
-
-			request.Fields = "files(id, name)";
-
-			var resultado = await request.ExecuteAsync();
-			var arquivos = resultado.Files;
-
-			if (arquivos != null && arquivos.Any())
-			{
-				foreach (var arquivo in arquivos)
-				{
-					retorno.Add(arquivo.Id);
-				}
-			}
-
-			return retorno.ToArray();
-		}
+		#region IMAGE / FOTOS GOOGLE DRIVE FUNCTIONS
 
 		// RETORNA ID DA PASTA DE FOTOS
 		//------------------------------------------------------------------------------------------------------------
@@ -326,6 +286,136 @@ namespace CamadaUI.Main
 			}
 		}
 
+		// REMOVE IMAGE/FOTO FROM GOOGLE DRIVE DEFAULT FOLDER
+		//------------------------------------------------------------------------------------------------------------
+		public async static Task<bool> RemoveImageFromDefaultFolder(string imageFileName)
+		{
+			try
+			{
+				//--- check Drive CONNECTION
+				if (!GoogleDriveConnection())
+				{
+					throw new Exception("Não conectado");
+				}
+
+				//--- check IMAGE FOLDER
+				string IDFotoFolder = await GetFotosFolderID();
+
+				if (string.IsNullOrEmpty(IDFotoFolder))
+				{
+					throw new Exception("Não há pasta de Fotos no Drive...");
+				}
+
+				//--- Get FileID from FileName
+				string[] IDImageFile = await ProcurarArquivoId(imageFileName, IDFotoFolder);
+
+				if (IDImageFile == null || !IDImageFile.Any())
+				{
+					throw new Exception("Não há imagem/foto com esse nome...");
+				}
+
+				//--- Preserve one copy on Local Desktop Folder
+
+
+				//--- Remove File From Drive
+				RemoveFile(IDImageFile.First());
+
+				//--- return
+				return true;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		// GET IMAGE/FOTO FILE AND DOWNLOAD IN FOLDER
+		//------------------------------------------------------------------------------------------------------------
+		public async static Task<string> DownloadImageAndSaveLocal(string ImageFileName, string FolderToSave)
+		{
+			try
+			{
+				//--- check Drive CONNECTION
+				if (!GoogleDriveConnection())
+				{
+					throw new Exception("Não há nenhuma conexão com o Google Drive...");
+				}
+
+				//--- check IMAGE FOLDER
+				string IDFotoFolder = await GetFotosFolderID();
+
+				if (string.IsNullOrEmpty(IDFotoFolder))
+				{
+					throw new AppException("Não há pasta de Fotos no Drive...");
+				}
+
+				//--- Get FileID from FileName
+				string[] IDImageFile = await ProcurarArquivoId(ImageFileName, IDFotoFolder);
+
+				if (IDImageFile == null || !IDImageFile.Any())
+				{
+					throw new AppException("Não foi encontrada imagem/foto desse registro...");
+				}
+
+				//--- Download File
+				await DownloadFromDrive(ImageFileName, IDImageFile[0], FolderToSave);
+
+				//--- return
+				return Path.Combine(FolderToSave, ImageFileName);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		#endregion // IMAGE GOOGLE DRIVE FUNCTIONS --- END
+
+		#region FUNCOES GOOGLE DRIVE
+
+		// RETORNA FILE ID DO ARQUIVO GOOGLE DRIVE
+		//------------------------------------------------------------------------------------------------------------
+		public static async Task<string[]> ProcurarArquivoId(string nome, string IDFolderParent = "", bool procurarNaLixeira = false)
+		{
+
+			if (!GoogleDriveConnection())
+			{
+				throw new Exception("Não conectado");
+			}
+
+			var retorno = new List<string>();
+
+			var request = driveService.Files.List(); // Files.List();    //.Files.List();
+
+			request.Q = string.Format("name = '{0}'", nome);
+
+			if (!string.IsNullOrEmpty(IDFolderParent))
+			{
+				request.Q += $" and '{IDFolderParent}' in parents";
+			}
+
+			if (!procurarNaLixeira)
+			{
+				request.Q += " and trashed = false";
+			}
+
+			request.Fields = "files(id, name)";
+
+			var resultado = await request.ExecuteAsync();
+			var arquivos = resultado.Files;
+
+			if (arquivos != null && arquivos.Any())
+			{
+				foreach (var arquivo in arquivos)
+				{
+					retorno.Add(arquivo.Id);
+				}
+			}
+
+			return retorno.ToArray();
+		}
+
 		// UPDATE PROGRESS
 		//------------------------------------------------------------------------------------------------------------
 		private static void Request_ProgressChanged(Google.Apis.Upload.IUploadProgress progress, Membros.frmMembro parent)
@@ -435,49 +525,6 @@ namespace CamadaUI.Main
 			return filesList;
 		}
 
-		// REMOVE IMAGE/FOTO FROM GOOGLE DRIVE DEFAULT FOLDER
-		//------------------------------------------------------------------------------------------------------------
-		public async static Task<bool> RemoveImageFromDefaultFolder(string imageFileName)
-		{
-			try
-			{
-				//--- check Drive CONNECTION
-				if (!GoogleDriveConnection())
-				{
-					throw new Exception("Não conectado");
-				}
-
-				//--- check IMAGE FOLDER
-				string IDFotoFolder = await GetFotosFolderID();
-
-				if (string.IsNullOrEmpty(IDFotoFolder))
-				{
-					throw new Exception("Não há pasta de Fotos no Drive...");
-				}
-
-				//--- Get FileID from FileName
-				string[] IDImageFile = await ProcurarArquivoId(imageFileName, IDFotoFolder);
-
-				if (IDImageFile == null || !IDImageFile.Any())
-				{
-					throw new Exception("Não há imagem/foto com esse nome...");
-				}
-
-				//--- Preserve one copy on Local Desktop Folder
-
-
-				//--- Remove File From Drive
-				RemoveFile(IDImageFile.First());
-
-				//--- return
-				return true;
-			}
-			catch
-			{
-				throw;
-			}
-		}
-
 		// DELETE / REMOVE FILE FROM GOOGLE DRIVE
 		//------------------------------------------------------------------------------------------------------------
 		public async static void RemoveFile(string fileID)
@@ -486,47 +533,6 @@ namespace CamadaUI.Main
 			{
 				var request = driveService.Files.Delete(fileID);
 				await request.ExecuteAsync();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-		// GET IMAGE/FOTO FILE AND DOWNLOAD IN FOLDER
-		//------------------------------------------------------------------------------------------------------------
-		public async static Task<string> DownloadImageAndSaveLocal(string ImageFileName, string FolderToSave)
-		{
-			try
-			{
-				//--- check Drive CONNECTION
-				if (!GoogleDriveConnection())
-				{
-					throw new Exception("Não há nenhuma conexão com o Google Drive...");
-				}
-
-				//--- check IMAGE FOLDER
-				string IDFotoFolder = await GetFotosFolderID();
-
-				if (string.IsNullOrEmpty(IDFotoFolder))
-				{
-					throw new AppException("Não há pasta de Fotos no Drive...");
-				}
-
-				//--- Get FileID from FileName
-				string[] IDImageFile = await ProcurarArquivoId(ImageFileName, IDFotoFolder);
-
-				if (IDImageFile == null || !IDImageFile.Any())
-				{
-					throw new AppException("Não foi encontrada imagem/foto desse registro...");
-				}
-
-				//--- Download File
-				await DownloadFromDrive(ImageFileName, IDImageFile[0], FolderToSave);
-
-				//--- return
-				return Path.Combine(FolderToSave, ImageFileName);
-
 			}
 			catch (Exception ex)
 			{
@@ -622,94 +628,7 @@ namespace CamadaUI.Main
 			return mimeType;
 		}
 
-		/*
-		public static async Google.Apis.Drive.v3.Data.File uploadFile(DriveService _service, string _uploadFile, string _parent, string _descrp = "Uploaded with .NET!")
-		{
-			if (System.IO.File.Exists(_uploadFile))
-			{
-				Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
-				body.Name = System.IO.Path.GetFileName(_uploadFile);
-				body.Description = _descrp;
-				body.MimeType = GetMimeType(_uploadFile);
-				//body.Parents = new List<ParentReference>() { new ParentReference() { Id = _parent } };
-
-				byte[] byteArray = System.IO.File.ReadAllBytes(_uploadFile);
-				System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
-
-				try
-				{
-					FilesResource.CreateMediaUpload request = _service.Files.Create(body, stream, GetMimeType(_uploadFile));
-					await request.UploadAsync();
-					return request.ResponseBody;
-				}
-				catch (Exception ex)
-				{
-					throw ex;
-				}
-			}
-			else
-			{
-				throw new Exception("O arquivo não existe");
-			}
-		}
-		*/
-
-		// AUTENTICAR CONEXAO
-		//------------------------------------------------------------------------------------------------------------
-		/*
-		private static async Task<UserCredential> Autenticar()
-		{
-			using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-			{
-				// The file token.json stores the user's access and refresh tokens, and is created
-				// automatically when the authorization flow completes for the first time.
-				string credPath = "token.json";
-
-				credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-					GoogleClientSecrets.FromStream(stream).Secrets,
-					Scopes,
-					"user",
-					CancellationToken.None,
-					new FileDataStore(credPath, true));
-			}
-
-			return credential;
-		}
-		*/
-
-		// INICIALIZA O SERVICO GOOGLE DRIVE
-		//------------------------------------------------------------------------------------------------------------
-		/*
-		private static async Task<DriveService> AbrirServico()
-		{
-			try
-			{
-				using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-				{
-					// The file token.json stores the user's access and refresh tokens, and is created
-					// automatically when the authorization flow completes for the first time.
-					string credPath = "token.json";
-
-					credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-						GoogleClientSecrets.FromStream(stream).Secrets,
-						Scopes,
-						"user",
-						CancellationToken.None,
-						new FileDataStore(credPath, true));
-				}
-
-				return new DriveService(new BaseClientService.Initializer()
-				{
-					HttpClientInitializer = credential,
-					ApplicationName = _ApplicationName
-				});
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-		*/
+		#endregion // FUNCOES GOOGLE DRIVE --- END
 
 	}
 }

@@ -82,6 +82,11 @@ namespace CamadaUI.Main
 				Program.lstEstadoCivil = div.GetListEstadoCivil();
 				Program.lstSituacao = div.GetListSituacao();
 			}
+			catch (AppException)
+			{
+				Config.frmConfig frm = new Config.frmConfig(this);
+				frm.ShowDialog();
+			}
 			catch (Exception ex)
 			{
 				AbrirDialog("Uma exceção ocorreu... " + "\n" +
@@ -232,8 +237,6 @@ namespace CamadaUI.Main
 			btnConfig.Enabled = IsEnabled;
 		}
 
-		#endregion
-
 		public void updateStatusBar(long bytes, string msg)
 		{
 			if (InvokeRequired)
@@ -254,5 +257,9 @@ namespace CamadaUI.Main
 				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 34, 385);
 			}
 		}
+
+		#endregion
+
+
 	}
 }
