@@ -73,6 +73,9 @@ namespace CamadaUI
 
 			return null;
 		}
+		public static string appDataSavePath = Environment.GetFolderPath(
+			Environment.SpecialFolder.ApplicationData)
+			+ "\\CartaoIgreja";
 
 		#region CONFIG CREATE | LOAD | CHANGE
 
@@ -80,12 +83,27 @@ namespace CamadaUI
 		//==============================================================================================
 		public static bool VerificaConfigXML()
 		{
-			string FindXML = Application.StartupPath + "\\Config.xml";
+			string FindXML = appDataSavePath + "\\Config.xml";
 
-			if (File.Exists(FindXML))
-				return true;
-			else
-				return false;
+			try
+			{
+				if (File.Exists(FindXML))
+				{
+					return true;
+				}
+				else
+				{
+					CriarConfigXML();
+					AbrirDialog("O arquivo de Configuração não foi encontrado...\n" +
+						"Uma nova confirguração foi criada. Favor informar os dados necessários.",
+						"Configuração", DialogType.OK, DialogIcon.Exclamation);
+					return VerificaConfigXML();
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		// CREATE CONFIG XML
@@ -121,7 +139,7 @@ namespace CamadaUI
 						)
 					)
 				)
-				.Save("Config.xml");
+				.Save(appDataSavePath + "\\Config.xml");
 
 			}
 			catch (Exception ex)
@@ -160,9 +178,10 @@ namespace CamadaUI
 			if (VerificaConfigXML())
 			{
 				XmlDocument myXML = new XmlDocument();
+
 				try
 				{
-					myXML.Load(Application.StartupPath + "\\Config.xml");
+					myXML.Load(appDataSavePath + "\\Config.xml");
 					return myXML;
 				}
 				catch (Exception ex)
@@ -204,7 +223,7 @@ namespace CamadaUI
 				if (myNode != null)
 				{
 					myNode.InnerText = NewValorDefault;
-					xmlConfig.Save("Config.xml");
+					xmlConfig.Save(appDataSavePath + "\\Config.xml");
 					return true;
 				}
 				else
@@ -238,7 +257,7 @@ namespace CamadaUI
 				if (elemList.Count > 0)
 				{
 					elemList[0].InnerXml = NodeValue;
-					xmlConfig.Save("Config.xml");
+					xmlConfig.Save(appDataSavePath + "\\Config.xml");
 				}
 				else
 				{

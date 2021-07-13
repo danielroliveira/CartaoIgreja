@@ -24,9 +24,6 @@ namespace CamadaUI.Main
 		private const string _ApplicationName = "Tesouraria Igreja";
 		private const string _CredentialName = "credential.json";
 		private const string _UserName = "User";
-		private static string appDataSavePath = Environment.GetFolderPath(
-			Environment.SpecialFolder.ApplicationData)
-			+ "\\CartaoIgreja";
 
 		#region AUTENTICAR GOOGLE DRIVE
 
