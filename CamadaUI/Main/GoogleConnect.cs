@@ -3,7 +3,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using GoogleDriveManager;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -69,7 +68,6 @@ namespace CamadaUI.Main
 				}
 				catch (Exception exc)
 				{
-					System.Diagnostics.Debug.WriteLine(exc.Message + " Get Credential Error");
 					//--- Write LOG FILE
 					Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Get Credential Error.\n");
@@ -103,12 +101,25 @@ namespace CamadaUI.Main
 			}
 			catch (Exception exc)
 			{
-				System.Diagnostics.Debug.WriteLine(exc.Message + " Create Drive Service Error.\n");
 				Gtools.writeToFile(frmPrincipal.errorLog, Environment.NewLine + DateTime.Now.ToString() +
 							Environment.NewLine + exc.Message + " Create Drive Service Error.\n");
 				return false;
 			}
 
+		}
+
+		// DELETE CREDENTIAL FILE
+		//------------------------------------------------------------------------------------------------------------
+		public static void deleteCredFile(string savePath, string userName)
+		{
+			string[] files = Directory.GetFiles(Path.Combine(savePath, ".credentials"));
+			foreach (string file in files)
+			{
+				if (userName == file.Split('-').Last())
+				{
+					System.IO.File.Delete(file);
+				}
+			}
 		}
 
 		#endregion // AUTENTICAR GOOGLE DRIVE --- END
@@ -611,18 +622,6 @@ namespace CamadaUI.Main
 			{
 				throw new Exception(exc.Message + " Create Folder to Drive Error");
 			}
-		}
-
-		// GET MIME TYPE
-		//------------------------------------------------------------------------------------------------------------
-		private static string GetMimeType(string fileName)
-		{
-			string mimeType = "application/unknown";
-			string ext = System.IO.Path.GetExtension(fileName).ToLower();
-			Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-			if (regKey != null && regKey.GetValue("Content Type") != null)
-				mimeType = regKey.GetValue("Content Type").ToString();
-			return mimeType;
 		}
 
 		#endregion // FUNCOES GOOGLE DRIVE --- END

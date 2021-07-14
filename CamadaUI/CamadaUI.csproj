@@ -256,10 +256,9 @@
     </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
     <Compile Include="Main\GoogleConnect.cs" />
-    <Compile Include="Main\GoogleDriveAPIV3.cs" />
-    <Compile Include="Main\Gtools.cs" />
-    <Compile Include="Main\MimeTypeConvert.cs" />
-    <Compile Include="Main\NotifyIcon.cs" />
+    <Compile Include="Main\NotifyIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Main\Utilidades.cs" />
     <Compile Include="Membros\frmCongregacaoProcura.cs">
       <SubType>Form</SubType>
@@ -497,7 +496,6 @@
     <None Include="Resources\down_arrow_32.png" />
     <None Include="Resources\lixeira_24.png" />
     <None Include="Resources\loading.gif" />
-    <None Include="Resources\TrayIcon.ico" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

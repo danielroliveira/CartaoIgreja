@@ -391,6 +391,7 @@ namespace CamadaUI.Cartao
 				Cursor.Current = Cursors.WaitCursor;
 
 				lblAguarde.Visible = true;
+				new NotifyIcon("Download", "Aguarde por Favor!", ToolTipIcon.Warning);
 
 				//--- Checking
 				if (!CheckQuantidade()) return;

@@ -11,7 +11,9 @@ namespace CamadaUI.Main
 {
 	public partial class frmPrincipal : Form
 	{
-		public static string errorLog;
+		public static System.Windows.Forms.NotifyIcon myNotify;
+
+		public static string errorLog = appDataSavePath + "\\LogFile.log";
 		public delegate void DelegateUpdate(long bytes, string msg);
 
 		#region SUB NEW | LOAD
@@ -35,6 +37,10 @@ namespace CamadaUI.Main
 					client.BackgroundImage = Properties.Resources.Logo_ADRJ_Fundo;
 				}
 			}
+
+			Width = Screen.PrimaryScreen.WorkingArea.Width;
+			Height = Screen.PrimaryScreen.WorkingArea.Height;
+
 		}
 
 		// LOAD
@@ -81,6 +87,9 @@ namespace CamadaUI.Main
 				Program.lstFuncao = new FuncaoBLL(pathDB).GetListFuncao();
 				Program.lstEstadoCivil = div.GetListEstadoCivil();
 				Program.lstSituacao = div.GetListSituacao();
+
+				new NotifyIcon("Cartão Igreja", "Seja Bem-Vindo!", ToolTipIcon.Info);
+
 			}
 			catch (AppException)
 			{
@@ -114,6 +123,8 @@ namespace CamadaUI.Main
 
 		}
 
+		// DEFINE TITLE OF APPLICATION
+		//------------------------------------------------------------------------------------------------------------
 		public string AplicacaoTitulo
 		{
 			get
