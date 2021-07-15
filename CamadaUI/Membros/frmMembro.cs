@@ -39,17 +39,18 @@ namespace CamadaUI.Membros
 			_formOrigem = formOrigem;
 			bind.DataSource = _membro;
 			BindingCreator();
-			ObterFotoServidor();
 
 			_membro.PropertyChanged += RegistroAlterado;
 
 			if (_membro.IDCongregacao == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
+				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
 			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
+				ObterFotoServidor();
 			}
 
 			//--- Nascimento Date Controlling
@@ -214,7 +215,7 @@ namespace CamadaUI.Membros
 		{
 			if (FotoState == EnumDefineFoto.FOTO_OK)
 			{
-				var resp = AbrirDialog("Já existe uma foto anexada ao Registro de Membro\n" +
+				var resp = AbrirDialog("Já existe uma foto anexada ao Registro de Membro...\n" +
 								"Deseja alterar / substituir a foto atual?", "Alterar Foto",
 								DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
 				if (resp == DialogResult.No) return;
@@ -738,6 +739,10 @@ namespace CamadaUI.Membros
 				//--- define new Image
 				FotoImage = Image.FromFile(ImagePath);
 				DefineFotoEstado(EnumDefineFoto.FOTO_OK);
+
+				//--- notify message
+				new NotifyIcon("Foto enviada", "Foto do Membro enviada com sucesso!", ToolTipIcon.Info);
+
 			}
 			catch (Exception ex)
 			{
@@ -772,6 +777,29 @@ namespace CamadaUI.Membros
 				AbrirDialog("Uma exceção ocorreu ao Obter a Imagem da Foto no Drive..." + "\n" +
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+			}
+		}
+
+		// UPDATE PROGRESS BAR
+		//------------------------------------------------------------------------------------------------------------
+		public void updateStatusBar(long bytes, string msg)
+		{
+			if (InvokeRequired)
+			{
+				var d = new DelegateUpdate(updateStatusBar);
+				BeginInvoke(d, new object[] { bytes, msg });
+			}
+			else
+			{
+				if (bytes > 0)
+				{
+					progressBar.Visible = true;
+					lblProgress.Visible = true;
+				}
+
+				progressBar.Value = (int)bytes;
+				lblProgress.Text = msg;
+				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 34, 385);
 			}
 		}
 
@@ -978,28 +1006,6 @@ namespace CamadaUI.Membros
 		}
 
 		#endregion // CONTEXT MENU --- END
-
-		public void updateStatusBar(long bytes, string msg)
-		{
-			if (InvokeRequired)
-			{
-				var d = new DelegateUpdate(updateStatusBar);
-				BeginInvoke(d, new object[] { bytes, msg });
-			}
-			else
-			{
-				if (bytes > 0)
-				{
-					progressBar.Visible = true;
-					lblProgress.Visible = true;
-				}
-
-				progressBar.Value = (int)bytes;
-				lblProgress.Text = msg;
-				lblProgress.Location = new Point(this.ClientRectangle.Width - lblProgress.Width - progressBar.Width - 34, 385);
-			}
-		}
-
 
 	}
 }

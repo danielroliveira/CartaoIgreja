@@ -9,7 +9,6 @@ namespace CamadaUI
 
 		public NotifyIcon(string title, string text, ToolTipIcon icon = ToolTipIcon.Info)
 		{
-			Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
 			InitializeComponent();
 			TrayIcon.Visible = true;
 			TrayIcon.ShowBalloonTip(10000, title, text, icon);
@@ -29,6 +28,7 @@ namespace CamadaUI
 				TrayIcon.Text = "Cartão Igreja Notificação";
 				TrayIcon.Icon = CamadaUI.Properties.Resources.program_icon;
 				Main.frmPrincipal.myNotify = TrayIcon;
+				Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
 			}
 		}
 
