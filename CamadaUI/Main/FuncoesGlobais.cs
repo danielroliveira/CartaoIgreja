@@ -19,6 +19,10 @@ namespace CamadaUI
 
 	public static class FuncoesGlobais
 	{
+		public static string appDataSavePath = Environment.GetFolderPath(
+			Environment.SpecialFolder.ApplicationData)
+			+ "\\CartaoIgreja";
+
 		// GET PATH OF DATABASE
 		//==============================================================================================
 		public static string DBPath()
@@ -73,9 +77,6 @@ namespace CamadaUI
 
 			return null;
 		}
-		public static string appDataSavePath = Environment.GetFolderPath(
-			Environment.SpecialFolder.ApplicationData)
-			+ "\\CartaoIgreja";
 
 		#region CONFIG CREATE | LOAD | CHANGE
 

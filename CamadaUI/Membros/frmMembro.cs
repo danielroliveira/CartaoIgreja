@@ -234,6 +234,29 @@ namespace CamadaUI.Membros
 
 			if (ImagePath.Length == 0) return;
 
+			//--- check foto size
+			FileInfo foto = new FileInfo(ImagePath);
+
+			if (foto.Length > 200000)
+			{
+				AbrirDialog("Essa imagem/foto tem um tamanho acima do valor máximo previsto...\n" +
+					"Favor otimizar a foto para obter no máximo 200Kb",
+					"Tamanho da Imagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
+			//--- check image Dimension (3x4)
+			Image image = Image.FromFile(ImagePath);
+			double dim = (Convert.ToDouble(image.Width) / 3) / (Convert.ToDouble(image.Height) / 4);
+
+			if (dim < 0.95 || dim > 1.05)
+			{
+				AbrirDialog("Essa imagem/foto não está na dimensão desejada de 3x4...\n" +
+					"Favor otimizar a foto para obter esta dimensão.",
+					"Dimensão da Imagem", DialogType.OK, DialogIcon.Exclamation);
+				return;
+			}
+
 			//--- upload to server
 			try
 			{

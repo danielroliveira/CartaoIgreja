@@ -10,10 +10,6 @@ namespace CamadaUI.Config
 {
 	public partial class frmConfigGeral : Models.frmModConfig
 	{
-		private static string appDataSavePath = Environment.GetFolderPath(
-			Environment.SpecialFolder.ApplicationData)
-			+ "\\CartaoIgreja";
-
 		#region SUB NEW | LOAD
 
 		// SUB NEW | CONSTRUCTOR
@@ -23,7 +19,6 @@ namespace CamadaUI.Config
 			LoadConfig();
 
 			HandlerKeyDownControl(this);
-
 		}
 
 		// LOAD
@@ -260,6 +255,8 @@ namespace CamadaUI.Config
 		}
 
 		#endregion // SAVE CONFIG --- END
+
+		#region FOTOS/IMAGES LOCAL/GOOGLE DRIVE FUNCTIONS
 
 		private void btnProcFotosFolder_Click(object sender, EventArgs e)
 		{
@@ -591,5 +588,8 @@ namespace CamadaUI.Config
 							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
 			}
 		}
+
+		#endregion // FOTOS/IMAGES LOCAL/GOOGLE DRIVE FUNCTIONS --- END
+
 	}
 }
