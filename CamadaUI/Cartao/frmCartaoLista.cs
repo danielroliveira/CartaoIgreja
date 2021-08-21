@@ -360,27 +360,6 @@ namespace CamadaUI.Cartao
 			frm.Show();
 		}
 
-		private Task Teste()
-		{
-			return new Task(() =>
-			{
-				var lblTeste = new Label();
-
-				lblTeste.AutoSize = true;
-				lblTeste.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				lblTeste.ForeColor = System.Drawing.Color.Red;
-				lblTeste.Location = new System.Drawing.Point(650, 509);
-				lblTeste.Name = "lblAguarde";
-				lblTeste.Size = new System.Drawing.Size(172, 32);
-				lblTeste.TabIndex = 11;
-				lblTeste.Text = "Aguarde...";
-				lblTeste.Visible = false;
-				lblTeste.Blink(50, 500);
-
-			});
-
-		}
-
 		private void btnPrintFrente_Click(object sender, EventArgs e)
 		{
 			ObterDados();
@@ -429,6 +408,7 @@ namespace CamadaUI.Cartao
 
 			if (!CheckQuantidade()) return;
 			if (!CheckModelos()) return;
+			if (!CheckValidade()) return;
 
 			try
 			{
@@ -452,6 +432,33 @@ namespace CamadaUI.Cartao
 		private void btnPrintConcluido_Click(object sender, EventArgs e)
 		{
 			if (!CheckQuantidade()) return;
+			if (!CheckValidade()) return;
+
+			var resp = AbrirDialog("Você tem certeza em marcar os 10 cadastros " +
+				"presentes na listagem como impressos?\n" +
+				"Esses cadastros serão removidos da listagem...",
+				"Marcar como Impressos", DialogType.SIM_NAO, DialogIcon.Question, DialogDefaultButton.Second);
+
+			if (resp == DialogResult.No) return;
+
+			//--- get validade
+			string Validade = ObterConfigValorNode("ValidadeAnos");
+			int.TryParse(Validade, out int anos);
+
+			//--- save Data
+			MembroBLL cBLL = new MembroBLL(DBPath());
+
+			foreach (var membro in lstMembros)
+			{
+				membro.EmissaoData = DateTime.Today;
+				membro.ValidadeData = DateTime.Today.AddYears(anos);
+				membro.Imprimir = false;
+				membro.NaLista = false;
+				cBLL.UpdateMembro(membro);
+			}
+
+			//--- requery
+			ObterDados();
 		}
 
 		// VERIFY QUANTITY TO PRINT
@@ -666,6 +673,24 @@ namespace CamadaUI.Cartao
 				{
 					membro.ImagemCartaoVerso = newFile;
 				}
+			}
+
+			return true;
+		}
+
+		private bool CheckValidade()
+		{
+			//--- get validade
+			string Validade = ObterConfigValorNode("ValidadeAnos");
+
+			if (!int.TryParse(Validade, out int anos))
+			{
+				AbrirDialog("É necessário a descrição do número de anos da validade das novas credenciais no CONFIG da aplicação." +
+					"\nFavor Informar esse dado ou comunique-se com o administrador do sistema.",
+					"Validade da Credencial Inválida",
+					DialogType.OK,
+					DialogIcon.Exclamation);
+				return false;
 			}
 
 			return true;

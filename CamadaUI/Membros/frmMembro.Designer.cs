@@ -350,17 +350,17 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(20, 369);
+			this.label4.Location = new System.Drawing.Point(40, 371);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(101, 19);
+			this.label4.Size = new System.Drawing.Size(81, 19);
 			this.label4.TabIndex = 19;
-			this.label4.Text = "Dt Membresia";
+			this.label4.Text = "Dt Batismo";
 			// 
 			// dtpMembresiaData
 			// 
 			this.dtpMembresiaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
 			this.dtpMembresiaData.Location = new System.Drawing.Point(127, 365);
-			this.dtpMembresiaData.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+			this.dtpMembresiaData.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			this.dtpMembresiaData.Name = "dtpMembresiaData";
 			this.dtpMembresiaData.Size = new System.Drawing.Size(124, 27);
 			this.dtpMembresiaData.TabIndex = 20;

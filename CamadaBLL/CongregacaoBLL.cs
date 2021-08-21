@@ -85,14 +85,28 @@ namespace CamadaBLL
 					throw new AppException("Já existe um cong cadastrado que possui o mesmo nome...");
 				}
 
+				//--- GET new ID
+				//------------------------------------------------------------------------------------------------------------
+				db.LimparParametros();
+
+				//--- create and execute query
+				query = "SELECT Max(IDCongregacao) AS MaxID FROM tblCongregacao;";
+				dt = db.ExecutarConsulta(CommandType.Text, query);
+				int MaxID = 0;
+
+				if (dt.Rows.Count > 0)
+				{
+					MaxID = (int)dt.Rows[0]["MaxID"];
+				}
+
 				// INSERT CONGREGACAO
 				//------------------------------------------------------------------------------------------------------------
 				db.LimparParametros();
 
 				//--- define Params
 				db.AdicionarParametros("@Congregacao", cong.Congregacao);
-				db.AdicionarParametros("@Ativo", cong.Ativo);
-				db.AdicionarParametros("@IDCongregacao", cong.IDCongregacao);
+				db.AdicionarParametros("@Ativo", true);
+				db.AdicionarParametros("@IDCongregacao", MaxID + 1);
 
 				//--- convert null parameters
 				db.ConvertNullParams();
