@@ -70,7 +70,8 @@
 			this.mnuRemoverFoto = new System.Windows.Forms.ToolStripMenuItem();
 			this.label5 = new System.Windows.Forms.Label();
 			this.dtpBatismoData = new System.Windows.Forms.DateTimePicker();
-			this.label7 = new System.Windows.Forms.Label();
+			this.chkDtBatismo = new System.Windows.Forms.CheckBox();
+			this.lblSemBatismo = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -225,7 +226,7 @@
 			this.tspMenu.Location = new System.Drawing.Point(2, 416);
 			this.tspMenu.Name = "tspMenu";
 			this.tspMenu.Size = new System.Drawing.Size(751, 44);
-			this.tspMenu.TabIndex = 21;
+			this.tspMenu.TabIndex = 29;
 			this.tspMenu.TabStop = true;
 			this.tspMenu.Text = "toolStrip1";
 			// 
@@ -356,7 +357,7 @@
 			this.label4.Location = new System.Drawing.Point(20, 372);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(101, 19);
-			this.label4.TabIndex = 19;
+			this.label4.TabIndex = 24;
 			this.label4.Text = "Dt Membresia";
 			// 
 			// dtpMembresiaData
@@ -365,8 +366,8 @@
 			this.dtpMembresiaData.Location = new System.Drawing.Point(127, 367);
 			this.dtpMembresiaData.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			this.dtpMembresiaData.Name = "dtpMembresiaData";
-			this.dtpMembresiaData.Size = new System.Drawing.Size(153, 27);
-			this.dtpMembresiaData.TabIndex = 20;
+			this.dtpMembresiaData.Size = new System.Drawing.Size(131, 27);
+			this.dtpMembresiaData.TabIndex = 25;
 			// 
 			// txtEstadoCivil
 			// 
@@ -414,7 +415,7 @@
 			this.btnSetFuncao.Location = new System.Drawing.Point(289, 298);
 			this.btnSetFuncao.Name = "btnSetFuncao";
 			this.btnSetFuncao.Size = new System.Drawing.Size(34, 27);
-			this.btnSetFuncao.TabIndex = 18;
+			this.btnSetFuncao.TabIndex = 19;
 			this.btnSetFuncao.TabStop = false;
 			this.btnSetFuncao.Text = "...";
 			this.btnSetFuncao.UseCompatibleTextRendering = true;
@@ -429,7 +430,7 @@
 			this.lblFuncao.Location = new System.Drawing.Point(65, 302);
 			this.lblFuncao.Name = "lblFuncao";
 			this.lblFuncao.Size = new System.Drawing.Size(55, 19);
-			this.lblFuncao.TabIndex = 16;
+			this.lblFuncao.TabIndex = 17;
 			this.lblFuncao.Text = "Função";
 			// 
 			// txtFuncao
@@ -439,7 +440,7 @@
 			this.txtFuncao.MaxLength = 30;
 			this.txtFuncao.Name = "txtFuncao";
 			this.txtFuncao.Size = new System.Drawing.Size(153, 27);
-			this.txtFuncao.TabIndex = 17;
+			this.txtFuncao.TabIndex = 18;
 			this.txtFuncao.Tag = "Pressione a tecla (+) para procurar";
 			this.txtFuncao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
 			this.txtFuncao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Control_KeyPress);
@@ -453,7 +454,7 @@
 			this.label1.Location = new System.Drawing.Point(328, 265);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(48, 13);
-			this.label1.TabIndex = 13;
+			this.label1.TabIndex = 16;
 			this.label1.Text = "(nº 1 a 4)";
 			// 
 			// lblFuncNumber
@@ -465,7 +466,7 @@
 			this.lblFuncNumber.Location = new System.Drawing.Point(328, 304);
 			this.lblFuncNumber.Name = "lblFuncNumber";
 			this.lblFuncNumber.Size = new System.Drawing.Size(48, 13);
-			this.lblFuncNumber.TabIndex = 13;
+			this.lblFuncNumber.TabIndex = 20;
 			this.lblFuncNumber.Text = "(nº 1 a 8)";
 			// 
 			// picFoto
@@ -491,7 +492,7 @@
 			this.btnAnexarFoto.Location = new System.Drawing.Point(545, 338);
 			this.btnAnexarFoto.Name = "btnAnexarFoto";
 			this.btnAnexarFoto.Size = new System.Drawing.Size(180, 35);
-			this.btnAnexarFoto.TabIndex = 12;
+			this.btnAnexarFoto.TabIndex = 26;
 			this.btnAnexarFoto.TabStop = false;
 			this.btnAnexarFoto.Text = "Anexar Foto";
 			this.btnAnexarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -509,7 +510,7 @@
 			this.lblProgress.Location = new System.Drawing.Point(382, 383);
 			this.lblProgress.Name = "lblProgress";
 			this.lblProgress.Size = new System.Drawing.Size(85, 17);
-			this.lblProgress.TabIndex = 104;
+			this.lblProgress.TabIndex = 27;
 			this.lblProgress.Text = "Obtendo...";
 			this.lblProgress.Visible = false;
 			// 
@@ -519,7 +520,7 @@
 			this.progressBar.Location = new System.Drawing.Point(473, 379);
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size(252, 23);
-			this.progressBar.TabIndex = 103;
+			this.progressBar.TabIndex = 28;
 			this.progressBar.Visible = false;
 			// 
 			// MenuFoto
@@ -569,7 +570,7 @@
 			this.label5.Location = new System.Drawing.Point(40, 338);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(81, 19);
-			this.label5.TabIndex = 19;
+			this.label5.TabIndex = 21;
 			this.label5.Text = "Dt Batismo";
 			// 
 			// dtpBatismoData
@@ -578,33 +579,44 @@
 			this.dtpBatismoData.Location = new System.Drawing.Point(127, 334);
 			this.dtpBatismoData.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			this.dtpBatismoData.Name = "dtpBatismoData";
-			this.dtpBatismoData.ShowCheckBox = true;
-			this.dtpBatismoData.Size = new System.Drawing.Size(153, 27);
-			this.dtpBatismoData.TabIndex = 20;
+			this.dtpBatismoData.Size = new System.Drawing.Size(131, 27);
+			this.dtpBatismoData.TabIndex = 22;
 			// 
-			// label7
+			// chkDtBatismo
 			// 
-			this.label7.AutoSize = true;
-			this.label7.BackColor = System.Drawing.Color.Transparent;
-			this.label7.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label7.ForeColor = System.Drawing.Color.DarkRed;
-			this.label7.Location = new System.Drawing.Point(286, 341);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(106, 13);
-			this.label7.TabIndex = 13;
-			this.label7.Text = "Sem Data de Batismo";
+			this.chkDtBatismo.AutoSize = true;
+			this.chkDtBatismo.Location = new System.Drawing.Point(267, 336);
+			this.chkDtBatismo.Name = "chkDtBatismo";
+			this.chkDtBatismo.Size = new System.Drawing.Size(131, 23);
+			this.chkDtBatismo.TabIndex = 23;
+			this.chkDtBatismo.Text = "Sem Dt Batismo";
+			this.chkDtBatismo.UseVisualStyleBackColor = true;
+			// 
+			// lblSemBatismo
+			// 
+			this.lblSemBatismo.AutoSize = true;
+			this.lblSemBatismo.BackColor = System.Drawing.Color.Transparent;
+			this.lblSemBatismo.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSemBatismo.ForeColor = System.Drawing.Color.DarkRed;
+			this.lblSemBatismo.Location = new System.Drawing.Point(129, 336);
+			this.lblSemBatismo.Name = "lblSemBatismo";
+			this.lblSemBatismo.Size = new System.Drawing.Size(90, 23);
+			this.lblSemBatismo.TabIndex = 21;
+			this.lblSemBatismo.Text = "-- / -- / --";
+			this.lblSemBatismo.Visible = false;
 			// 
 			// frmMembro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
 			this.ClientSize = new System.Drawing.Size(756, 462);
+			this.Controls.Add(this.lblSemBatismo);
+			this.Controls.Add(this.chkDtBatismo);
 			this.Controls.Add(this.lblProgress);
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.picFoto);
 			this.Controls.Add(this.txtFuncao);
 			this.Controls.Add(this.lblFuncao);
 			this.Controls.Add(this.txtEstadoCivil);
-			this.Controls.Add(this.label7);
 			this.Controls.Add(this.lblFuncNumber);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblEstCivil);
@@ -657,13 +669,14 @@
 			this.Controls.SetChildIndex(this.lblEstCivil, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.lblFuncNumber, 0);
-			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.txtEstadoCivil, 0);
 			this.Controls.SetChildIndex(this.lblFuncao, 0);
 			this.Controls.SetChildIndex(this.txtFuncao, 0);
 			this.Controls.SetChildIndex(this.picFoto, 0);
 			this.Controls.SetChildIndex(this.progressBar, 0);
 			this.Controls.SetChildIndex(this.lblProgress, 0);
+			this.Controls.SetChildIndex(this.chkDtBatismo, 0);
+			this.Controls.SetChildIndex(this.lblSemBatismo, 0);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tspMenu.ResumeLayout(false);
@@ -717,6 +730,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuRemoverFoto;
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dtpBatismoData;
-		internal System.Windows.Forms.Label label7;
+		private System.Windows.Forms.CheckBox chkDtBatismo;
+		internal System.Windows.Forms.Label lblSemBatismo;
 	}
 }

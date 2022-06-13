@@ -22,6 +22,7 @@ namespace CamadaUI.Membros
 		private EnumFlagEstado _Sit;
 		private Form _formOrigem;
 		private Image FotoImage = null;
+		private bool _SemDataBatismo;
 		public objMembro propEscolha { get; set; }
 
 		private enum EnumDefineFoto { LOADING, SEM_FOTO, FOTO_OK }
@@ -46,11 +47,13 @@ namespace CamadaUI.Membros
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+				DefineDataBatismo(true);
 			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 				ObterFotoServidor();
+				DefineDataBatismo(true);
 			}
 
 			//--- Nascimento Date Controlling
@@ -68,7 +71,7 @@ namespace CamadaUI.Membros
 
 			txtMembroNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtMembroNome);
 
-
+			dtpBatismoData.ValueChanged += DtpBatismoData_ValueChanged;
 			
 
 		}
@@ -147,6 +150,18 @@ namespace CamadaUI.Membros
 						break;
 				}
 			}
+		}
+
+		private void DefineDataBatismo(bool UpdateCheckBox)
+		{
+			if(UpdateCheckBox)
+			{
+				chkDtBatismo.Checked = _SemDataBatismo;
+			}
+
+			bool DataNula = _membro.BatismoData == null;
+			lblSemBatismo.Visible = DataNula;
+			dtpBatismoData.Visible = !DataNula;
 		}
 
 		#endregion
@@ -607,6 +622,11 @@ namespace CamadaUI.Membros
 		private void TxtIDMembro_GotFocus(object sender, EventArgs e)
 		{
 			AutoValidate = AutoValidate.EnableAllowFocusChange;
+		}
+
+		private void DtpBatismoData_ValueChanged(object sender, EventArgs e)
+		{
+			MessageBox.Show("valor alterado");
 		}
 
 		#endregion // FORM CONTROLS FUCTIONS --- END
