@@ -67,6 +67,10 @@ namespace CamadaUI.Membros
 			txtCongregacao.Enter += text_Enter;
 
 			txtMembroNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtMembroNome);
+
+
+			
+
 		}
 
 		// DEFINE ESTADO DA FOTO

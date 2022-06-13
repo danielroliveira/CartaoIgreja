@@ -59,6 +59,7 @@ namespace CamadaDTO
 				//_EmissaoData = DateTime.Today,
 				_IDCongregacao = null,
 				_MembresiaData = DateTime.Today,
+				_BatismoData = null,
 			};
 		}
 

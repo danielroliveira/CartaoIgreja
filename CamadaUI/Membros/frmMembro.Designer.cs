@@ -70,6 +70,7 @@
 			this.mnuRemoverFoto = new System.Windows.Forms.ToolStripMenuItem();
 			this.label5 = new System.Windows.Forms.Label();
 			this.dtpBatismoData = new System.Windows.Forms.DateTimePicker();
+			this.label7 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -581,6 +582,18 @@
 			this.dtpBatismoData.Size = new System.Drawing.Size(153, 27);
 			this.dtpBatismoData.TabIndex = 20;
 			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.BackColor = System.Drawing.Color.Transparent;
+			this.label7.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.ForeColor = System.Drawing.Color.DarkRed;
+			this.label7.Location = new System.Drawing.Point(286, 341);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(106, 13);
+			this.label7.TabIndex = 13;
+			this.label7.Text = "Sem Data de Batismo";
+			// 
 			// frmMembro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -591,6 +604,7 @@
 			this.Controls.Add(this.txtFuncao);
 			this.Controls.Add(this.lblFuncao);
 			this.Controls.Add(this.txtEstadoCivil);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.lblFuncNumber);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblEstCivil);
@@ -643,6 +657,7 @@
 			this.Controls.SetChildIndex(this.lblEstCivil, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.lblFuncNumber, 0);
+			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.txtEstadoCivil, 0);
 			this.Controls.SetChildIndex(this.lblFuncao, 0);
 			this.Controls.SetChildIndex(this.txtFuncao, 0);
@@ -702,5 +717,6 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuRemoverFoto;
 		internal System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dtpBatismoData;
+		internal System.Windows.Forms.Label label7;
 	}
 }
