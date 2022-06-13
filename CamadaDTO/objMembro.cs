@@ -16,6 +16,7 @@ namespace CamadaDTO
 			internal DateTime? _NascimentoData;
 			internal byte _Sexo; // 1 : Masculino | 2 : Feminino
 			internal DateTime? _MembresiaData;
+			internal DateTime? _BatismoData;
 			internal DateTime? _EmissaoData;
 			internal DateTime? _ValidadeData;
 			internal objEstadoCivil _EstadoCivil;
@@ -189,6 +190,21 @@ namespace CamadaDTO
 				{
 					EditData._MembresiaData = value;
 					NotifyPropertyChanged("MembresiaData");
+				}
+			}
+		}
+
+		// Property BatismoData
+		//---------------------------------------------------------------
+		public DateTime? BatismoData
+		{
+			get => EditData._BatismoData;
+			set
+			{
+				if (value != EditData._BatismoData)
+				{
+					EditData._BatismoData = value;
+					NotifyPropertyChanged("BatismoData");
 				}
 			}
 		}
