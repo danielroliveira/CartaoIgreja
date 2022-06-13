@@ -57,6 +57,9 @@ namespace CamadaUI.Membros
 			dtpMembresiaData.MaxDate = DateTime.Today;
 			dtpNascimentoData.MaxDate = DateTime.Today.AddYears(-1);
 
+			//--- Funcao label text
+			lblFuncNumber.Text = $"(nº 1 a {Program.lstFuncao.Count})";
+
 			// ADD HANDLERS
 			HandlerKeyDownControl(this);
 			txtRGMembro.LostFocus += TxtIDMembro_LostFocus;
@@ -156,6 +159,7 @@ namespace CamadaUI.Membros
 			txtRGMembro.DataBindings.Add("Text", bind, "RGMembro", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpNascimentoData.DataBindings.Add("Value", bind, "NascimentoData", true, DataSourceUpdateMode.OnPropertyChanged);
 			dtpMembresiaData.DataBindings.Add("Value", bind, "MembresiaData", true, DataSourceUpdateMode.OnPropertyChanged);
+			dtpBatismoData.DataBindings.Add("Value", bind, "BatismoData", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtCongregacao.DataBindings.Add("Text", bind, "Congregacao", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtEstadoCivil.DataBindings.Add("Text", bind, "EstadoCivil", true, DataSourceUpdateMode.OnPropertyChanged);
 			txtFuncao.DataBindings.Add("Text", bind, "Funcao", true, DataSourceUpdateMode.OnPropertyChanged);

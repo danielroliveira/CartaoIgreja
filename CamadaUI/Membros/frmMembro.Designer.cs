@@ -56,10 +56,10 @@
 			this.lblEstCivil = new System.Windows.Forms.Label();
 			this.btnSetEstadoCivil = new System.Windows.Forms.Button();
 			this.btnSetFuncao = new System.Windows.Forms.Button();
-			this.lblFunção = new System.Windows.Forms.Label();
+			this.lblFuncao = new System.Windows.Forms.Label();
 			this.txtFuncao = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
+			this.lblFuncNumber = new System.Windows.Forms.Label();
 			this.picFoto = new System.Windows.Forms.PictureBox();
 			this.btnAnexarFoto = new System.Windows.Forms.Button();
 			this.lblProgress = new System.Windows.Forms.Label();
@@ -68,6 +68,8 @@
 			this.mnuAnexarFoto = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuDownloadFoto = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuRemoverFoto = new System.Windows.Forms.ToolStripMenuItem();
+			this.label5 = new System.Windows.Forms.Label();
+			this.dtpBatismoData = new System.Windows.Forms.DateTimePicker();
 			this.panel1.SuspendLayout();
 			this.tspMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFoto)).BeginInit();
@@ -102,7 +104,7 @@
 			// 
 			// txtCongregacao
 			// 
-			this.txtCongregacao.Location = new System.Drawing.Point(127, 231);
+			this.txtCongregacao.Location = new System.Drawing.Point(127, 222);
 			this.txtCongregacao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtCongregacao.MaxLength = 30;
 			this.txtCongregacao.Name = "txtCongregacao";
@@ -116,7 +118,7 @@
 			this.Label6.AutoSize = true;
 			this.Label6.BackColor = System.Drawing.Color.Transparent;
 			this.Label6.ForeColor = System.Drawing.Color.Black;
-			this.Label6.Location = new System.Drawing.Point(27, 235);
+			this.Label6.Location = new System.Drawing.Point(27, 226);
 			this.Label6.Name = "Label6";
 			this.Label6.Size = new System.Drawing.Size(94, 19);
 			this.Label6.TabIndex = 10;
@@ -293,7 +295,7 @@
 			this.btnCongregacaoEscolher.BackColor = System.Drawing.Color.Transparent;
 			this.btnCongregacaoEscolher.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnCongregacaoEscolher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnCongregacaoEscolher.Location = new System.Drawing.Point(398, 231);
+			this.btnCongregacaoEscolher.Location = new System.Drawing.Point(398, 222);
 			this.btnCongregacaoEscolher.Name = "btnCongregacaoEscolher";
 			this.btnCongregacaoEscolher.Size = new System.Drawing.Size(34, 27);
 			this.btnCongregacaoEscolher.TabIndex = 12;
@@ -308,7 +310,7 @@
 			this.line1.EndPoint = new System.Drawing.Point(495, 5);
 			this.line1.LineColor = System.Drawing.Color.SlateGray;
 			this.line1.LineWidth = 3F;
-			this.line1.Location = new System.Drawing.Point(20, 196);
+			this.line1.Location = new System.Drawing.Point(20, 191);
 			this.line1.Name = "line1";
 			this.line1.Size = new System.Drawing.Size(500, 10);
 			this.line1.StartPoint = new System.Drawing.Point(5, 5);
@@ -350,24 +352,24 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.ForeColor = System.Drawing.Color.Black;
-			this.label4.Location = new System.Drawing.Point(40, 371);
+			this.label4.Location = new System.Drawing.Point(20, 372);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(81, 19);
+			this.label4.Size = new System.Drawing.Size(101, 19);
 			this.label4.TabIndex = 19;
-			this.label4.Text = "Dt Batismo";
+			this.label4.Text = "Dt Membresia";
 			// 
 			// dtpMembresiaData
 			// 
 			this.dtpMembresiaData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpMembresiaData.Location = new System.Drawing.Point(127, 365);
+			this.dtpMembresiaData.Location = new System.Drawing.Point(127, 367);
 			this.dtpMembresiaData.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
 			this.dtpMembresiaData.Name = "dtpMembresiaData";
-			this.dtpMembresiaData.Size = new System.Drawing.Size(124, 27);
+			this.dtpMembresiaData.Size = new System.Drawing.Size(153, 27);
 			this.dtpMembresiaData.TabIndex = 20;
 			// 
 			// txtEstadoCivil
 			// 
-			this.txtEstadoCivil.Location = new System.Drawing.Point(127, 268);
+			this.txtEstadoCivil.Location = new System.Drawing.Point(127, 259);
 			this.txtEstadoCivil.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtEstadoCivil.MaxLength = 30;
 			this.txtEstadoCivil.Name = "txtEstadoCivil";
@@ -382,7 +384,7 @@
 			this.lblEstCivil.AutoSize = true;
 			this.lblEstCivil.BackColor = System.Drawing.Color.Transparent;
 			this.lblEstCivil.ForeColor = System.Drawing.Color.Black;
-			this.lblEstCivil.Location = new System.Drawing.Point(36, 272);
+			this.lblEstCivil.Location = new System.Drawing.Point(36, 263);
 			this.lblEstCivil.Name = "lblEstCivil";
 			this.lblEstCivil.Size = new System.Drawing.Size(85, 19);
 			this.lblEstCivil.TabIndex = 13;
@@ -393,7 +395,7 @@
 			this.btnSetEstadoCivil.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetEstadoCivil.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnSetEstadoCivil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetEstadoCivil.Location = new System.Drawing.Point(289, 268);
+			this.btnSetEstadoCivil.Location = new System.Drawing.Point(289, 259);
 			this.btnSetEstadoCivil.Name = "btnSetEstadoCivil";
 			this.btnSetEstadoCivil.Size = new System.Drawing.Size(34, 27);
 			this.btnSetEstadoCivil.TabIndex = 15;
@@ -408,7 +410,7 @@
 			this.btnSetFuncao.BackColor = System.Drawing.Color.Transparent;
 			this.btnSetFuncao.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnSetFuncao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSetFuncao.Location = new System.Drawing.Point(289, 307);
+			this.btnSetFuncao.Location = new System.Drawing.Point(289, 298);
 			this.btnSetFuncao.Name = "btnSetFuncao";
 			this.btnSetFuncao.Size = new System.Drawing.Size(34, 27);
 			this.btnSetFuncao.TabIndex = 18;
@@ -418,20 +420,20 @@
 			this.btnSetFuncao.UseVisualStyleBackColor = false;
 			this.btnSetFuncao.Click += new System.EventHandler(this.btnSetFuncao_Click);
 			// 
-			// lblFunção
+			// lblFuncao
 			// 
-			this.lblFunção.AutoSize = true;
-			this.lblFunção.BackColor = System.Drawing.Color.Transparent;
-			this.lblFunção.ForeColor = System.Drawing.Color.Black;
-			this.lblFunção.Location = new System.Drawing.Point(65, 311);
-			this.lblFunção.Name = "lblFunção";
-			this.lblFunção.Size = new System.Drawing.Size(55, 19);
-			this.lblFunção.TabIndex = 16;
-			this.lblFunção.Text = "Função";
+			this.lblFuncao.AutoSize = true;
+			this.lblFuncao.BackColor = System.Drawing.Color.Transparent;
+			this.lblFuncao.ForeColor = System.Drawing.Color.Black;
+			this.lblFuncao.Location = new System.Drawing.Point(65, 302);
+			this.lblFuncao.Name = "lblFuncao";
+			this.lblFuncao.Size = new System.Drawing.Size(55, 19);
+			this.lblFuncao.TabIndex = 16;
+			this.lblFuncao.Text = "Função";
 			// 
 			// txtFuncao
 			// 
-			this.txtFuncao.Location = new System.Drawing.Point(127, 307);
+			this.txtFuncao.Location = new System.Drawing.Point(127, 298);
 			this.txtFuncao.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.txtFuncao.MaxLength = 30;
 			this.txtFuncao.Name = "txtFuncao";
@@ -447,23 +449,23 @@
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.Black;
-			this.label1.Location = new System.Drawing.Point(328, 274);
+			this.label1.Location = new System.Drawing.Point(328, 265);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(48, 13);
 			this.label1.TabIndex = 13;
 			this.label1.Text = "(nº 1 a 4)";
 			// 
-			// label5
+			// lblFuncNumber
 			// 
-			this.label5.AutoSize = true;
-			this.label5.BackColor = System.Drawing.Color.Transparent;
-			this.label5.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label5.ForeColor = System.Drawing.Color.Black;
-			this.label5.Location = new System.Drawing.Point(328, 313);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(48, 13);
-			this.label5.TabIndex = 13;
-			this.label5.Text = "(nº 1 a 8)";
+			this.lblFuncNumber.AutoSize = true;
+			this.lblFuncNumber.BackColor = System.Drawing.Color.Transparent;
+			this.lblFuncNumber.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblFuncNumber.ForeColor = System.Drawing.Color.Black;
+			this.lblFuncNumber.Location = new System.Drawing.Point(328, 304);
+			this.lblFuncNumber.Name = "lblFuncNumber";
+			this.lblFuncNumber.Size = new System.Drawing.Size(48, 13);
+			this.lblFuncNumber.TabIndex = 13;
+			this.lblFuncNumber.Text = "(nº 1 a 8)";
 			// 
 			// picFoto
 			// 
@@ -558,6 +560,27 @@
 			this.mnuRemoverFoto.Text = "Remover/Apagar Foto";
 			this.mnuRemoverFoto.Click += new System.EventHandler(this.mnuRemoverFoto_Click);
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.BackColor = System.Drawing.Color.Transparent;
+			this.label5.ForeColor = System.Drawing.Color.Black;
+			this.label5.Location = new System.Drawing.Point(40, 338);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(81, 19);
+			this.label5.TabIndex = 19;
+			this.label5.Text = "Dt Batismo";
+			// 
+			// dtpBatismoData
+			// 
+			this.dtpBatismoData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpBatismoData.Location = new System.Drawing.Point(127, 334);
+			this.dtpBatismoData.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+			this.dtpBatismoData.Name = "dtpBatismoData";
+			this.dtpBatismoData.ShowCheckBox = true;
+			this.dtpBatismoData.Size = new System.Drawing.Size(153, 27);
+			this.dtpBatismoData.TabIndex = 20;
+			// 
 			// frmMembro
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -566,11 +589,12 @@
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.picFoto);
 			this.Controls.Add(this.txtFuncao);
-			this.Controls.Add(this.lblFunção);
+			this.Controls.Add(this.lblFuncao);
 			this.Controls.Add(this.txtEstadoCivil);
-			this.Controls.Add(this.label5);
+			this.Controls.Add(this.lblFuncNumber);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.lblEstCivil);
+			this.Controls.Add(this.dtpBatismoData);
 			this.Controls.Add(this.dtpMembresiaData);
 			this.Controls.Add(this.dtpNascimentoData);
 			this.Controls.Add(this.cmbSexo);
@@ -583,6 +607,7 @@
 			this.Controls.Add(this.txtMembroNome);
 			this.Controls.Add(this.txtRGMembro);
 			this.Controls.Add(this.txtCongregacao);
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.Label6);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label2);
@@ -600,6 +625,7 @@
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.Label6, 0);
+			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.txtCongregacao, 0);
 			this.Controls.SetChildIndex(this.txtRGMembro, 0);
 			this.Controls.SetChildIndex(this.txtMembroNome, 0);
@@ -613,11 +639,12 @@
 			this.Controls.SetChildIndex(this.cmbSexo, 0);
 			this.Controls.SetChildIndex(this.dtpNascimentoData, 0);
 			this.Controls.SetChildIndex(this.dtpMembresiaData, 0);
+			this.Controls.SetChildIndex(this.dtpBatismoData, 0);
 			this.Controls.SetChildIndex(this.lblEstCivil, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.lblFuncNumber, 0);
 			this.Controls.SetChildIndex(this.txtEstadoCivil, 0);
-			this.Controls.SetChildIndex(this.lblFunção, 0);
+			this.Controls.SetChildIndex(this.lblFuncao, 0);
 			this.Controls.SetChildIndex(this.txtFuncao, 0);
 			this.Controls.SetChildIndex(this.picFoto, 0);
 			this.Controls.SetChildIndex(this.progressBar, 0);
@@ -661,10 +688,10 @@
 		internal System.Windows.Forms.Label lblEstCivil;
 		internal System.Windows.Forms.Button btnSetEstadoCivil;
 		internal System.Windows.Forms.Button btnSetFuncao;
-		internal System.Windows.Forms.Label lblFunção;
+		internal System.Windows.Forms.Label lblFuncao;
 		internal System.Windows.Forms.TextBox txtFuncao;
 		internal System.Windows.Forms.Label label1;
-		internal System.Windows.Forms.Label label5;
+		internal System.Windows.Forms.Label lblFuncNumber;
 		private System.Windows.Forms.PictureBox picFoto;
 		internal System.Windows.Forms.Button btnAnexarFoto;
 		private System.Windows.Forms.Label lblProgress;
@@ -673,5 +700,7 @@
 		internal System.Windows.Forms.ToolStripMenuItem mnuAnexarFoto;
 		internal System.Windows.Forms.ToolStripMenuItem mnuDownloadFoto;
 		private System.Windows.Forms.ToolStripMenuItem mnuRemoverFoto;
+		internal System.Windows.Forms.Label label5;
+		private System.Windows.Forms.DateTimePicker dtpBatismoData;
 	}
 }

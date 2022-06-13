@@ -462,6 +462,7 @@ namespace CamadaUI.Cadastros
 			{
 				ObterDados();
 				Sit = EnumFlagEstado.RegistroSalvo;
+				Program.lstFuncao = new FuncaoBLL(DBPath()).GetListFuncao();
 				AbrirDialog("Registros salvos com sucesso!", "Registros Salvos");
 			}
 		}
