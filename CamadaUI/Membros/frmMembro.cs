@@ -43,16 +43,18 @@ namespace CamadaUI.Membros
 
 			_membro.PropertyChanged += RegistroAlterado;
 
-			if (_membro.IDCongregacao == null)
+			if (_membro.IDMembro == null)
 			{
 				Sit = EnumFlagEstado.NovoRegistro;
 				DefineFotoEstado(EnumDefineFoto.SEM_FOTO);
+				_SemDataBatismo = false;
 				DefineDataBatismo(true);
 			}
 			else
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 				ObterFotoServidor();
+				_SemDataBatismo = _membro.BatismoData == null;
 				DefineDataBatismo(true);
 			}
 
@@ -68,12 +70,9 @@ namespace CamadaUI.Membros
 			txtRGMembro.LostFocus += TxtIDMembro_LostFocus;
 			txtRGMembro.GotFocus += TxtIDMembro_GotFocus;
 			txtCongregacao.Enter += text_Enter;
+			chkDtBatismo.CheckedChanged += chkDtBatismo_CheckedChanged;
 
 			txtMembroNome.Validating += (a, b) => PrimeiraLetraMaiuscula(txtMembroNome);
-
-			dtpBatismoData.ValueChanged += DtpBatismoData_ValueChanged;
-			
-
 		}
 
 		// DEFINE ESTADO DA FOTO
@@ -150,18 +149,6 @@ namespace CamadaUI.Membros
 						break;
 				}
 			}
-		}
-
-		private void DefineDataBatismo(bool UpdateCheckBox)
-		{
-			if(UpdateCheckBox)
-			{
-				chkDtBatismo.Checked = _SemDataBatismo;
-			}
-
-			bool DataNula = _membro.BatismoData == null;
-			lblSemBatismo.Visible = DataNula;
-			dtpBatismoData.Visible = !DataNula;
 		}
 
 		#endregion
@@ -346,6 +333,8 @@ namespace CamadaUI.Membros
 			else if (Sit == EnumFlagEstado.Alterado)
 			{
 				bind.CancelEdit();
+				_SemDataBatismo = _membro.BatismoData == null;
+				DefineDataBatismo(true);
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
 			else
@@ -381,6 +370,8 @@ namespace CamadaUI.Membros
 			if (Sit != EnumFlagEstado.RegistroSalvo) return;
 
 			_membro = new objMembro(null);
+			_SemDataBatismo = false;
+			DefineDataBatismo(true);
 			Sit = EnumFlagEstado.NovoRegistro;
 			bind.DataSource = _membro;
 			txtRGMembro.Focus();
@@ -406,6 +397,8 @@ namespace CamadaUI.Membros
 				if (!CheckSaveData()) return;
 
 				MembroBLL cBLL = new MembroBLL(DBPath());
+
+				if (chkDtBatismo.Checked) _membro.BatismoData = null;
 
 				if (_membro.IDMembro == null)
 				{
@@ -456,6 +449,20 @@ namespace CamadaUI.Membros
 			if (!VerificaDadosClasse(txtCongregacao, "Congregação", _membro)) return false;
 			if (!VerificaDadosClasse(txtEstadoCivil, "Estado do Civil", _membro)) return false;
 			if (!VerificaDadosClasse(txtFuncao, "Função do Membro", _membro)) return false;
+
+			if (!chkDtBatismo.Checked)
+			{
+				if(_membro.BatismoData >= DateTime.Today)
+				{
+					AbrirDialog("A Data de Batismo não pode ser igual ou maior que a data de hoje...",
+						"Data de Batismo", DialogType.OK, DialogIcon.Exclamation);
+					return false;
+				}
+			}
+			else
+			{
+				_membro.BatismoData = null;
+			}
 
 			return true;
 		}
@@ -622,11 +629,6 @@ namespace CamadaUI.Membros
 		private void TxtIDMembro_GotFocus(object sender, EventArgs e)
 		{
 			AutoValidate = AutoValidate.EnableAllowFocusChange;
-		}
-
-		private void DtpBatismoData_ValueChanged(object sender, EventArgs e)
-		{
-			MessageBox.Show("valor alterado");
 		}
 
 		#endregion // FORM CONTROLS FUCTIONS --- END
@@ -1058,5 +1060,40 @@ namespace CamadaUI.Membros
 
 		#endregion // CONTEXT MENU --- END
 
+		#region DATA BATISMO CONTROL
+
+		// CONTROLA DATA DO BATISMO CHECK BOX
+		//------------------------------------------------------------------------------------------------------------
+		private void chkDtBatismo_CheckedChanged(object sender, EventArgs e)
+		{
+			_SemDataBatismo = chkDtBatismo.Checked;
+			DefineDataBatismo(false);
+
+			if (!_SemDataBatismo) 
+			{ 
+				dtpBatismoData.Focus();
+
+				if(_membro.BatismoData == null)
+				{
+					if (_membro.MembresiaData == null) 
+						_membro.MembresiaData = DateTime.Today;
+
+					_membro.BatismoData = _membro.MembresiaData;
+				}
+			}
+		}
+
+		// DEFINE CONTROLES DA DATA DE BATISMO
+		//------------------------------------------------------------------------------------------------------------
+		private void DefineDataBatismo(bool UpdateCheckBox)
+		{
+			if (UpdateCheckBox)	chkDtBatismo.Checked = _SemDataBatismo;
+
+			//bool DataNula = _membro.BatismoData == null;
+			lblSemBatismo.Visible = _SemDataBatismo;
+			dtpBatismoData.Visible = !_SemDataBatismo;
+		}
+
+		#endregion // DATA BATISMO CONTROL --- END
 	}
 }

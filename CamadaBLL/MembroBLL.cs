@@ -174,6 +174,7 @@ namespace CamadaBLL
 				IDSituacao = (byte)row["IDSituacao"],
 				Situacao = (string)row["Situacao"],
 				MembresiaData = row["MembresiaData"] == DBNull.Value ? null : (DateTime?)row["MembresiaData"],
+				BatismoData = row["BatismoData"] == DBNull.Value ? null : (DateTime?)row["BatismoData"],
 				ValidadeData = row["ValidadeData"] == DBNull.Value ? null : (DateTime?)row["ValidadeData"],
 				Imprimir = (bool)row["Imprimir"],
 				NaLista = (bool)row["NaLista"],
@@ -237,6 +238,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Sexo", membro.Sexo);
 				db.AdicionarParametros("@EmissaoData", membro.EmissaoData);
 				db.AdicionarParametros("@MembresiaData", membro.MembresiaData);
+				db.AdicionarParametros("@BatismoData", membro.BatismoData);
 				db.AdicionarParametros("@ValidadeData", membro.ValidadeData);
 				db.AdicionarParametros("@IDEstadoCivil", membro.IDEstadoCivil);
 				db.AdicionarParametros("@IDCongregacao", membro.IDCongregacao);
@@ -327,6 +329,7 @@ namespace CamadaBLL
 				db.AdicionarParametros("@Sexo", membro.Sexo);
 				db.AdicionarParametros("@EmissaoData", membro.EmissaoData);
 				db.AdicionarParametros("@MembresiaData", membro.MembresiaData);
+				db.AdicionarParametros("@BatismoData", membro.BatismoData);
 				db.AdicionarParametros("@ValidadeData", membro.ValidadeData);
 				db.AdicionarParametros("@IDEstadoCivil", membro.IDEstadoCivil);
 				db.AdicionarParametros("@IDCongregacao", membro.IDCongregacao);

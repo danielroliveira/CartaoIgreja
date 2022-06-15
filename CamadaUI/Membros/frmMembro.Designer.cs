@@ -581,15 +581,16 @@
 			this.dtpBatismoData.Name = "dtpBatismoData";
 			this.dtpBatismoData.Size = new System.Drawing.Size(131, 27);
 			this.dtpBatismoData.TabIndex = 22;
+			this.dtpBatismoData.Value = new System.DateTime(2022, 1, 1, 0, 0, 0, 0);
 			// 
 			// chkDtBatismo
 			// 
 			this.chkDtBatismo.AutoSize = true;
 			this.chkDtBatismo.Location = new System.Drawing.Point(267, 336);
 			this.chkDtBatismo.Name = "chkDtBatismo";
-			this.chkDtBatismo.Size = new System.Drawing.Size(131, 23);
+			this.chkDtBatismo.Size = new System.Drawing.Size(124, 23);
 			this.chkDtBatismo.TabIndex = 23;
-			this.chkDtBatismo.Text = "Sem Dt Batismo";
+			this.chkDtBatismo.Text = "Não Informada";
 			this.chkDtBatismo.UseVisualStyleBackColor = true;
 			// 
 			// lblSemBatismo
