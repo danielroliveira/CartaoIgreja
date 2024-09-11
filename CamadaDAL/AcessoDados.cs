@@ -1,47 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace CamadaDAL
 {
 	public class AcessoDados
 	{
-		// -------------------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------------------
 		// DECLARAÇÃO DAS VARIÁVEIS
-		// -------------------------------------------------------------------------------------------------------
-		private OleDbConnection conn;
-		private OleDbCommand cmd;
-		private OleDbTransaction trans;
-		private readonly List<OleDbParameter> ParamList = new List<OleDbParameter>();
-		private string _dataBasePath;
+		//-------------------------------------------------------------------------------------------------------
+		SqlConnection conn;
+		SqlCommand cmd;
+		private SqlTransaction trans;
+		public List<SqlParameter> ParamList = new List<SqlParameter>();
+
+		// ==============================================================================
+		#region CONEXAO
 
 		// NEW CONSTRUCTOR
-		public AcessoDados(string dataBasePath)
+		//-------------------------------------------------------------------------------------------------
+		public AcessoDados()
 		{
-			_dataBasePath = dataBasePath; // backup DATABASE path
-
-			if (!Connect(dataBasePath))
+			if (!Connect())
 			{
 				return;
 			}
 		}
 
-		// OPEN CONNECTION
-		private bool Connect(string dataBasePath)
+		// GET CONNECTION STRING
+		//------------------------------------------------------------------------------------------------------------
+		public static string GetConnectionString()
 		{
-			//string connstr = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + dataBasePath;
-			string connstr = "Provider=Microsoft.Jet.OleDb.4.0; Data Source=" + dataBasePath;
+			try
+			{
+				//string connFile = ConfigurationManager.AppSettings["ConexaoStringFile"];
+				string connFile = Properties.Settings.Default.ConexaoStringFile;
+
+				//string connName = ConfigurationManager.AppSettings["ConexaoStringName"];
+				string connName = Properties.Settings.Default.ConexaoStringName;
+
+				GetConnection getConn = new GetConnection();
+
+				string retorno = getConn.LoadConnectionString(connFile, connName);
+
+				if (string.IsNullOrEmpty(retorno.Trim()))
+				{
+					throw new Exception("Arquivo de Conexão Database inválido...");
+				}
+
+				return retorno;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// GET CONFIG DB - CONNECTION XML PATH
+		//------------------------------------------------------------------------------------------------------------
+		public static string GetConfigXMLPath()
+		{
+			try
+			{
+				return Properties.Settings.Default.ConexaoStringFile;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		// OPEN CONNECTION
+		private bool Connect()
+		{
+			string connstr = "";
 			bool bln = false;
 
 			if (conn == null)
 			{
 				try
 				{
-					//connstr = GetConnectionString();
+					connstr = GetConnectionString();
+
 					if (connstr != string.Empty)
 					{
-						conn = new OleDbConnection(connstr);
+						conn = new SqlConnection(connstr);
 						bln = true;
 					}
 					else
@@ -89,13 +133,13 @@ namespace CamadaDAL
 		// ADD PARAMETERS
 		public void AdicionarParametros(string nomeParametro, object valorParametro)
 		{
-			ParamList.Add(new OleDbParameter(nomeParametro, valorParametro));
+			ParamList.Add(new SqlParameter(nomeParametro, valorParametro));
 		}
 
 		// TRANSFORM NULL PARAMETERS
 		public void ConvertNullParams()
 		{
-			foreach (OleDbParameter parameter in ParamList)
+			foreach (SqlParameter parameter in ParamList)
 			{
 				if (parameter.Value == null)
 				{
@@ -109,10 +153,13 @@ namespace CamadaDAL
 
 		}
 
+		#endregion
+
 		// ==============================================================================
 		#region DATABASE CRUD COMMANDS
 
 		// EXECUTAR MANIPULACAO
+		//------------------------------------------------------------------------------------------------------------
 		public void ExecutarManipulacao(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
 		{
 			try
@@ -120,16 +167,18 @@ namespace CamadaDAL
 				if (conn.State == ConnectionState.Closed)
 				{
 					// try connect
-					Connect(_dataBasePath);
+					Connect();
 					// Check Again
 					if (conn.State == ConnectionState.Closed)
 						throw new Exception("Sem conexão ao Database...");
 				}
 
-				cmd = new OleDbConnection().CreateCommand();
+				cmd = new SqlConnection().CreateCommand();
 				cmd.Connection = conn;
 				cmd.CommandType = commandType;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandText = nomeStoredProcedureOuTextoSQL;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandTimeout = 7200;
 
 				ParamList.ForEach(p => cmd.Parameters.Add(p));
@@ -151,6 +200,8 @@ namespace CamadaDAL
 			}
 		}
 
+		// EXECUTE QUERY RETURN DATATABLE
+		//------------------------------------------------------------------------------------------------------------
 		public DataTable ExecutarConsulta(CommandType commandType, string nomeStoredProcedureOuTextoSQL)
 		{
 			try
@@ -158,23 +209,25 @@ namespace CamadaDAL
 				if (conn.State == ConnectionState.Closed)
 				{
 					// try connect
-					Connect(_dataBasePath);
+					Connect();
 					// Check Again
 					if (conn.State == ConnectionState.Closed)
 						throw new Exception("Sem conexão ao Database...");
 				}
 
-				cmd = new OleDbConnection().CreateCommand();
+				cmd = new SqlConnection().CreateCommand();
 				cmd.Connection = conn;
 				cmd.CommandType = commandType;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandText = nomeStoredProcedureOuTextoSQL;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandTimeout = 7200;
 
 				if (isTran) cmd.Transaction = trans;
 
 				ParamList.ForEach(p => cmd.Parameters.Add(p));
 
-				OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+				SqlDataAdapter da = new SqlDataAdapter(cmd);
 				DataTable dt = new DataTable();
 				da.Fill(dt);
 
@@ -189,7 +242,6 @@ namespace CamadaDAL
 			}
 		}
 
-
 		// EXECUTAR INSERT AND RETURN NEW ID
 		//------------------------------------------------------------------------------------------------------------
 		public long ExecutarInsertAndGetID(string query)
@@ -199,16 +251,18 @@ namespace CamadaDAL
 				if (conn.State == ConnectionState.Closed)
 				{
 					// try connect
-					Connect(_dataBasePath);
+					Connect();
 					// Check Again
 					if (conn.State == ConnectionState.Closed)
 						throw new Exception("Sem conexão ao Database...");
 				}
 
-				cmd = new OleDbConnection().CreateCommand();
+				cmd = new SqlConnection().CreateCommand();
 				cmd.Connection = conn;
 				cmd.CommandType = CommandType.Text;
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandText = query;
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
 				cmd.CommandTimeout = 7200;
 
 				ParamList.ForEach(p => cmd.Parameters.Add(p));
@@ -291,7 +345,7 @@ namespace CamadaDAL
 		#region TRANSACTION
 
 		// BEGIN TRANSACTION
-		public void BeginTransaction()
+		public void BeginTransaction(bool IsolationReadUncommitted = false)
 		{
 			if (isTran) return;
 
@@ -300,7 +354,15 @@ namespace CamadaDAL
 				conn.Open();
 			}
 
-			trans = conn.BeginTransaction();
+			if (!IsolationReadUncommitted)
+			{
+				trans = conn.BeginTransaction();
+			}
+			else
+			{
+				trans = conn.BeginTransaction(IsolationLevel.ReadUncommitted);
+			}
+
 			isTran = true;
 
 		}
@@ -326,11 +388,10 @@ namespace CamadaDAL
 		}
 
 		// PROPERTY ISTRAN
-		public bool isTran { get; set; }
+		public bool isTran { get; set; } = false;
 
 		#endregion
 
-		// ==============================================================================
 		#region RETURN STRINGS INSERT | UPDATE
 
 		// CREATE INSERT STRING SQL
@@ -374,8 +435,6 @@ namespace CamadaDAL
 			// create SQL string
 			IDParamName = IDParamName.Replace("@", "");
 			sql += $"{filds.Remove(filds.Length - 2, 2)} WHERE {IDParamName} = @{IDParamName}";
-
-			sql = sql + ";";
 
 			// return
 			return sql;
