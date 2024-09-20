@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcessoControlBLL.cs" />
     <Compile Include="CongregacaoBLL.cs" />
     <Compile Include="DiversosBLL.cs" />
     <Compile Include="FuncaoBLL.cs" />

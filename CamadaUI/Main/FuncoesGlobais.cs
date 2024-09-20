@@ -23,61 +23,6 @@ namespace CamadaUI
 			Environment.SpecialFolder.ApplicationData)
 			+ "\\CartaoIgreja";
 
-		// GET PATH OF DATABASE
-		//==============================================================================================
-		public static string DBPath()
-		{
-			// 1. check config database path
-			var DBPathConfig = ObterDefault("DBPath");
-			bool ExistsDefaultDBPath = false;
-
-			if (!string.IsNullOrEmpty(DBPathConfig))
-			{
-				ExistsDefaultDBPath = true;
-
-				if (Directory.Exists(DBPathConfig))
-				{
-					if (File.Exists(DBPathConfig + "\\CartaoIgrejaDB.mdb"))
-					{
-						return DBPathConfig + "\\CartaoIgrejaDB.mdb";
-					}
-				}
-			}
-
-			// 2. check default folder
-			if (ExistsDefaultDBPath)
-			{
-				var resp = AbrirDialog("A pasta padrão do Banco de Dados está definida no Config, " +
-								"porém não há um Banco de Dados válido na pasta...\n\n" +
-								"Deseja copiar um Banco de Dados vazio para a pasta padrão?",
-								"Não há Banco de Dados",
-								DialogType.SIM_NAO,
-								DialogIcon.Question, DialogDefaultButton.Second);
-
-				// 3. copy original empty database
-				if (resp == DialogResult.Yes)
-				{
-					//--- create directory
-					Directory.CreateDirectory(DBPathConfig);
-
-					var OriginalFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Database\\CartaoIgrejaDB.mdb";
-					var DestFile = DBPathConfig + "\\CartaoIgrejaDB.mdb";
-
-					File.Copy(OriginalFile, DestFile);
-
-					return DestFile;
-				}
-			}
-			else
-			{
-				AbrirDialog("Favor definir a pasta padrão do Banco de Dados no config Geral...",
-					"Pasta do Banco de Dados", DialogType.OK, DialogIcon.Exclamation);
-				throw new AppException("Banco de Dados Inválido...");
-			}
-
-			return null;
-		}
-
 		#region CONFIG CREATE | LOAD | CHANGE
 
 		// CHECK IF EXIST CONFIG

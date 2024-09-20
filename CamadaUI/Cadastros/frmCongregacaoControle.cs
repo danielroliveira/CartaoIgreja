@@ -13,7 +13,7 @@ namespace CamadaUI.Cadastros
 	{
 		private List<classCong> list;
 		private BindingSource bindList = new BindingSource();
-		CongregacaoBLL bBLL = new CongregacaoBLL(DBPath());
+		CongregacaoBLL bBLL = new CongregacaoBLL();
 
 		private Form _formOrigem;
 

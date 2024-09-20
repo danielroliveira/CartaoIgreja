@@ -8,20 +8,13 @@ namespace CamadaBLL
 {
 	public class DiversosBLL
 	{
-		private string _DBPath;
-
-		public DiversosBLL(string DBPath)
-		{
-			_DBPath = DBPath;
-		}
-
 		// GET LIST OF ESTADO CIVIL
 		//------------------------------------------------------------------------------------------------------------
 		public List<objEstadoCivil> GetListEstadoCivil()
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM tblEstadoCivil";
 
@@ -65,7 +58,7 @@ namespace CamadaBLL
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM tblSituacao";
 
@@ -101,5 +94,4 @@ namespace CamadaBLL
 			}
 		}
 	}
-
 }

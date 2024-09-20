@@ -248,6 +248,12 @@
     <Compile Include="Config\frmConfig.designer.cs">
       <DependentUpon>frmConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\frmConnString.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmConnString.Designer.cs">
+      <DependentUpon>frmConnString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\frmDateGet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +265,12 @@
     </Compile>
     <Compile Include="Main\frmDateMesAnoGet.designer.cs">
       <DependentUpon>frmDateMesAnoGet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\frmMessage.cs">
       <SubType>Form</SubType>
@@ -313,6 +325,12 @@
     </Compile>
     <Compile Include="Models\frmModFinBorderSizeable.designer.cs">
       <DependentUpon>frmModFinBorderSizeable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\frmModNoBorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\frmModNoBorder.Designer.cs">
+      <DependentUpon>frmModNoBorder.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -503,6 +521,9 @@
     </Content>
     <Content Include="Config\Config.xml" />
     <Content Include="program_icon.ico" />
+    <None Include="Resources\refresh_32.png" />
+    <None Include="Resources\download_24.png" />
+    <None Include="Resources\add_24.png" />
     <None Include="Resources\novo_peq_24.png" />
     <None Include="Resources\top_arrow_32.png" />
     <None Include="Resources\down_arrow_32.png" />

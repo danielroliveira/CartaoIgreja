@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppEnum.cs" />
     <Compile Include="AppException.cs" />
     <Compile Include="objCongregacao.cs" />
     <Compile Include="objDadosIgreja.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="objFuncao.cs" />
     <Compile Include="objMembro.cs" />
     <Compile Include="objSituacao.cs" />
+    <Compile Include="objUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

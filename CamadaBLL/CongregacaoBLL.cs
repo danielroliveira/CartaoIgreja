@@ -9,20 +9,13 @@ namespace CamadaBLL
 {
 	public class CongregacaoBLL
 	{
-		private string _DBPath;
-
-		public CongregacaoBLL(string DBPath)
-		{
-			_DBPath = DBPath;
-		}
-
 		// GET LIST OF CONGREGACAO
 		//------------------------------------------------------------------------------------------------------------
 		public List<objCongregacao> GetListCongregacao()
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM tblCongregacao";
 
@@ -67,7 +60,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated cong
@@ -144,7 +137,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated MEMBRO

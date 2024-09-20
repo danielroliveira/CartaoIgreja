@@ -3,26 +3,19 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace CamadaBLL
 {
 	public class FuncaoBLL
 	{
-		private string _DBPath;
-
-		public FuncaoBLL(string DBPath)
-		{
-			_DBPath = DBPath;
-		}
-
 		// GET LIST OF FUNCAO
 		//------------------------------------------------------------------------------------------------------------
 		public List<objFuncao> GetListFuncao()
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM tblFuncao";
 
@@ -70,7 +63,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated Funcao
@@ -156,7 +149,7 @@ namespace CamadaBLL
 				return (byte)newID;
 
 			}
-			catch (OleDbException ex)
+			catch (SqlException ex)
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();
@@ -178,7 +171,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated MEMBRO
@@ -220,7 +213,7 @@ namespace CamadaBLL
 				return true;
 
 			}
-			catch (OleDbException ex)
+			catch (SqlException ex)
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();
@@ -243,7 +236,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check IF used FUNCAO
@@ -308,7 +301,7 @@ namespace CamadaBLL
 				return true;
 
 			}
-			catch (OleDbException ex)
+			catch (SqlException ex)
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();

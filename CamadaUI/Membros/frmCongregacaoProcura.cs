@@ -43,7 +43,7 @@ namespace CamadaUI.Membros
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				CongregacaoBLL cBLL = new CongregacaoBLL(FuncoesGlobais.DBPath());
+				CongregacaoBLL cBLL = new CongregacaoBLL();
 				listCong = cBLL.GetListCongregacao();
 				PreencheListagem();
 			}

@@ -17,7 +17,7 @@ namespace CamadaUI.Cartao
 	{
 		private List<objMembro> lstMembros = new List<objMembro>();
 		private Form _formOrigem;
-		private MembroBLL mBLL = new MembroBLL(DBPath());
+		private MembroBLL mBLL = new MembroBLL();
 
 		#region NEW | OPEN FUNCTIONS
 
@@ -446,7 +446,7 @@ namespace CamadaUI.Cartao
 			int.TryParse(Validade, out int anos);
 
 			//--- save Data
-			MembroBLL cBLL = new MembroBLL(DBPath());
+			MembroBLL cBLL = new MembroBLL();
 
 			foreach (var membro in lstMembros)
 			{

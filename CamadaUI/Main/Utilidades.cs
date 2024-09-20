@@ -33,6 +33,234 @@ namespace CamadaUI
 			}
 		}
 
+		#region INPUT BOX FORMS TYPES
+
+		// =============================================================================
+		// INPUT BOX DIALOG
+		// =============================================================================
+
+		// INPUT BOX STRING
+		//------------------------------------------------------------------------------
+		public static DialogResult InputBoxTexto(
+			string title,
+			ref string valorPadrao,
+			Form formOrigem = null)
+		{
+			var form = new Models.frmModFinBorder();
+			Button buttonOk = new Button();
+			Button buttonCancel = new Button();
+
+			TextBox txtString = new TextBox();
+			txtString.SetBounds(12, 46, 475, 100);
+
+			form.Text = title;
+			form.lblTitulo.Text = title;
+			form.panel1.Height = 35;
+			form.btnClose.Visible = false;
+
+			txtString.Text = (string)valorPadrao;
+
+			buttonOk.Text = "OK";
+			buttonCancel.Text = "Cancelar";
+			buttonOk.DialogResult = DialogResult.OK;
+			buttonCancel.DialogResult = DialogResult.Cancel;
+
+			buttonOk.SetBounds(12, 150, 120, 40);
+			buttonCancel.SetBounds(368, 150, 120, 40);
+
+			txtString.Font = new Font("Calibri", 14.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			buttonOk.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			buttonCancel.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+			buttonOk.ForeColor = Color.DarkBlue;
+			buttonCancel.ForeColor = Color.DarkRed;
+
+			txtString.Anchor = txtString.Anchor | AnchorStyles.Right;
+			txtString.AutoSize = false;
+			buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+			form.ClientSize = new Size(500, 200);
+			form.Controls.AddRange(new Control[] { txtString, buttonOk, buttonCancel });
+			form.FormBorderStyle = FormBorderStyle.None;
+			form.StartPosition = FormStartPosition.CenterScreen;
+			form.MinimizeBox = false;
+			form.MaximizeBox = false;
+			form.AcceptButton = buttonOk;
+			form.CancelButton = buttonCancel;
+
+			form.lblTitulo.Font = new Font("Calibri", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+			form.lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
+			form.lblTitulo.Width = 500;
+
+			if (formOrigem != null)
+			{
+				Panel pnl = (Panel)formOrigem.Controls["Panel1"];
+				pnl.BackColor = Color.Silver;
+			}
+
+			DialogResult dialogResult = form.ShowDialog();
+
+			if (formOrigem != null)
+			{
+				Panel pnl = (Panel)formOrigem.Controls["Panel1"];
+				pnl.BackColor = Color.SlateGray;
+			}
+
+			valorPadrao = txtString.Text;
+			return dialogResult;
+		}
+
+		// INPUT BOX STRING
+		//------------------------------------------------------------------------------
+		public static DialogResult InputBoxMoeda(
+			string title,
+			ref decimal valorPadrao,
+			Form formOrigem = null)
+		{
+			//--- defs
+			var form = new Models.frmModFinBorder();
+			Button buttonOk = new Button();
+			Button buttonCancel = new Button();
+
+			//--- text box
+			TextBox txtString = new TextBox();
+			txtString.Text = valorPadrao.ToString("c");
+			txtString.SetBounds(12, 46, 248, 35);
+			txtString.Font = new Font("Calibri", 14.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			txtString.Anchor = txtString.Anchor | AnchorStyles.Right;
+			txtString.AutoSize = false;
+			txtString.KeyPress += (a, b) => Moeda_KeyPress(a, b);
+
+			//--- buttom
+			buttonOk.Text = "OK";
+			buttonOk.DialogResult = DialogResult.OK;
+			buttonOk.SetBounds(12, 100, 120, 40);
+			buttonOk.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			buttonOk.ForeColor = Color.DarkBlue;
+			buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+			buttonCancel.Text = "Cancelar";
+			buttonCancel.DialogResult = DialogResult.Cancel;
+			buttonCancel.SetBounds(140, 100, 120, 40);
+			buttonCancel.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			buttonCancel.ForeColor = Color.DarkRed;
+			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+			//--- form
+			form.Text = title;
+			form.panel1.Height = 35;
+			form.btnClose.Visible = false;
+
+			form.ClientSize = new Size(270, 150);
+			form.Controls.AddRange(new Control[] { txtString, buttonOk, buttonCancel });
+			form.FormBorderStyle = FormBorderStyle.None;
+			form.StartPosition = FormStartPosition.CenterScreen;
+			form.MinimizeBox = false;
+			form.MaximizeBox = false;
+			form.AcceptButton = buttonOk;
+			form.CancelButton = buttonCancel;
+
+			//--- titulo
+			form.lblTitulo.Font = new Font("Calibri", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+			form.lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
+			form.lblTitulo.Width = 270;
+			form.lblTitulo.TextChanged += (a, b) => ResizeFontLabel(form.lblTitulo);
+			form.lblTitulo.Text = title;
+
+			//---OPEN FORM
+			if (formOrigem != null)
+			{
+				Panel pnl = (Panel)formOrigem.Controls["Panel1"];
+				pnl.BackColor = Color.Silver;
+			}
+
+			DialogResult dialogResult = form.ShowDialog();
+
+			//--- DIALOG CLOSED
+			if (formOrigem != null)
+			{
+				Panel pnl = (Panel)formOrigem.Controls["Panel1"];
+				pnl.BackColor = Color.SlateGray;
+			}
+
+			if (string.IsNullOrEmpty(txtString.Text))
+			{
+				valorPadrao = 0;
+			}
+			else
+			{
+				try
+				{
+					valorPadrao = decimal.Parse(txtString.Text, System.Globalization.NumberStyles.Currency);
+				}
+				catch
+				{
+					AbrirDialog("O valor digitado não pôde ser convertido em valores monetários...\n" +
+						"Favor inserir um valor numérico", "",
+						DialogType.OK, DialogIcon.Exclamation);
+				}
+			}
+
+			return dialogResult;
+		}
+
+		#endregion // INPUT BOX FORMS TYPES --- END
+
+		#region DEFAULT COMMOM HANDLERS
+
+		// DEFAULT COMMOM HANDLERS
+		//=================================================================================================
+
+		//--- 01. INTEIROS
+		public static Action<object, KeyPressEventArgs> Inteiro_KeyPress = (sender, e) =>
+		{
+			if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+			{
+				e.Handled = true;
+			}
+		};
+
+		//--- 02. DECIMAL
+		public static Action<object, KeyPressEventArgs> Decimal_KeyPress = (sender, e) =>
+		{
+			if (e.KeyChar == ',')
+			{
+				e.Handled = false;
+			}
+			else if (e.KeyChar == '.')
+			{
+				((TextBox)sender).SelectedText = ",";
+				e.Handled = true;
+			}
+			else if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+			{
+				e.Handled = true;
+			}
+		};
+
+		//--- 03. MOEDA
+		public static Action<object, KeyPressEventArgs> Moeda_KeyPress = (sender, e) =>
+		{
+			string atual = ((TextBox)sender).Text;
+
+			if (e.KeyChar == ',' && !atual.Contains(","))
+			{
+				e.Handled = false;
+			}
+			else if (e.KeyChar == '.' && !atual.Contains(","))
+			{
+				((TextBox)sender).SelectedText = ",";
+				e.Handled = true;
+			}
+			else if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && !char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+			{
+				e.Handled = true;
+			}
+		};
+
+		#endregion // DEFAULT COMMOM HANDLERS --- END
+
 		// VERIFY IS STRING CAN CHANGE TO NUMERIC
 		// =============================================================================
 		public static bool IsNumeric(this string text) => double.TryParse(text, out _);

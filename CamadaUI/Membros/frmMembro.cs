@@ -341,7 +341,6 @@ namespace CamadaUI.Membros
 			{
 				Sit = EnumFlagEstado.RegistroSalvo;
 			}
-
 		}
 
 		// OPEN CONGREGACAO PROCURA FORM
@@ -396,7 +395,7 @@ namespace CamadaUI.Membros
 				//--- check data
 				if (!CheckSaveData()) return;
 
-				MembroBLL cBLL = new MembroBLL(DBPath());
+				MembroBLL cBLL = new MembroBLL();
 
 				if (chkDtBatismo.Checked) _membro.BatismoData = null;
 

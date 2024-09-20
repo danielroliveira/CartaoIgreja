@@ -1,11 +1,14 @@
 ﻿using CamadaBLL;
 using CamadaDTO;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using static CamadaUI.FuncoesGlobais;
 using static CamadaUI.Utilidades;
+
 
 namespace CamadaUI.Main
 {
@@ -24,6 +27,9 @@ namespace CamadaUI.Main
 		{
 			InitializeComponent();
 
+			//trata qualquer exceção que ocorra nesta thread
+			Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+
 			string titulo = AplicacaoTitulo;
 			lblTitulo.Text = titulo == string.Empty ? "Título da Igreja" : titulo;
 
@@ -40,7 +46,15 @@ namespace CamadaUI.Main
 
 			Width = Screen.PrimaryScreen.WorkingArea.Width;
 			Height = Screen.PrimaryScreen.WorkingArea.Height;
+		}
 
+		// CAPTURA OS ERROS NAO TRATADOS PELA APLICACAO
+		//------------------------------------------------------------------------------------------------------------
+		void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+		{
+			string texto = $"Exceção não esperada capturada... \n" +
+				$"{e.Exception.ToString()}";
+			MessageBox.Show(texto, "Exceção", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
 		// LOAD
@@ -56,15 +70,13 @@ namespace CamadaUI.Main
 				//--- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				//--- open check DATABASE
-				string pathDB = DBPath();
-				FileInfo DB = new FileInfo(pathDB);
+				//--- ABRE E VERIFICA O LOGIN DO USUARIO
+				//------------------------------------------------------------------------------------------------------------
+				Main.frmLogin frmLog = new Main.frmLogin();
+				frmLog.ShowDialog();
 
-				if (!DB.Exists)
+				if (frmLog.DialogResult == DialogResult.No || Program.usuarioAtual == null)
 				{
-					AbrirDialog("Não foi encontrado o Banco de Dados...\n" +
-						"Desculpe, o aplicativo não pode ser aberto!",
-						"Exceção", DialogType.OK, DialogIcon.Exclamation);
 					Application.Exit();
 					return;
 				}
@@ -82,14 +94,13 @@ namespace CamadaUI.Main
 
 				//--- PREENCHE AS LISTAGENS
 				//------------------------------------------------------------------------------------------------------------
-				DiversosBLL div = new DiversosBLL(pathDB);
-				Program.lstCongregacao = new CongregacaoBLL(pathDB).GetListCongregacao();
-				Program.lstFuncao = new FuncaoBLL(pathDB).GetListFuncao();
+				DiversosBLL div = new DiversosBLL();
+				Program.lstCongregacao = new CongregacaoBLL().GetListCongregacao();
+				Program.lstFuncao = new FuncaoBLL().GetListFuncao();
 				Program.lstEstadoCivil = div.GetListEstadoCivil();
 				Program.lstSituacao = div.GetListSituacao();
 
 				new NotifyIcon("Cartão Igreja", "Seja Bem-Vindo!", ToolTipIcon.Info);
-
 			}
 			catch (AppException)
 			{
@@ -120,7 +131,6 @@ namespace CamadaUI.Main
 			// CREATE HANDLERS TO OPEN FORM ONCLICK
 			//----------------------------------------------------------------
 			HandlersMenuClickToOpenForm();
-
 		}
 
 		// DEFINE TITLE OF APPLICATION

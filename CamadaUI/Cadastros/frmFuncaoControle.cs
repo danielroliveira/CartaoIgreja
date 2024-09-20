@@ -14,7 +14,7 @@ namespace CamadaUI.Cadastros
 	{
 		private List<classFuncao> list;
 		private BindingSource bindList = new BindingSource();
-		FuncaoBLL fBLL = new FuncaoBLL(DBPath());
+		FuncaoBLL fBLL = new FuncaoBLL();
 
 		private Form _formOrigem;
 
@@ -462,7 +462,7 @@ namespace CamadaUI.Cadastros
 			{
 				ObterDados();
 				Sit = EnumFlagEstado.RegistroSalvo;
-				Program.lstFuncao = new FuncaoBLL(DBPath()).GetListFuncao();
+				Program.lstFuncao = new FuncaoBLL().GetListFuncao();
 				AbrirDialog("Registros salvos com sucesso!", "Registros Salvos");
 			}
 		}

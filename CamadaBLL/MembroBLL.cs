@@ -3,26 +3,19 @@ using CamadaDTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace CamadaBLL
 {
 	public class MembroBLL
 	{
-		string _DBPath;
-
-		public MembroBLL(string DBPath)
-		{
-			_DBPath = DBPath;
-		}
-
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
 		public List<objMembro> GetListMembro(string membro = "", byte? IDCongregacao = null, byte? IDFuncao = null, byte? IDSituacao = null)
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM qryMembro";
 				bool haveWhere = false;
@@ -98,7 +91,7 @@ namespace CamadaBLL
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM qryMembro WHERE IDMembro = @IDMembro";
 				db.LimparParametros();
@@ -121,7 +114,7 @@ namespace CamadaBLL
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				string query = "SELECT * FROM qryMembro WHERE NaLista = True ";
 
@@ -193,7 +186,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated MEMBRO
@@ -260,7 +253,7 @@ namespace CamadaBLL
 				return newID;
 
 			}
-			catch (OleDbException ex)
+			catch (SqlException ex)
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();
@@ -282,7 +275,7 @@ namespace CamadaBLL
 
 			try
 			{
-				db = new AcessoDados(_DBPath);
+				db = new AcessoDados();
 				db.BeginTransaction();
 
 				//--- check duplicated MEMBRO
@@ -352,7 +345,7 @@ namespace CamadaBLL
 				return true;
 
 			}
-			catch (OleDbException ex)
+			catch (SqlException ex)
 			{
 				//--- ROLLBACK
 				db.RollBackTransaction();
@@ -373,7 +366,7 @@ namespace CamadaBLL
 		{
 			try
 			{
-				AcessoDados db = new AcessoDados(_DBPath);
+				AcessoDados db = new AcessoDados();
 
 				//string query = "SELECT COUNT ";
 

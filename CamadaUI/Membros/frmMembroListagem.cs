@@ -73,7 +73,7 @@ namespace CamadaUI.Membros
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
-				MembroBLL cBLL = new MembroBLL(DBPath());
+				MembroBLL cBLL = new MembroBLL();
 				lstMembros = cBLL.GetListMembro("", IDCongregacao, IDFuncao, IDSituacao);
 				dgvListagem.DataSource = lstMembros;
 			}
@@ -395,7 +395,7 @@ namespace CamadaUI.Membros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				MembroBLL cBLL = new MembroBLL(DBPath());
+				MembroBLL cBLL = new MembroBLL();
 				cBLL.UpdateMembro(membro);
 
 				//--- altera a imagem
@@ -459,7 +459,7 @@ namespace CamadaUI.Membros
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				MembroBLL cBLL = new MembroBLL(DBPath());
+				MembroBLL cBLL = new MembroBLL();
 				cBLL.UpdateMembro(membro);
 
 				//--- altera a imagem
