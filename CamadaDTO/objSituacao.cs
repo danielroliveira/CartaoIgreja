@@ -4,5 +4,6 @@
 	{
 		public byte IDSituacao { get; set; }
 		public string Situacao { get; set; }
+		public bool Ativo { get; set; }
 	}
 }

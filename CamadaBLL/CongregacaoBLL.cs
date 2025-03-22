@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace CamadaBLL
 {
@@ -36,7 +37,7 @@ namespace CamadaBLL
 				{
 					objCongregacao obj = new objCongregacao();
 
-					obj.IDCongregacao = (byte)row["IDCongregacao"];
+					obj.IDCongregacao = (int)row["IDCongregacao"];
 					obj.Congregacao = (string)row["Congregacao"];
 					obj.Ativo = (bool)row["Ativo"];
 
@@ -45,6 +46,16 @@ namespace CamadaBLL
 
 				return listagem;
 
+			}
+			catch (SqlException ex)
+			{
+				if (ex.Number == 208)
+				{
+					//--- create table tblCongregacao
+					throw new Exception("Ainda não existe uma tabela de Congregações criada...");
+				}
+
+				throw ex;
 			}
 			catch (Exception ex)
 			{

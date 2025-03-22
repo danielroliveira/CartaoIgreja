@@ -40,8 +40,15 @@ namespace CamadaUI
 			}
 
 			//--- Check Server Access
-			if (!CheckServerAccess())
+			var serverAccess = CheckServerAccess();
+
+			if (!serverAccess.Result)
 			{
+				AbrirDialog("Não foi possível conectar com o servidor de dados...\n" +
+					$"{serverAccess.Message}",
+					"Conexão com Servidor", 
+					DialogType.OK, 
+					DialogIcon.Exclamation);
 				Application.Exit();
 				return;
 			}
@@ -51,7 +58,7 @@ namespace CamadaUI
 
 		//--- VERIFICA SE EXISTE SERVER CONFIG TO GET CONN STRING
 		//------------------------------------------------------------------------------------------------------------
-		private static bool CheckServerAccess()
+		private static CommandResult CheckServerAccess()
 		{
 			string TestAcesso = new AcessoControlBLL().GetConnString();
 
@@ -63,13 +70,62 @@ namespace CamadaUI
 
 				if (fcString.DialogResult != DialogResult.OK)
 				{
-					return false;
+					return new CommandResult(false, "Não foi encontrada a Chave de Conexão...");
 				}
-
-				return true;
 			}
 
-			return true;
+			//--- create new Acesso and Transaction
+			var acesso = new AcessoControlBLL();
+			var dbTran = acesso.GetNewAcessoWithTransaction();
+
+			try
+			{
+				// --- Ampulheta ON
+				Cursor.Current = Cursors.WaitCursor;
+
+				//--- get database name from Connexion String
+				var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(TestAcesso);
+
+				string server = builder.DataSource;
+				string database = builder.InitialCatalog;
+
+				//--- check if database exists
+				var DBExists = DBCheckBLL.CheckDatabaseExists(database, dbTran);
+
+				if (!DBExists)
+				{
+					acesso.RollbackAcessoWithTransaction(dbTran);
+					return new CommandResult(false, "Não foi possível conectar com o servidor de dados...");
+				}
+
+				//--- check table Usuario
+				var UserExists = DBCheckBLL.CheckTableExists("tblUsuario", dbTran);
+
+				if (!UserExists)
+				{
+					acesso.RollbackAcessoWithTransaction(dbTran);
+					return new CommandResult(false, "Ainda não existe a tabela de usuários...");
+				}
+
+				//--- Commit and Return
+				acesso.CommitAcessoWithTransaction(dbTran);
+				return new CommandResult(true, "Conexão com o servidor OK...");
+			}
+			catch (Exception ex)
+			{
+				acesso.RollbackAcessoWithTransaction(dbTran);
+
+				AbrirDialog("Uma exceção ocorreu ao Tentar Verificar o Acesso..." + "\n" +
+							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
+
+				return new CommandResult(false, "Erro ao tentar verificar o acesso..." +
+					$"{ex.Message}");
+			}
+			finally
+			{
+				// --- Ampulheta OFF
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		// VERIFICA SE JA EXISTE OUTRA INSTANCIA ABERTA

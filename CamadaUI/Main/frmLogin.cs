@@ -58,7 +58,6 @@ namespace CamadaUI.Main
 		//------------------------------------------------------------------------------------------------------------
 		private void btnOK_Click(object sender, EventArgs e)
 		{
-
 			if (!VerificaCampos()) return;
 
 			try
@@ -66,43 +65,45 @@ namespace CamadaUI.Main
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
 
-				objUsuario obj = db.GetAuthorization(txtApelido.Text, txtSenha.Text);
+				var result = db.GetAuthorization(txtApelido.Text, txtSenha.Text);
 
-				Program.usuarioAtual = obj;
-				Logado = true;
+				if (result.Result) 
+				{ 
+					Program.usuarioAtual = (objUsuario)result.ResultObject;
+					Logado = true;
 
-				string AcessoTipo = Program.usuarioAtual.UsuarioAcessoDesc;
+					string AcessoTipo = Program.usuarioAtual.UsuarioAcessoDesc;
 
-				//--- Bem-vindo
-				AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +
-							"Acesso: " + AcessoTipo.ToUpper(), TituloIgreja,
-							DialogType.OK,
-							DialogIcon.Information);
-				DialogResult = DialogResult.Yes;
-				Close();
-			}
-			catch (AppException ex)
-			{
+					//--- Bem-vindo
+					AbrirDialog("Seja Bem-Vindo: " + txtApelido.Text.ToUpper() + "\n \n" +
+								"Acesso: " + AcessoTipo.ToUpper(), TituloIgreja,
+								DialogType.OK,
+								DialogIcon.Information);
+					DialogResult = DialogResult.Yes;
+					Close();
+				}
+
+				//--- Nova tentativa
 				switch (db.TentativasAcesso)
 				{
 					case 1:
-						MessageBox.Show(ex.Message + "\n" +
-										"Tente novamente..." + "\n" +
+						MessageBox.Show(result.Message + "\n\n" +
+										"Tente novamente..." + "\n\n" +
 										"PRIMEIRA TENTATIVA, você pode tentar mais DUAS vezes",
 										"Senha e/ou Usuário Incorreto",
 										MessageBoxButtons.OK, MessageBoxIcon.Information);
 						txtApelido.Focus();
 						break;
 					case 2:
-						MessageBox.Show("Usuário ou Senha estão incorretas! \n" +
-										"Tente novamente...\n" +
+						MessageBox.Show("Usuário ou Senha estão incorretas! \n\n" +
+										"Tente novamente...\n\n" +
 										"SEGUNDA TENTATIVA, você pode tentar mais UMA vezes",
 										"Senha e/ou Usuário Incorreto",
 										MessageBoxButtons.OK, MessageBoxIcon.Information);
 						txtApelido.Focus();
 						break;
 					case 3:
-						MessageBox.Show("Usuário ou Senha estão incorretas!\n" +
+						MessageBox.Show("Usuário ou Senha estão incorretas!\n\n" +
 										"TERCEIRA TENTATIVA, a aplicação será encerrada...",
 										"Erro de Senha e Usuário",
 										MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -196,19 +197,11 @@ namespace CamadaUI.Main
 			{
 				btnCancel_Click(new object(), new EventArgs());
 			}
-			else if (e.Alt && e.KeyCode == Keys.F12)
-			{
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-				txtApelido.Text = "Suporte";
-				txtSenha.Text = "12345678";
-				btnOK_Click(new object(), new EventArgs());
-			}
 			else if (e.Alt && e.KeyCode == Keys.D)
 			{
 				e.Handled = true;
 				e.SuppressKeyPress = true;
-				txtApelido.Text = "Daniel";
+				txtApelido.Text = "Suporte";
 				txtSenha.Text = "12345678";
 				btnOK_Click(new object(), new EventArgs());
 			}

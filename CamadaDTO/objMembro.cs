@@ -23,7 +23,7 @@ namespace CamadaDTO
 			//internal byte _IDEstadoCivil;
 			//internal string _EstadoCivilM;
 			//internal string _EstadoCivilF;
-			internal byte? _IDCongregacao;
+			internal int? _IDCongregacao;
 			internal string _Congregacao;
 			internal objFuncao _Funcao;
 			//internal byte _IDFuncao;
@@ -302,7 +302,7 @@ namespace CamadaDTO
 
 		// Property IDCongregacao
 		//---------------------------------------------------------------
-		public byte? IDCongregacao
+		public int? IDCongregacao
 		{
 			get => EditData._IDCongregacao;
 			set

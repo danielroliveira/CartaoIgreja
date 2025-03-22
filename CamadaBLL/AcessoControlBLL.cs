@@ -17,7 +17,7 @@ namespace CamadaBLL
 		//=================================================================================================
 		// GET NEW LOGIN ACESSO
 		//=================================================================================================
-		public objUsuario GetAuthorization(
+		public CommandResult GetAuthorization(
 			string UsuarioApelido,
 			string UsuarioSenha,
 			EnumAcessoTipo UsuarioAcesso = EnumAcessoTipo.Usuario_Local, // usuario_local = 4
@@ -40,7 +40,7 @@ namespace CamadaBLL
 				if (dt.Rows.Count == 0)
 				{
 					TentativasAcesso += 1;
-					throw new AppException("Não há Usuários no sistema, comunique com o administrador...");
+					return new CommandResult(false, "Não há Usuários no sistema, comunique com o administrador...");
 				}
 
 				DataRow row = dt.Rows[0];
@@ -48,7 +48,7 @@ namespace CamadaBLL
 				if (row.ItemArray.Length == 1)
 				{
 					TentativasAcesso += 1;
-					throw new AppException(dt.Rows[0].ItemArray[0].ToString());
+					return new CommandResult(false, dt.Rows[0].ItemArray[0].ToString());
 				}
 
 				objUsuario UsuarioAtual = new objUsuario((int)row["IDUsuario"])
@@ -57,11 +57,14 @@ namespace CamadaBLL
 					UsuarioApelido = (string)row["UsuarioApelido"]
 				};
 
-				return UsuarioAtual;
-			}
-			catch (AppException ex)
-			{
-				throw ex;
+				//--- check usuario atual have access in CartaoIgreja
+				if (UsuarioAtual.UsuarioAcesso < 11 && UsuarioAtual.UsuarioAcesso != 0) 
+				{ 
+					TentativasAcesso = 1;
+					return new CommandResult(false, "Usuário NÃO tem ACESSO ao aplicativo de Membresia");
+				}
+
+				return new CommandResult(true, "Usuário Válido", UsuarioAtual);
 			}
 			catch (Exception ex)
 			{

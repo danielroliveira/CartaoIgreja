@@ -18,7 +18,7 @@ namespace CamadaUI.Membros
 		private int _validade;
 		private Form _formOrigem;
 		private byte? IDFuncao;
-		private byte? IDCongregacao;
+		private int? IDCongregacao;
 		private byte? IDSituacao;
 
 		//--- PROPRIEDADE DE ESCOLHA

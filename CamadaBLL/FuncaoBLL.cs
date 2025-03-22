@@ -17,7 +17,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblFuncao";
+				string query = "SELECT * FROM tblMembroFuncao";
 
 				// add params
 				db.LimparParametros();
@@ -36,8 +36,8 @@ namespace CamadaBLL
 				{
 					objFuncao obj = new objFuncao();
 
-					obj.IDFuncao = (byte)row["IDFuncao"];
-					obj.Funcao = (string)row["Funcao"];
+					obj.IDFuncao = (byte)row["IDMembroFuncao"];
+					obj.Funcao = (string)row["MembroFuncao"];
 					obj.ImagemCartaoFrente = row["ImagemCartaoFrente"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoFrente"];
 					obj.ImagemCartaoVerso = row["ImagemCartaoVerso"] == DBNull.Value ? string.Empty : (string)row["ImagemCartaoVerso"];
 					obj.Ativo = (bool)row["Ativo"];
@@ -73,7 +73,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create and execute query
-				string query = "SELECT * FROM tblFuncao WHERE LCase(Funcao) = @Funcao";
+				string query = "SELECT * FROM tblMembroFuncao WHERE LCase(Funcao) = @Funcao";
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				if (dt.Rows.Count > 0)
@@ -89,7 +89,7 @@ namespace CamadaBLL
 				int newPosition = 0;
 
 				//--- create and execute query
-				query = "SELECT COUNT(*) AS Total FROM tblFuncao";
+				query = "SELECT COUNT(*) AS Total FROM tblMembroFuncao";
 				dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				if (dt.Rows.Count == 0)
@@ -112,7 +112,7 @@ namespace CamadaBLL
 				int newID = 0;
 
 				//--- create and execute query
-				query = "SELECT MAX(IDFuncao) AS ID FROM tblFuncao";
+				query = "SELECT MAX(IDFuncao) AS ID FROM tblMembroFuncao";
 				dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				if (dt.Rows.Count == 0)
@@ -139,7 +139,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				query = db.CreateInsertSQL("tblFuncao");
+				query = db.CreateInsertSQL("tblMembroFuncao");
 
 				//--- insert
 				db.ExecutarManipulacao(CommandType.Text, query);
@@ -182,7 +182,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create and execute query
-				string query = "SELECT * FROM tblFuncao WHERE Funcao = @Funcao AND IDFuncao <> @IDFuncao";
+				string query = "SELECT * FROM tblMembroFuncao WHERE Funcao = @Funcao AND IDFuncao <> @IDFuncao";
 				DataTable dt = db.ExecutarConsulta(CommandType.Text, query);
 
 				if (dt.Rows.Count > 0)
@@ -204,7 +204,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				query = db.CreateUpdateSQL("tblFuncao", "@IDFuncao");
+				query = db.CreateUpdateSQL("tblMembroFuncao", "@IDFuncao");
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);
@@ -275,7 +275,7 @@ namespace CamadaBLL
 				db.ConvertNullParams();
 
 				//--- create query
-				query = "DELETE * FROM tblFuncao WHERE IDFuncao = @IDFuncao";
+				query = "DELETE * FROM tblMembroFuncao WHERE IDFuncao = @IDFuncao";
 
 				//--- update
 				db.ExecutarManipulacao(CommandType.Text, query);

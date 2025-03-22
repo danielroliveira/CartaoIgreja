@@ -16,7 +16,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblEstadoCivil";
+				string query = "SELECT * FROM tblMembroEstadoCivil";
 
 				// add params
 				db.LimparParametros();
@@ -60,7 +60,7 @@ namespace CamadaBLL
 			{
 				AcessoDados db = new AcessoDados();
 
-				string query = "SELECT * FROM tblSituacao";
+				string query = "SELECT * FROM tblMembroSituacao";
 
 				// add params
 				db.LimparParametros();
@@ -81,6 +81,7 @@ namespace CamadaBLL
 
 					obj.IDSituacao = (byte)row["IDSituacao"];
 					obj.Situacao = (string)row["Situacao"];
+					obj.Ativo = (bool)row["Ativo"];
 
 					listagem.Add(obj);
 				}

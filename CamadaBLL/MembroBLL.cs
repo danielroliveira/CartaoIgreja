@@ -11,7 +11,7 @@ namespace CamadaBLL
 	{
 		// GET LIST OF
 		//------------------------------------------------------------------------------------------------------------
-		public List<objMembro> GetListMembro(string membro = "", byte? IDCongregacao = null, byte? IDFuncao = null, byte? IDSituacao = null)
+		public List<objMembro> GetListMembro(string membro = "", int? IDCongregacao = null, byte? IDFuncao = null, byte? IDSituacao = null)
 		{
 			try
 			{
