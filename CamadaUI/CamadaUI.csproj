@@ -278,6 +278,12 @@
     <Compile Include="Main\frmMessage.designer.cs">
       <DependentUpon>frmMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\FuncoesGlobais.cs" />
     <Compile Include="Main\GoogleConnect.cs" />
     <Compile Include="Main\NotifyIcon.cs">
@@ -374,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\frmMessage.resx">
       <DependentUpon>frmMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Membros\frmCongregacaoProcura.resx">
       <DependentUpon>frmCongregacaoProcura.cs</DependentUpon>

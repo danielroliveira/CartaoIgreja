@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CamadaBLL;
+﻿using CamadaBLL;
 using CamadaDTO;
 using CamadaUI.Main;
-using static CamadaUI.FuncoesGlobais;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using static CamadaUI.Utilidades;
 
 namespace CamadaUI
@@ -39,18 +36,24 @@ namespace CamadaUI
 				return;
 			}
 
-			//--- Check Server Access
-			var serverAccess = CheckServerAccess();
-
-			if (!serverAccess.Result)
+			using (var splash = new frmSplash())
 			{
-				AbrirDialog("Não foi possível conectar com o servidor de dados...\n" +
-					$"{serverAccess.Message}",
-					"Conexão com Servidor", 
-					DialogType.OK, 
-					DialogIcon.Exclamation);
-				Application.Exit();
-				return;
+				splash.Show();
+				splash.Refresh();
+				System.Threading.Thread.Sleep(1000);
+
+				//--- Check Server Access
+				var serverAccess = CheckServerAccess();
+
+				if (!serverAccess.Result)
+				{
+					AbrirDialog($"{serverAccess.Message}",
+						"Conexão com Servidor", 
+						DialogType.OK, 
+						DialogIcon.Exclamation);
+					Application.Exit();
+					return;
+				}
 			}
 
 			Application.Run(new frmPrincipal());
@@ -76,12 +79,14 @@ namespace CamadaUI
 
 			//--- create new Acesso and Transaction
 			var acesso = new AcessoControlBLL();
-			var dbTran = acesso.GetNewAcessoWithTransaction();
+			object dbTran = null;
 
 			try
 			{
 				// --- Ampulheta ON
 				Cursor.Current = Cursors.WaitCursor;
+				
+				dbTran = acesso.GetNewAcessoWithTransaction();
 
 				//--- get database name from Connexion String
 				var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(TestAcesso);
@@ -113,12 +118,9 @@ namespace CamadaUI
 			}
 			catch (Exception ex)
 			{
-				acesso.RollbackAcessoWithTransaction(dbTran);
+				if(dbTran != null) acesso.RollbackAcessoWithTransaction(dbTran);
 
-				AbrirDialog("Uma exceção ocorreu ao Tentar Verificar o Acesso..." + "\n" +
-							ex.Message, "Exceção", DialogType.OK, DialogIcon.Exclamation);
-
-				return new CommandResult(false, "Erro ao tentar verificar o acesso..." +
+				return new CommandResult(false, "Erro ao tentar acessar o servidor...\n" +
 					$"{ex.Message}");
 			}
 			finally
